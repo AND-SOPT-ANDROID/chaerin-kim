@@ -7,6 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import org.sopt.and.screen.SignUpScreen
 import org.sopt.and.ui.theme.ANDANDROIDTheme
@@ -18,7 +21,14 @@ class SignUpActivity : ComponentActivity() {
         setContent {
             ANDANDROIDTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SignUpScreen(modifier = Modifier.padding(innerPadding))
+                    val email by remember { mutableStateOf("") }
+                    val password by remember { mutableStateOf("") }
+
+                    SignUpScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        email = email,
+                        password = password
+                    )
                 }
             }
         }
