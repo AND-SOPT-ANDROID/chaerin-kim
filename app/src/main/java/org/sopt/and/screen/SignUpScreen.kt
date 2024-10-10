@@ -4,40 +4,42 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
+import org.sopt.and.component.GrayTextField
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray80
-import org.sopt.and.ui.theme.Typography
 import org.sopt.and.ui.theme.pretendardFamily
 
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
     email: String,
-    password: String
+    onEmailChange: (String)->Unit,
+    password: String,
+    onPasswordChange: (String)->Unit,
 ) {
     Column(
         modifier = modifier
@@ -93,11 +95,23 @@ fun SignUpScreen(
             fontSize = 22.sp,
             modifier = Modifier.padding(start = 10.dp, top = 4.dp)
         )
+
+        GrayTextField(
+            email,
+            "wavve@example.com",
+        ) { onEmailChange(it) }
+        GrayTextField(
+            password,
+            "Wavve 비밀번호 설정"
+        ) { onPasswordChange(it) }
+
     }
 }
 
 @Preview
 @Composable
 fun Preview(modifier: Modifier = Modifier) {
-    SignUpScreen(modifier, "", "")
+    var text by remember { mutableStateOf("") }
+    var text2 by remember { mutableStateOf("") }
+    SignUpScreen(modifier, text, onEmailChange = {text=it}, text2, onPasswordChange = {text2=it})
 }
