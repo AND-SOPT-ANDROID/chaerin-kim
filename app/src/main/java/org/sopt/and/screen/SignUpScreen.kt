@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.component.GrayTextField
+import org.sopt.and.component.TextFieldNotificationMessage
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
@@ -100,10 +101,16 @@ fun SignUpScreen(
             email,
             "wavve@example.com",
         ) { onEmailChange(it) }
+        TextFieldNotificationMessage(
+            "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요."
+        )
         GrayTextField(
             password,
             "Wavve 비밀번호 설정"
         ) { onPasswordChange(it) }
+        TextFieldNotificationMessage(
+            "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
+        )
 
     }
 }
