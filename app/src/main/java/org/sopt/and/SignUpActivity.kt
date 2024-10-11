@@ -1,6 +1,7 @@
 package org.sopt.and
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,16 +23,16 @@ class SignUpActivity : ComponentActivity() {
         setContent {
             ANDANDROIDTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    var email by remember { mutableStateOf("") }
-                    var password by remember { mutableStateOf("") }
+                    var email = ""
+                    var password = ""
 
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
-                        email = email,
-                        onEmailChange = { email = it },
-                        password = password,
-                        onPasswordChange = { password = it }
-                    )
+                    ) {
+                        email = it[0]
+                        password = it[1]
+                        Log.d("chrin", "SignUp - email $email, password $password")
+                    }
                 }
             }
         }
