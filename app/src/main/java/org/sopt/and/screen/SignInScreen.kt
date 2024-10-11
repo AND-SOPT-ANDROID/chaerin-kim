@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,6 +50,7 @@ import org.sopt.and.SignUpActivity
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.SNSLogin
 import org.sopt.and.component.SNSNotificationMessage
+import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
@@ -63,6 +66,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         snackbarHost = {
@@ -110,10 +114,8 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
+                    focusManager.clearFocus()
                     if (id == signInEmail && password == signInPassword) {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("로그인에 성공했습니다.")
-                        }
                         val intent = Intent(context, MyActivity::class.java)
                         intent.putExtra("userName", id)
                         context.startActivity(intent)
