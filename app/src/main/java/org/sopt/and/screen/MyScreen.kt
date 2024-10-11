@@ -59,6 +59,7 @@ fun MyScreen(
                     modifier = Modifier
                         .size(60.dp)
                         .clip(CircleShape),
+                    contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
