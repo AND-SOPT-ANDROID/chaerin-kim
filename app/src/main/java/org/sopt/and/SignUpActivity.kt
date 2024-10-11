@@ -29,15 +29,11 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     containerColor = BackgroundBlack
                 ) { innerPadding ->
-                    var email = ""
-                    var password = ""
-
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
                     ) {
-                        email = it[0]
-                        password = it[1]
-                        Log.d("chrin", "SignUp - email $email, password $password")
+                        val email = it[0]
+                        val password = it[1]
                     }
                 }
             }
