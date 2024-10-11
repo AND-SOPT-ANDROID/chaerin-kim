@@ -1,8 +1,10 @@
 package org.sopt.and.screen
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -19,11 +21,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import org.sopt.and.MyActivity
 import org.sopt.and.R
 import org.sopt.and.SignUpActivity
@@ -46,6 +53,7 @@ import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
 import org.sopt.and.ui.theme.pretendardFamily
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SignInScreen(modifier: Modifier = Modifier) {
     var id by remember { mutableStateOf("") }
@@ -53,80 +61,96 @@ fun SignInScreen(modifier: Modifier = Modifier) {
     var signInEmail by remember { mutableStateOf("") }
     var signInPassword by remember { mutableStateOf("") }
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 10.dp)
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+        modifier = modifier.fillMaxSize()
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp),
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(horizontal = 10.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.ic_x_close),
-                contentDescription = "btn_close",
+            Box(
                 modifier = Modifier
-                    .size(30.dp)
-                    .clickable { }
-            )
-            Image(
-                painter = painterResource(R.drawable.ic_wavve_logo),
-                contentDescription = "Wavve logo",
-                modifier = Modifier
-                    .clickable { }
-                    .align(Alignment.Center)
-            )
+                    .fillMaxWidth()
+                    .padding(top = 12.dp),
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_x_close),
+                    contentDescription = "btn_close",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable { }
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_wavve_logo),
+                    contentDescription = "Wavve logo",
+                    modifier = Modifier
+                        .clickable { }
+                        .align(Alignment.Center)
+                )
+            }
+            Spacer(modifier = Modifier.height(80.dp))
+
+            GrayTextField(
+                value = id,
+                placeholderText = "이메일 주소 또는 아이디"
+            ) { id = it }
+            Spacer(modifier = Modifier.height(6.dp))
+            GrayTextField(
+                value = password,
+                placeholderText = "비밀번호"
+            ) { password = it }
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Button(
+                onClick = {
+                    if (id == signInEmail && password == signInPassword) {
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("로그인에 성공했습니다.")
+                        }
+                        val intent = Intent(context, MyActivity::class.java)
+                        intent.putExtra("userName", id)
+                        context.startActivity(intent)
+                    } else {
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("이메일 또는 비밀번호가 올바르지 않습니다.")
+                        }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonColors(
+                    containerColor = MainBlue,
+                    contentColor = Color.White,
+                    disabledContentColor = Gray60,
+                    disabledContainerColor = Color.White
+                )
+            ) {
+                Text(
+                    "로그인",
+                    color = Color.White,
+                    fontFamily = pretendardFamily,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp
+                )
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+
+            LoginHelpButton {
+                signInEmail = it[0].toString()
+                signInPassword = it[1].toString()
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+
+            SNSLogin(modifier)
+            SNSNotificationMessage(modifier)
+
         }
-        Spacer(modifier = Modifier.height(80.dp))
-
-        GrayTextField(
-            value = id,
-            placeholderText = "이메일 주소 또는 아이디"
-        ) { id = it }
-        Spacer(modifier = Modifier.height(6.dp))
-        GrayTextField(
-            value = password,
-            placeholderText = "비밀번호"
-        ) { password = it }
-        Spacer(modifier = Modifier.height(40.dp))
-
-        Button(
-            onClick = {
-                if (id == signInEmail && password == signInPassword) {
-                    val intent = Intent(context, MyActivity::class.java)
-                    intent.putExtra("userName", id)
-                    context.startActivity(intent)
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonColors(
-                containerColor = MainBlue,
-                contentColor = Color.White,
-                disabledContentColor = Gray60,
-                disabledContainerColor = Color.White
-            )
-        ) {
-            Text(
-                "로그인",
-                color = Color.White,
-                fontFamily = pretendardFamily,
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp
-            )
-        }
-        Spacer(modifier = Modifier.height(30.dp))
-
-        LoginHelpButton {
-            signInEmail = it[0].toString()
-            signInPassword = it[1].toString()
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-
-        SNSLogin(modifier)
-        SNSNotificationMessage(modifier)
-
     }
 }
 
