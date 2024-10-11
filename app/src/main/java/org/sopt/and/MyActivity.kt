@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.and.screen.MyScreen
 import org.sopt.and.ui.theme.ANDANDROIDTheme
+import org.sopt.and.ui.theme.BackgroundBlack
 
 class MyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +21,10 @@ class MyActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ANDANDROIDTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    containerColor = BackgroundBlack
+                ) { innerPadding ->
                     val userName = "채린"
                     MyScreen(
                         modifier = Modifier.padding(innerPadding),

@@ -38,7 +38,7 @@ fun MyScreen(
     userName: String,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
         Box(

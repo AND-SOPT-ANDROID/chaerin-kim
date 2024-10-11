@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.sopt.and.screen.SignInScreen
 import org.sopt.and.ui.theme.ANDANDROIDTheme
+import org.sopt.and.ui.theme.BackgroundBlack
 
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +21,10 @@ class SignInActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ANDANDROIDTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    containerColor = BackgroundBlack
+                ) { innerPadding ->
                     SignInScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
