@@ -2,8 +2,10 @@ package org.sopt.and.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.component.GrayTextField
+import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
 import org.sopt.and.ui.theme.pretendardFamily
@@ -91,13 +94,36 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                 "로그인",
                 color = Color.White,
                 fontFamily = pretendardFamily,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp
             )
         }
-
-
         Spacer(modifier = Modifier.height(30.dp))
 
+        LoginHelpButton()
+
+    }
+}
+
+@Composable
+fun LoginHelpButton() {
+    val helpLinks = listOf("아이디 찾기", "비밀번호 재설정", "회원가입")
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 80.dp),
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        helpLinks.forEach { link ->
+            Text(
+                text = link,
+                color = Gray40,
+                fontFamily = pretendardFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = 12.sp
+            )
+        }
     }
 }
 
