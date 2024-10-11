@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,6 +36,7 @@ import org.sopt.and.component.SNSLogin
 import org.sopt.and.component.SNSNotificationMessage
 import org.sopt.and.component.TextFieldNotificationMessage
 import org.sopt.and.ui.theme.BackgroundBlack
+import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
 
@@ -116,6 +120,21 @@ fun SignUpScreen(
 
         SNSLogin()
         SNSNotificationMessage()
+
+        Button(
+            onClick = {  },
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = Gray60),
+            shape = RoundedCornerShape(0.dp)
+        ) {
+            Text(
+                text = "Wavve 회원가입",
+                color = Color.White,
+                fontFamily = pretendardFamily,
+                fontSize = 14.sp
+            )
+        }
     }
 }
 
