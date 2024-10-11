@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,16 +50,17 @@ fun MyScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(color = Gray80)
-                    .padding(vertical = 4.dp),
+                    .padding(start = 16.dp, top = 20.dp, bottom = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     painter = painterResource(R.drawable.img_sample),
                     contentDescription = "사용자이미지",
                     modifier = Modifier
-                        .clip(CircleShape)
-                        .size(100.dp)
+                        .size(60.dp)
+                        .clip(CircleShape),
                 )
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "${userName}님",
                     fontFamily = pretendardFamily,
@@ -69,7 +71,7 @@ fun MyScreen(
             }
 
             Row(
-                modifier = Modifier.padding(end = 10.dp)
+                modifier = Modifier.padding(end = 16.dp)
             ) {
                 Image(
                     painter = painterResource(R.drawable.ic_alram),
