@@ -13,12 +13,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray80
+import org.sopt.and.ui.theme.pretendardFamily
 
 @Composable
 fun GrayTextField(
@@ -40,7 +42,13 @@ fun GrayTextField(
             text = it
             onValueChange(it)
         },
-        placeholder = { Text(placeholderText) },
+        placeholder = {
+            Text(
+                placeholderText,
+                fontFamily = pretendardFamily,
+                fontWeight = FontWeight.Normal
+            )
+        },
         visualTransformation = visualTransformation,
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.colors(

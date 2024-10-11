@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -78,6 +79,7 @@ fun SignUpScreen(
                 Text(
                     text = "회원가입",
                     fontFamily = pretendardFamily,
+                    fontWeight = FontWeight.Normal,
                     fontSize = 18.sp,
                     color = Color.White,
                     modifier = Modifier.fillMaxWidth(),
@@ -157,6 +159,7 @@ fun SignUpText() {
             }
         },
         fontFamily = pretendardFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         modifier = Modifier.padding(start = 10.dp)
     )
@@ -170,6 +173,7 @@ fun SignUpText() {
             }
         },
         fontFamily = pretendardFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         modifier = Modifier.padding(start = 10.dp, top = 4.dp)
     )

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,9 +42,10 @@ fun SNSLogin(modifier: Modifier = Modifier) {
             )
 
             Text(
-                text = "또는 다른 서비스 계정으로 로그인",
+                text = "또는 다른 서비스 계정으로 가입",
                 color = Gray40,
                 fontFamily = pretendardFamily,
+                fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )

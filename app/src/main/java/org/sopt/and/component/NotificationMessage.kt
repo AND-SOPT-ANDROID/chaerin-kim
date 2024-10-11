@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,6 +34,7 @@ fun TextFieldNotificationMessage(message: String) {
             text = message,
             color = Gray40,
             fontFamily = pretendardFamily,
+            fontWeight = FontWeight.Normal,
             fontSize = 14.sp
         )
     }
@@ -45,6 +47,7 @@ fun SNSNotificationMessage(modifier: Modifier = Modifier) {
             text = "•",
             color = Gray60,
             fontFamily = pretendardFamily,
+            fontWeight = FontWeight.Normal,
             fontSize = 14.sp
         )
         Spacer(modifier = Modifier.width(6.dp))
@@ -52,6 +55,7 @@ fun SNSNotificationMessage(modifier: Modifier = Modifier) {
             text = "SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다. 기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고 하세요." ,
             color = Gray60,
             fontFamily = pretendardFamily,
+            fontWeight = FontWeight.Normal,
             fontSize = 13.sp
         )
     }
