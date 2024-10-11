@@ -2,7 +2,6 @@ package org.sopt.and.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,9 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
+import org.sopt.and.component.ShowContentList
+import org.sopt.and.component.PromotionalBanner
 import org.sopt.and.ui.theme.BackgroundBlack
-import org.sopt.and.ui.theme.Gray40
-import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
 
@@ -88,96 +87,9 @@ fun MyScreen(
         Spacer(modifier = Modifier.height(2.dp))
         PromotionalBanner(message = "현재 보유하신 이용권이 없습니다.")
 
-        ContentList("전체 시청내역", "시청내역이 없어요.")
-        ContentList("관심 프로그램", "관심 프로그램이 없어요.")
+        ShowContentList("전체 시청내역", "시청내역이 없어요.")
+        ShowContentList("관심 프로그램", "관심 프로그램이 없어요.")
 
-    }
-}
-
-@Composable
-fun PromotionalBanner(
-    message: String
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Gray80)
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 20.dp)
-        ) {
-            Column {
-                Text(
-                    text = message,
-                    fontFamily = pretendardFamily,
-                    fontWeight = FontWeight.Normal,
-                    color = Gray40,
-                    fontSize = 16.sp
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "구매하기",
-                        fontFamily = pretendardFamily,
-                        fontWeight = FontWeight.Normal,
-                        color = Color.White,
-                        fontSize = 16.sp
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.ic_chevron_right),
-                        contentDescription = "오른쪽화살표",
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ContentList(
-    title: String,
-    noContentMsg: String
-) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 20.dp)
-    ) {
-        Text(
-            text = title,
-            fontFamily = pretendardFamily,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            fontSize = 20.sp
-        )
-        Box(
-            modifier = Modifier
-                .padding(top = 36.dp)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_alert_circle),
-                    contentDescription = "경고아이콘",
-                    modifier = Modifier
-                        .size(60.dp)
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(
-                    text = noContentMsg,
-                    fontFamily = pretendardFamily,
-                    fontWeight = FontWeight.Normal,
-                    color = Gray40
-                )
-            }
-
-        }
     }
 }
 
