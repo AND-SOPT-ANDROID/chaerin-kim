@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.component.GrayTextField
+import org.sopt.and.component.SNSLogin
+import org.sopt.and.component.SNSNotificationMessage
 import org.sopt.and.component.TextFieldNotificationMessage
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray80
@@ -112,6 +114,8 @@ fun SignUpScreen(
             "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
         )
 
+        SNSLogin()
+        SNSNotificationMessage()
     }
 }
 
