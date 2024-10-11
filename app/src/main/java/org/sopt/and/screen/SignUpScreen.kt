@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -81,7 +82,7 @@ fun SignUpScreen(
                 withStyle(style = SpanStyle(color = Color.White)) {
                     append("이메일과 비밀번호")
                 }
-                withStyle(style = SpanStyle(color = Gray80)) {
+                withStyle(style = SpanStyle(color = Gray60)) {
                     append("만으로")
                 }
             },
@@ -94,7 +95,7 @@ fun SignUpScreen(
                 withStyle(style = SpanStyle(color = Color.White)) {
                     append("Wavve를 즐길 수 ")
                 }
-                withStyle(style = SpanStyle(color = Gray80)) {
+                withStyle(style = SpanStyle(color = Gray60)) {
                     append("있어요!")
                 }
             },
@@ -103,23 +104,32 @@ fun SignUpScreen(
             modifier = Modifier.padding(start = 10.dp, top = 4.dp)
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
         GrayTextField(
             email,
             "wavve@example.com",
         ) { onEmailChange(it) }
+        Spacer(modifier = Modifier.height(10.dp))
         TextFieldNotificationMessage(
             "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요."
         )
+        Spacer(modifier = Modifier.height(10.dp))
         GrayTextField(
             password,
             "Wavve 비밀번호 설정"
         ) { onPasswordChange(it) }
+        Spacer(modifier = Modifier.height(10.dp))
         TextFieldNotificationMessage(
             "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
         )
 
+        Spacer(modifier = Modifier.height(30.dp))
+
         SNSLogin()
         SNSNotificationMessage()
+
+        Spacer(modifier = Modifier.weight(1f))
 
         Button(
             onClick = {  },
