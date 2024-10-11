@@ -140,6 +140,7 @@ fun SignUpScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
+                .height(60.dp)
                 .align(Alignment.BottomCenter),
             colors = ButtonDefaults.buttonColors(containerColor = Gray60),
             shape = RoundedCornerShape(0.dp)
