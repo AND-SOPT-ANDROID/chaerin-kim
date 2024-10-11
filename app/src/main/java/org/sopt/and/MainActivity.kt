@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,8 +36,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val intent = Intent(context, SignUpActivity::class.java)
     Button(
+        modifier = modifier.padding(20.dp),
         onClick = {
             context.startActivity(intent)
         }
-    ) { }
+    ) { Text("회원가입")}
 }
