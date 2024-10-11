@@ -45,14 +45,24 @@ import org.sopt.and.ui.theme.pretendardFamily
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    email: String,
-    onEmailChange: (String)->Unit,
-    password: String,
-    onPasswordChange: (String)->Unit,
+    onButtonClick: (Array<String>) -> Unit
 ) {
-    Box(
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var emailError by remember { mutableStateOf(false) }
+    var passwordError by remember { mutableStateOf(false) }
 
-    ) {
+    fun validateEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    fun validatePassword(password: String): Boolean {
+        return password.length in 8..20 && password.any { it.isDigit() } &&
+                password.any { it.isUpperCase() } && password.any { it.isLowerCase() } &&
+                password.any { !it.isLetterOrDigit() }
+    }
+
+    Box {
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -83,13 +93,13 @@ fun SignUpScreen(
             }
             Spacer(modifier = Modifier.height(50.dp))
 
-            SignUpText(modifier = modifier)
+            SignUpText()
             Spacer(modifier = Modifier.height(30.dp))
 
             GrayTextField(
                 email,
                 "wavve@example.com",
-            ) { onEmailChange(it) }
+            ) { email = it }
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
                 "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요."
@@ -99,7 +109,7 @@ fun SignUpScreen(
             GrayTextField(
                 password,
                 "Wavve 비밀번호 설정"
-            ) { onPasswordChange(it) }
+            ) { password = it }
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
                 "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
@@ -111,7 +121,14 @@ fun SignUpScreen(
         }
 
         Button(
-            onClick = {  },
+            onClick = {
+                emailError = !validateEmail(email)
+                passwordError = !validatePassword(password)
+
+                if (!emailError && !passwordError) {
+                    onButtonClick(arrayOf(email, password))
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter),
@@ -129,7 +146,7 @@ fun SignUpScreen(
 }
 
 @Composable
-fun SignUpText(modifier: Modifier = Modifier) {
+fun SignUpText() {
     Text(
         text = buildAnnotatedString {
             withStyle(style = SpanStyle(color = Color.White)) {
@@ -161,7 +178,10 @@ fun SignUpText(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun Preview(modifier: Modifier = Modifier) {
-    var text by remember { mutableStateOf("") }
-    var text2 by remember { mutableStateOf("") }
-    SignUpScreen(modifier, text, onEmailChange = {text=it}, text2, onPasswordChange = {text2=it})
+    var userInfo = ""
+    SignUpScreen(
+        modifier,
+    ) {
+        userInfo = it[0]
+    }
 }
