@@ -1,5 +1,10 @@
 package org.sopt.and.screen
 
+import android.app.Activity
+import android.content.Intent
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,13 +28,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.sopt.and.MyActivity
 import org.sopt.and.R
+import org.sopt.and.SignUpActivity
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.SNSLogin
 import org.sopt.and.component.SNSNotificationMessage
@@ -42,6 +50,9 @@ import org.sopt.and.ui.theme.pretendardFamily
 fun SignInScreen(modifier: Modifier = Modifier) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var signInEmail by remember { mutableStateOf("") }
+    var signInPassword by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(
         modifier = modifier
@@ -82,7 +93,13 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(40.dp))
 
         Button(
-            onClick = { },
+            onClick = {
+                if (id == signInEmail && password == signInPassword) {
+                    val intent = Intent(context, MyActivity::class.java)
+                    intent.putExtra("userName", id)
+                    context.startActivity(intent)
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonColors(
                 containerColor = MainBlue,
@@ -101,7 +118,10 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         }
         Spacer(modifier = Modifier.height(30.dp))
 
-        LoginHelpButton()
+        LoginHelpButton {
+            signInEmail = it[0].toString()
+            signInPassword = it[1].toString()
+        }
         Spacer(modifier = Modifier.height(20.dp))
 
         SNSLogin(modifier)
@@ -111,8 +131,20 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LoginHelpButton() {
+fun LoginHelpButton(
+    setInfoFromSignUp: (Array<String?>) -> Unit
+) {
     val helpLinks = listOf("아이디 찾기", "비밀번호 재설정", "회원가입")
+    val context = LocalContext.current
+    val resultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val email = result.data?.getStringExtra("email")
+            val password = result.data?.getStringExtra("password")
+            setInfoFromSignUp(arrayOf(email, password))
+        }
+    }
 
     Row(
         modifier = Modifier
@@ -126,7 +158,15 @@ fun LoginHelpButton() {
                 color = Gray40,
                 fontFamily = pretendardFamily,
                 fontWeight = FontWeight.Normal,
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                modifier = if (link == "회원가입") {
+                    Modifier.clickable(onClick = {
+                        val intent = Intent(context, SignUpActivity::class.java)
+                        resultLauncher.launch(intent)
+                    })
+                } else {
+                    Modifier
+                }
             )
         }
     }

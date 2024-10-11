@@ -1,5 +1,7 @@
 package org.sopt.and
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -34,6 +36,11 @@ class SignUpActivity : ComponentActivity() {
                     ) {
                         val email = it[0]
                         val password = it[1]
+                        val intent = Intent()
+                        intent.putExtra("email", email)
+                        intent.putExtra("password", password)
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
                     }
                 }
             }
