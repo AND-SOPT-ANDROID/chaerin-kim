@@ -1,6 +1,7 @@
 package org.sopt.and
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -25,11 +26,15 @@ class MyActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     containerColor = BackgroundBlack
                 ) { innerPadding ->
-                    val userName = "채린"
-                    MyScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        userName
-                    )
+                    val userName = intent.getStringExtra("userName")
+                    if (userName != null) {
+                        MyScreen(
+                            modifier = Modifier.padding(innerPadding),
+                            userName
+                        )
+                    } else {
+                        Log.d("chrin", "MyActivity : [오류] userName = null값")
+                    }
                 }
             }
         }
