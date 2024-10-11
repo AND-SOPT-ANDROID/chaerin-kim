@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.component.GrayTextField
+import org.sopt.and.component.SNSLogin
+import org.sopt.and.component.SNSNotificationMessage
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
@@ -101,6 +103,10 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(30.dp))
 
         LoginHelpButton()
+        Spacer(modifier = Modifier.height(20.dp))
+
+        SNSLogin(modifier)
+        SNSNotificationMessage(modifier)
 
     }
 }
