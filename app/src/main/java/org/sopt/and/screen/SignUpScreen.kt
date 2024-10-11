@@ -2,6 +2,7 @@ package org.sopt.and.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -49,92 +50,71 @@ fun SignUpScreen(
     password: String,
     onPasswordChange: (String)->Unit,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 10.dp)
-            .background(BackgroundBlack)
+    Box(
+
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp),
-            contentAlignment = Alignment.CenterEnd
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(horizontal = 10.dp)
+                .background(BackgroundBlack)
         ) {
-            Text(
-                text = "회원가입",
-                fontFamily = pretendardFamily,
-                fontSize = 18.sp,
-                color = Color.White,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
-            Image(
-                painter = painterResource(R.drawable.ic_x_close),
-                contentDescription = "btn_close",
+            Box(
                 modifier = Modifier
-                    .size(30.dp)
+                    .fillMaxWidth()
+                    .padding(top = 12.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Text(
+                    text = "회원가입",
+                    fontFamily = pretendardFamily,
+                    fontSize = 18.sp,
+                    color = Color.White,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_x_close),
+                    contentDescription = "btn_close",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable {  }
+                )
+            }
+            Spacer(modifier = Modifier.height(50.dp))
+
+            SignUpText(modifier = modifier)
+            Spacer(modifier = Modifier.height(30.dp))
+
+            GrayTextField(
+                email,
+                "wavve@example.com",
+            ) { onEmailChange(it) }
+            Spacer(modifier = Modifier.height(10.dp))
+            TextFieldNotificationMessage(
+                "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요."
             )
+            Spacer(modifier = Modifier.height(10.dp))
+
+            GrayTextField(
+                password,
+                "Wavve 비밀번호 설정"
+            ) { onPasswordChange(it) }
+            Spacer(modifier = Modifier.height(10.dp))
+            TextFieldNotificationMessage(
+                "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+
+            SNSLogin()
+            SNSNotificationMessage()
         }
-        Spacer(modifier = Modifier.height(50.dp))
-        Text(
-            text = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = Color.White)) {
-                    append("이메일과 비밀번호")
-                }
-                withStyle(style = SpanStyle(color = Gray60)) {
-                    append("만으로")
-                }
-            },
-            fontFamily = pretendardFamily,
-            fontSize = 22.sp,
-            modifier = Modifier.padding(start = 10.dp)
-        )
-        Text(
-            text = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = Color.White)) {
-                    append("Wavve를 즐길 수 ")
-                }
-                withStyle(style = SpanStyle(color = Gray60)) {
-                    append("있어요!")
-                }
-            },
-            fontFamily = pretendardFamily,
-            fontSize = 22.sp,
-            modifier = Modifier.padding(start = 10.dp, top = 4.dp)
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        GrayTextField(
-            email,
-            "wavve@example.com",
-        ) { onEmailChange(it) }
-        Spacer(modifier = Modifier.height(10.dp))
-        TextFieldNotificationMessage(
-            "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요."
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        GrayTextField(
-            password,
-            "Wavve 비밀번호 설정"
-        ) { onPasswordChange(it) }
-        Spacer(modifier = Modifier.height(10.dp))
-        TextFieldNotificationMessage(
-            "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        SNSLogin()
-        SNSNotificationMessage()
-
-        Spacer(modifier = Modifier.weight(1f))
 
         Button(
             onClick = {  },
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter),
             colors = ButtonDefaults.buttonColors(containerColor = Gray60),
             shape = RoundedCornerShape(0.dp)
         ) {
@@ -146,6 +126,36 @@ fun SignUpScreen(
             )
         }
     }
+}
+
+@Composable
+fun SignUpText(modifier: Modifier = Modifier) {
+    Text(
+        text = buildAnnotatedString {
+            withStyle(style = SpanStyle(color = Color.White)) {
+                append("이메일과 비밀번호")
+            }
+            withStyle(style = SpanStyle(color = Gray60)) {
+                append("만으로")
+            }
+        },
+        fontFamily = pretendardFamily,
+        fontSize = 22.sp,
+        modifier = Modifier.padding(start = 10.dp)
+    )
+    Text(
+        text = buildAnnotatedString {
+            withStyle(style = SpanStyle(color = Color.White)) {
+                append("Wavve를 즐길 수 ")
+            }
+            withStyle(style = SpanStyle(color = Gray60)) {
+                append("있어요!")
+            }
+        },
+        fontFamily = pretendardFamily,
+        fontSize = 22.sp,
+        modifier = Modifier.padding(start = 10.dp, top = 4.dp)
+    )
 }
 
 @Preview
