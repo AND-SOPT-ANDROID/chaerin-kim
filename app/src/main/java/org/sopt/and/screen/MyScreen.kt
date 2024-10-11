@@ -88,6 +88,9 @@ fun MyScreen(
         Spacer(modifier = Modifier.height(2.dp))
         PromotionalBanner(message = "현재 보유하신 이용권이 없습니다.")
 
+        ContentList("전체 시청내역", "시청내역이 없어요.")
+        ContentList("관심 프로그램", "관심 프로그램이 없어요.")
+
     }
 }
 
@@ -129,6 +132,51 @@ fun PromotionalBanner(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun ContentList(
+    title: String,
+    noContentMsg: String
+) {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 20.dp)
+    ) {
+        Text(
+            text = title,
+            fontFamily = pretendardFamily,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            fontSize = 20.sp
+        )
+        Box(
+            modifier = Modifier
+                .padding(top = 36.dp)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_alert_circle),
+                    contentDescription = "경고아이콘",
+                    modifier = Modifier
+                        .size(60.dp)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = noContentMsg,
+                    fontFamily = pretendardFamily,
+                    fontWeight = FontWeight.Normal,
+                    color = Gray40
+                )
+            }
+
         }
     }
 }
