@@ -61,10 +61,9 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                     .clickable { }
             )
             Image(
-                painter = painterResource(R.drawable.ic_x_close),
+                painter = painterResource(R.drawable.ic_wavve_logo),
                 contentDescription = "Wavve logo",
                 modifier = Modifier
-                    .size(30.dp)
                     .clickable { }
                     .align(Alignment.Center)
             )
