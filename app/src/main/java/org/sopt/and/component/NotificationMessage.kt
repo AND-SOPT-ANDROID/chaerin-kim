@@ -52,7 +52,7 @@ fun SNSNotificationMessage(modifier: Modifier = Modifier) {
             text = "SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다. 기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고 하세요." ,
             color = Gray60,
             fontFamily = pretendardFamily,
-            fontSize = 14.sp
+            fontSize = 13.sp
         )
     }
 }
