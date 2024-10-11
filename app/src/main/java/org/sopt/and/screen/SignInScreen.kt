@@ -72,7 +72,8 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         },
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        containerColor = BackgroundBlack
     ) {
         Column(
             modifier = modifier
@@ -81,8 +82,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
+                    .fillMaxWidth(),
             ) {
                 Image(
                     painter = painterResource(R.drawable.ic_x_close),
