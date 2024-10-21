@@ -1,6 +1,5 @@
 package org.sopt.and.screen
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -52,7 +51,6 @@ import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
 import org.sopt.and.ui.theme.pretendardFamily
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SignInScreen(modifier: Modifier = Modifier) {
     var id by remember { mutableStateOf("") }
@@ -70,10 +68,11 @@ fun SignInScreen(modifier: Modifier = Modifier) {
         },
         modifier = Modifier.fillMaxSize(),
         containerColor = BackgroundBlack
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(horizontal = 10.dp)
         ) {
             Box(
