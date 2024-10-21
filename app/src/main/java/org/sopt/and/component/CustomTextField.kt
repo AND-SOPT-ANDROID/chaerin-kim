@@ -27,29 +27,24 @@ import org.sopt.and.ui.theme.pretendardFamily
 fun GrayTextField(
     value: String,
     placeholderText: String,
-    isPassword: Boolean,
-    onValueChange: (String) -> Unit
+    isPassword: Boolean = false,
+    passwordHidden: Boolean = true,
+    onValueChange: (String) -> Unit,
+    onPasswordToggle: (() -> Unit)? = null
 ) {
     var text by remember { mutableStateOf(value) }
-    var passwordHidden by rememberSaveable { mutableStateOf(true) }
 
     val visualTransformation = when {
         isPassword && passwordHidden -> PasswordVisualTransformation()
         else -> VisualTransformation.None
     }
 
-    val trailingText = when {
-        passwordHidden -> "SHOW"
-        !passwordHidden -> "HIDE"
-        else -> ""
-    }
-
     val trailingIcon: (@Composable () -> Unit)? = if (isPassword) {
         {
             Text(
-                text = trailingText,
+                text = if (passwordHidden) "SHOW" else "HIDE",
                 modifier = Modifier
-                    .clickable { passwordHidden = !passwordHidden }
+                    .clickable { onPasswordToggle?.invoke() }
                     .padding(end = 8.dp),
                 color = Color.White,
                 fontFamily = pretendardFamily,

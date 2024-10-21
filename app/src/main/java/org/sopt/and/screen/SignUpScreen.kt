@@ -52,6 +52,7 @@ fun SignUpScreen(
     var password by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
+    var passwordHidden by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
     fun validateEmail(email: String): Boolean {
@@ -102,8 +103,8 @@ fun SignUpScreen(
             GrayTextField(
                 email,
                 "wavve@example.com",
-                isPassword = false
-            ) { email = it }
+                onValueChange = { email = it }
+            )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
                 "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요."
@@ -113,8 +114,11 @@ fun SignUpScreen(
             GrayTextField(
                 password,
                 "Wavve 비밀번호 설정",
-                isPassword = true
-            ) { password = it }
+                isPassword = true,
+                passwordHidden = passwordHidden,
+                onValueChange = { password = it },
+                onPasswordToggle = { passwordHidden = !passwordHidden}
+            )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
                 "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
