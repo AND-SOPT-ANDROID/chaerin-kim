@@ -46,7 +46,7 @@ import org.sopt.and.ui.theme.pretendardFamily
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onButtonClick: (Array<String>) -> Unit
+    onButtonClick: (email: String, password: String) -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -129,7 +129,7 @@ fun SignUpScreen(
                 passwordError = !validatePassword(password)
 
                 if (!emailError && !passwordError) {
-                    onButtonClick(arrayOf(email, password))
+                    onButtonClick(email, password)
                 } else if (emailError) {
                     Toast.makeText(context, "이메일 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
                 } else {
@@ -187,11 +187,11 @@ fun SignUpText() {
 
 @Preview
 @Composable
-fun Preview(modifier: Modifier = Modifier) {
-    var userInfo = ""
+private fun Preview(modifier: Modifier = Modifier) {
     SignUpScreen(
         modifier,
-    ) {
-        userInfo = it[0]
+    ) { email, password ->
+        val userEmail = email
+        val userPassword = password
     }
 }

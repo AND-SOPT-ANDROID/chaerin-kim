@@ -26,9 +26,7 @@ class SignUpActivity : ComponentActivity() {
                 ) { innerPadding ->
                     SignUpScreen(
                         modifier = Modifier.padding(innerPadding),
-                    ) {
-                        val email = it[0]
-                        val password = it[1]
+                    ) { email, password ->
                         val intent = Intent()
                         intent.putExtra("email", email)
                         intent.putExtra("password", password)

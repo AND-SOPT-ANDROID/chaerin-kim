@@ -2,6 +2,7 @@ package org.sopt.and.screen
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -138,9 +139,9 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             }
             Spacer(modifier = Modifier.height(30.dp))
 
-            LoginHelpButton {
-                signInEmail = it[0].toString()
-                signInPassword = it[1].toString()
+            LoginHelpButton { email, password ->
+                signInEmail = email
+                signInPassword = password
             }
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -153,7 +154,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun LoginHelpButton(
-    setInfoFromSignUp: (Array<String?>) -> Unit
+    setInfoFromSignUp: (email: String, password: String) -> Unit
 ) {
     val helpLinks = listOf("아이디 찾기", "비밀번호 재설정", "회원가입")
     val context = LocalContext.current
@@ -163,7 +164,11 @@ fun LoginHelpButton(
         if (result.resultCode == Activity.RESULT_OK) {
             val email = result.data?.getStringExtra("email")
             val password = result.data?.getStringExtra("password")
-            setInfoFromSignUp(arrayOf(email, password))
+            if (email!= null && password!= null) {
+                setInfoFromSignUp(email, password)
+            } else {
+                Log.d("chrin", "SignIn - LoginHelpButton: email $email, password $password")
+            }
         }
     }
 
