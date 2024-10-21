@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -121,7 +121,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonColors(
+                colors = ButtonDefaults.buttonColors(
                     containerColor = MainBlue,
                     contentColor = Color.White,
                     disabledContentColor = Gray60,
