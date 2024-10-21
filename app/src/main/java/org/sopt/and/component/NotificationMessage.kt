@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
-import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
 
 @Composable
