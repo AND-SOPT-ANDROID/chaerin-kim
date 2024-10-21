@@ -102,6 +102,7 @@ fun SignUpScreen(
             GrayTextField(
                 email,
                 "wavve@example.com",
+                isPassword = false
             ) { email = it }
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
@@ -111,7 +112,8 @@ fun SignUpScreen(
 
             GrayTextField(
                 password,
-                "Wavve 비밀번호 설정"
+                "Wavve 비밀번호 설정",
+                isPassword = true
             ) { password = it }
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(

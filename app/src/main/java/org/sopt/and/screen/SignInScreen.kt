@@ -99,12 +99,14 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 
             GrayTextField(
                 value = id,
-                placeholderText = "이메일 주소 또는 아이디"
+                placeholderText = "이메일 주소 또는 아이디",
+                isPassword = false
             ) { id = it }
             Spacer(modifier = Modifier.height(6.dp))
             GrayTextField(
                 value = password,
-                placeholderText = "비밀번호"
+                placeholderText = "비밀번호",
+                isPassword = true
             ) { password = it }
             Spacer(modifier = Modifier.height(40.dp))
 

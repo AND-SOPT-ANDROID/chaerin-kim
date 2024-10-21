@@ -27,21 +27,39 @@ import org.sopt.and.ui.theme.pretendardFamily
 fun GrayTextField(
     value: String,
     placeholderText: String,
+    isPassword: Boolean,
     onValueChange: (String) -> Unit
 ) {
     var text by remember { mutableStateOf(value) }
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
 
-    val visualTransformation = if (placeholderText.contains("비밀번호")) {
-        if (!passwordHidden) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
+    val visualTransformation = when {
+        isPassword && passwordHidden -> PasswordVisualTransformation()
+        else -> VisualTransformation.None
+    }
+
+    val trailingText = when {
+        passwordHidden -> "SHOW"
+        !passwordHidden -> "HIDE"
+        else -> ""
+    }
+
+    val trailingIcon: (@Composable () -> Unit)? = if (isPassword) {
+        {
+            Text(
+                text = trailingText,
+                modifier = Modifier
+                    .clickable { passwordHidden = !passwordHidden }
+                    .padding(end = 8.dp),
+                color = Color.White,
+                fontFamily = pretendardFamily,
+                fontWeight = FontWeight.Medium,
+            )
         }
     } else {
-        VisualTransformation.None
+        null
     }
-    val trailingText = if (placeholderText.contains("비밀번호")) { "show" } else { "" }
+
     TextField(
         value = text,
         onValueChange = {
@@ -69,16 +87,6 @@ fun GrayTextField(
             cursorColor = Color.White
         ),
         modifier = Modifier.fillMaxWidth(),
-        trailingIcon = {
-            Text(
-                text = trailingText,
-                modifier = Modifier
-                    .clickable { passwordHidden = !passwordHidden }
-                    .padding(end = 8.dp),
-                color = Color.White,
-                fontFamily = pretendardFamily,
-                fontWeight = FontWeight.Medium,
-            )
-        }
+        trailingIcon = trailingIcon
     )
 }
