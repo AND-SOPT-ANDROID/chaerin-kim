@@ -8,12 +8,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import org.sopt.and.screen.SignInScreen
+import androidx.navigation.compose.rememberNavController
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.BackgroundBlack
 
@@ -31,11 +33,26 @@ class SignInActivity : ComponentActivity() {
 
         setContent {
             ANDANDROIDTheme {
+                val snackbarHostState = remember { SnackbarHostState() }
+                val coroutineScope = rememberCoroutineScope()
+                val navController = rememberNavController()
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    containerColor = BackgroundBlack
+                    containerColor = BackgroundBlack,
+                    snackbarHost = {
+                        SnackbarHost(hostState = snackbarHostState)
+                    }
                 ) { innerPadding ->
-                    SignInScreen(modifier = Modifier.padding(innerPadding), userViewModel)
+
+                    NavGraph(
+                        modifier = Modifier.padding(innerPadding),
+                        navController,
+                        userViewModel,
+                        snackbarHostState,
+                        coroutineScope
+                    )
+//                    SignInScreen(modifier = Modifier.padding(innerPadding), userViewModel)
                 }
             }
         }
