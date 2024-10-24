@@ -126,9 +126,10 @@ fun SignInScreen(
                     if (email == signUpInfo.email && password == signUpInfo.password) {
                         userViewModel.updateUserPreferences(email, password)
 
-                        val intent = Intent(context, MyActivity::class.java)
-                        intent.putExtra("userName", email)
-                        intent.putExtra("isLoginSuccess", true)
+                        val intent = Intent(context, MyActivity::class.java).apply {
+                            putExtra("userName", email)
+                            putExtra("isLoginSuccess", true)
+                        }
                         context.startActivity(intent)
                     } else {
                         coroutineScope.launch {
