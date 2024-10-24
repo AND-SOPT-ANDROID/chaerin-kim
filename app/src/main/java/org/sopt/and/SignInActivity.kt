@@ -35,10 +35,7 @@ class SignInActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     containerColor = BackgroundBlack
                 ) { innerPadding ->
-                    SignInScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        userViewModel = userViewModel
-                    )
+                    SignInScreen(modifier = Modifier.padding(innerPadding), userViewModel)
                 }
             }
         }
