@@ -37,7 +37,9 @@ class MyActivity : ComponentActivity() {
                     },
                 ) { innerPadding ->
                     val userName = intent.getStringExtra("userName")
-                    if (userName != null) {
+                    val isLoginSuccess = intent?.getBooleanExtra("isLoginSuccess", false) ?: false
+
+                    if (isLoginSuccess && userName != null) {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("로그인에 성공했습니다.")
                         }
@@ -46,7 +48,7 @@ class MyActivity : ComponentActivity() {
                             userName
                         )
                     } else {
-                        Log.d("chrin", "MyActivity : [오류] userName = null값")
+                        Log.d("chrin", "MyActivity : [오류] userName = $userName")
                     }
                 }
             }

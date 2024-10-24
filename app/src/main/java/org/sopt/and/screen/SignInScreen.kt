@@ -120,6 +120,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
                     if (id == signInEmail && password == signInPassword) {
                         val intent = Intent(context, MyActivity::class.java)
                         intent.putExtra("userName", id)
+                        intent.putExtra("isLoginSuccess", true)
                         context.startActivity(intent)
                     } else {
                         coroutineScope.launch {
