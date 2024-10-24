@@ -40,7 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import org.sopt.and.MyActivity
+import kotlinx.serialization.Serializable
 import org.sopt.and.R
 import org.sopt.and.SignUpActivity
 import org.sopt.and.UserPreferences
@@ -54,10 +54,14 @@ import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
 import org.sopt.and.ui.theme.pretendardFamily
 
+@Serializable
+data object SignIn
+
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    navigateToMy: (isLoginSuccess: Boolean) -> Unit,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -127,11 +131,7 @@ fun SignInScreen(
                     if (email == signUpInfo.email && password == signUpInfo.password) {
                         userViewModel.updateUserPreferences(email, password)
 
-                        val intent = Intent(context, MyActivity::class.java).apply {
-                            putExtra("userName", email)
-                            putExtra("isLoginSuccess", true)
-                        }
-                        context.startActivity(intent)
+                        navigateToMy(true)
                     } else {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("이메일 또는 비밀번호가 올바르지 않습니다.")
