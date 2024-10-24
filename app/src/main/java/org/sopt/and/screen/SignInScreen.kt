@@ -67,10 +67,7 @@ fun SignInScreen(
     var password by remember { mutableStateOf("") }
 
     var signUpInfo by remember { mutableStateOf(UserPreferences("","")) }
-//    var signInEmail by remember { mutableStateOf("") }
-//    var signInPassword by remember { mutableStateOf("") }
     var passwordHidden by remember { mutableStateOf(true) }
-    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
