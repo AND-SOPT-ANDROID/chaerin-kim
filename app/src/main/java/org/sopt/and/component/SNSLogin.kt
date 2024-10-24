@@ -24,7 +24,10 @@ import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
 
 @Composable
-fun SNSLogin(modifier: Modifier = Modifier) {
+fun SNSLogin(
+    modifier: Modifier = Modifier,
+    typeText: String
+) {
     Column {
         Row(
             modifier = Modifier
@@ -40,7 +43,7 @@ fun SNSLogin(modifier: Modifier = Modifier) {
             )
 
             Text(
-                text = "또는 다른 서비스 계정으로 가입",
+                text = "${R.string.user_sns} $typeText",
                 color = Gray40,
                 fontFamily = pretendardFamily,
                 fontWeight = FontWeight.Normal,
@@ -85,5 +88,5 @@ fun SNSLogin(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun PreviewSNSLogin(modifier: Modifier = Modifier) {
-    SNSLogin(modifier)
+    SNSLogin(modifier, "로그인")
 }

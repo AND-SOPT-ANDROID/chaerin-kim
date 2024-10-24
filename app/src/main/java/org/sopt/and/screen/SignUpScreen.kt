@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -79,7 +80,7 @@ fun SignUpScreen(
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Text(
-                    text = "회원가입",
+                    text = stringResource(R.string.sign_up),
                     fontFamily = pretendardFamily,
                     fontWeight = FontWeight.Normal,
                     fontSize = 18.sp,
@@ -102,12 +103,12 @@ fun SignUpScreen(
 
             GrayTextField(
                 email,
-                "wavve@example.com",
+                stringResource(R.string.example_email),
                 onValueChange = { email = it }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
-                "로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요."
+                stringResource(R.string.email_condition_info)
             )
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -121,11 +122,11 @@ fun SignUpScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
-                "비밀번호는 8~20자 이내로 영문 대소문자, 숫자, 특수문자  3가지 이상 혼용하여 입력해 주세요."
+                stringResource(R.string.password_condition_info)
             )
             Spacer(modifier = Modifier.height(30.dp))
 
-            SNSLogin()
+            SNSLogin(typeText = "가입")
             SNSNotificationMessage()
         }
 
@@ -137,9 +138,9 @@ fun SignUpScreen(
                 if (!emailError && !passwordError) {
                     onLoginButtonClicked(email, password)
                 } else if (emailError) {
-                    Toast.makeText(context, "이메일 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "이메일 ${R.string.type_error}", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "비밀번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "비밀번호 ${R.string.type_error}", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier

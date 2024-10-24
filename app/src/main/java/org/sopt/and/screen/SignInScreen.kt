@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -112,7 +113,7 @@ fun SignInScreen(
             Spacer(modifier = Modifier.height(6.dp))
             GrayTextField(
                 value = password,
-                placeholderText = "비밀번호",
+                placeholderText = stringResource(R.string.password),
                 isPassword = true,
                 passwordHidden = passwordHidden,
                 onValueChange = { password = it },
@@ -146,7 +147,7 @@ fun SignInScreen(
                 )
             ) {
                 Text(
-                    "로그인",
+                    text = stringResource(R.string.sign_in),
                     color = Color.White,
                     fontFamily = pretendardFamily,
                     fontWeight = FontWeight.Medium,
@@ -160,7 +161,7 @@ fun SignInScreen(
             }
             Spacer(modifier = Modifier.height(20.dp))
 
-            SNSLogin(modifier)
+            SNSLogin(modifier, "로그인")
             SNSNotificationMessage(modifier)
 
         }

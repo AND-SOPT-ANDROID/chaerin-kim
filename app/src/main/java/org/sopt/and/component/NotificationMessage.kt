@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,7 +52,7 @@ fun SNSNotificationMessage(modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.width(6.dp))
         Text(
-            text = "SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다. 기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고 하세요." ,
+            text = stringResource(R.string.sns_info) ,
             color = Gray60,
             fontFamily = pretendardFamily,
             fontWeight = FontWeight.Normal,
@@ -64,7 +65,7 @@ fun SNSNotificationMessage(modifier: Modifier = Modifier) {
 @Composable
 fun Preview(modifier: Modifier = Modifier) {
     Column {
-        TextFieldNotificationMessage("로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해 주세요.")
+        TextFieldNotificationMessage(stringResource(R.string.email_condition_info))
         SNSNotificationMessage(modifier)
     }
 }
