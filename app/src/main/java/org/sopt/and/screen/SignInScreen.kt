@@ -36,13 +36,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.and.MyActivity
 import org.sopt.and.R
 import org.sopt.and.SignUpActivity
+import org.sopt.and.UserPreferences
+import org.sopt.and.UserViewModel
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.SNSLogin
 import org.sopt.and.component.SNSNotificationMessage
@@ -53,11 +54,16 @@ import org.sopt.and.ui.theme.MainBlue
 import org.sopt.and.ui.theme.pretendardFamily
 
 @Composable
-fun SignInScreen(modifier: Modifier = Modifier) {
-    var id by remember { mutableStateOf("") }
+fun SignInScreen(
+    modifier: Modifier = Modifier,
+    userViewModel: UserViewModel
+) {
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var signInEmail by remember { mutableStateOf("") }
-    var signInPassword by remember { mutableStateOf("") }
+
+    var signUpInfo by remember { mutableStateOf(UserPreferences("","")) }
+//    var signInEmail by remember { mutableStateOf("") }
+//    var signInPassword by remember { mutableStateOf("") }
     var passwordHidden by remember { mutableStateOf(true) }
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -99,9 +105,9 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(80.dp))
 
             GrayTextField(
-                value = id,
+                value = email,
                 placeholderText = "이메일 주소 또는 아이디",
-                onValueChange = { id = it }
+                onValueChange = { email = it }
             )
             Spacer(modifier = Modifier.height(6.dp))
             GrayTextField(
@@ -117,9 +123,11 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             Button(
                 onClick = {
                     focusManager.clearFocus()
-                    if (id == signInEmail && password == signInPassword) {
+                    if (email == signUpInfo.email && password == signUpInfo.password) {
+                        userViewModel.updateUserPreferences(email, password)
+
                         val intent = Intent(context, MyActivity::class.java)
-                        intent.putExtra("userName", id)
+                        intent.putExtra("userName", email)
                         intent.putExtra("isLoginSuccess", true)
                         context.startActivity(intent)
                     } else {
@@ -146,9 +154,8 @@ fun SignInScreen(modifier: Modifier = Modifier) {
             }
             Spacer(modifier = Modifier.height(30.dp))
 
-            LoginHelpButton { email, password ->
-                signInEmail = email
-                signInPassword = password
+            LoginHelpButton { userInfo ->
+                signUpInfo = userInfo
             }
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -161,7 +168,7 @@ fun SignInScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun LoginHelpButton(
-    setInfoFromSignUp: (email: String, password: String) -> Unit
+    setInfoFromSignUp: (UserPreferences) -> Unit
 ) {
     val helpLinks = listOf("아이디 찾기", "비밀번호 재설정", "회원가입")
     val context = LocalContext.current
@@ -171,8 +178,10 @@ fun LoginHelpButton(
         if (result.resultCode == Activity.RESULT_OK) {
             val email = result.data?.getStringExtra("email")
             val password = result.data?.getStringExtra("password")
+
             if (email!= null && password!= null) {
-                setInfoFromSignUp(email, password)
+                val userInfo = UserPreferences(email, password)
+                setInfoFromSignUp(userInfo)
             } else {
                 Log.d("chrin", "SignIn - LoginHelpButton: email $email, password $password")
             }
@@ -203,10 +212,4 @@ fun LoginHelpButton(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewSignIn(modifier: Modifier = Modifier) {
-    SignInScreen(modifier)
 }

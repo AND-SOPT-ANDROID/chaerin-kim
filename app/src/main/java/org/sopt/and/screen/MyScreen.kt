@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
+import org.sopt.and.UserViewModel
 import org.sopt.and.component.ShowContentList
 import org.sopt.and.component.PromotionalBanner
 import org.sopt.and.ui.theme.BackgroundBlack
@@ -35,8 +38,10 @@ import org.sopt.and.ui.theme.pretendardFamily
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
-    userName: String,
+    userViewModel: UserViewModel
 ) {
+    val email by userViewModel.preferenceEmail.collectAsState()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -63,7 +68,7 @@ fun MyScreen(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "${userName}님",
+                    text = "${email}님",
                     fontFamily = pretendardFamily,
                     fontWeight = FontWeight.Medium,
                     color = Color.White,
@@ -94,10 +99,4 @@ fun MyScreen(
         ShowContentList("관심 프로그램", "관심 프로그램이 없어요.")
 
     }
-}
-
-@Preview
-@Composable
-fun PreviewMy(modifier: Modifier = Modifier) {
-    MyScreen(modifier, "userName")
 }

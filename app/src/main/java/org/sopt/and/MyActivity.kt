@@ -43,10 +43,7 @@ class MyActivity : ComponentActivity() {
                         coroutineScope.launch {
                             snackbarHostState.showSnackbar("로그인에 성공했습니다.")
                         }
-                        MyScreen(
-                            modifier = Modifier.padding(innerPadding),
-                            userName
-                        )
+                        MyScreen(modifier = Modifier.padding(innerPadding))
                     } else {
                         Log.d("chrin", "MyActivity : [오류] userName = $userName")
                     }
