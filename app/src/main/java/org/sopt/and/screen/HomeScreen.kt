@@ -27,26 +27,25 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 14.dp),
-        contentPadding = PaddingValues(vertical = 12.dp)
     ) {
         item {
             HomeTopBar()
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(20.dp))
         }
 
         stickyHeader {
             HomeCategory()
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(14.dp))
         }
 
         item {
             HomeBanner()
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(10.dp))
         }
 
         item {
             EditorRecommended()
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(10.dp))
         }
 
         item {
@@ -58,6 +57,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun Preivew(modifier: Modifier = Modifier) {
+private fun Preview(modifier: Modifier = Modifier) {
     HomeScreen(modifier)
 }
