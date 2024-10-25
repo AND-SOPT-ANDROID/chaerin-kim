@@ -14,22 +14,10 @@ import org.sopt.and.component.EditorRecommended
 import org.sopt.and.component.HomeBanner
 import org.sopt.and.component.HomeCategory
 import org.sopt.and.component.HomeTopBar
-import org.sopt.and.data.ContentItem
 import org.sopt.and.data.HomeBannerItem
-import org.sopt.and.data.HomeCategoryItem
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    val categoryItem = listOf(
-        HomeCategoryItem("뉴클래식"),
-        HomeCategoryItem("드라마"),
-        HomeCategoryItem("예능"),
-        HomeCategoryItem("영화"),
-        HomeCategoryItem("애니"),
-        HomeCategoryItem("해외시지르"),
-        HomeCategoryItem("시사교양"),
-        HomeCategoryItem("키즈"),
-    )
     val banners = listOf(
         HomeBannerItem(R.drawable.img_sample, "컨텐츠 제목1", "설명 1"),
         HomeBannerItem(R.drawable.img_sample2, "컨텐츠 제목2", "설명 2"),
@@ -42,7 +30,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     ) {
         HomeTopBar()
         Spacer(modifier = Modifier.height(10.dp))
-        HomeCategory(categoryItem)
+        HomeCategory()
         Spacer(modifier = Modifier.height(16.dp))
         HomeBanner(banners)
         EditorRecommended()
