@@ -1,7 +1,5 @@
-package org.sopt.and
+package org.sopt.and.userPreferences
 
-import android.content.Context
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow

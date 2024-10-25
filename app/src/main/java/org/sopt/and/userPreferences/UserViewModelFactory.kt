@@ -1,4 +1,4 @@
-package org.sopt.and
+package org.sopt.and.userPreferences
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

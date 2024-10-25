@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.UserViewModel
+import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.ShowContentList
 import org.sopt.and.component.PromotionalBanner
 import org.sopt.and.ui.theme.BackgroundBlack

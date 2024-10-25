@@ -3,8 +3,6 @@ package org.sopt.and.navigation
 import android.annotation.SuppressLint
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -13,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.sopt.and.UserViewModel
+import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.screen.HomeScreen
 import org.sopt.and.screen.MyScreen
 import org.sopt.and.screen.SearchScreen

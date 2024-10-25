@@ -1,6 +1,5 @@
 package org.sopt.and.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -34,8 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.sopt.and.R
-import org.sopt.and.UserPreferences
-import org.sopt.and.UserViewModel
+import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.LoginHelpButton
 import org.sopt.and.component.SNSLogin
