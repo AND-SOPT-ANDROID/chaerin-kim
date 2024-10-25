@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.sopt.and.screen.HomeScreen
 import org.sopt.and.screen.MyScreen
 import org.sopt.and.screen.SignInScreen
 import org.sopt.and.screen.SignUpScreen
@@ -39,7 +40,7 @@ fun NavGraph(
 ) {
     NavHost(navController = navController, startDestination = "SignIn") {
         composable(route = BottomNavRoutes.Home) {
-            //MainHome()
+            HomeScreen(modifier = modifier)
         }
 
         composable(route = BottomNavRoutes.Search) {
