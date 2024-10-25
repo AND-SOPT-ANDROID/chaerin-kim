@@ -22,7 +22,7 @@ data class BottomNavigationItem(
             ),
             BottomNavigationItem(
                 label = R.string.my,
-                icon = R.drawable.ic_search,
+                icon = R.drawable.img_sample,
                 route = BottomNavRoutes.My
             ),
         )

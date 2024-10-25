@@ -6,10 +6,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -17,13 +18,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -76,10 +77,11 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 BottomNavigationItem().bottomNavigationItems()
                                     .forEachIndexed { _, item ->
+                                        val selected = item.route == currentRoute
                                         NavigationBarItem(
-                                            selected = item.route == currentRoute,
+                                            selected = selected,
                                             label = {
-                                                val color = if (item.route == currentRoute) Color.White else Color.Gray
+                                                val color = if (selected) Color.White else Color.Gray
                                                 Text(
                                                     text = stringResource(item.label),
                                                     color = color,
@@ -100,9 +102,13 @@ class MainActivity : ComponentActivity() {
                                                 }
                                             },
                                             icon = {
-                                                Icon(
-                                                    painterResource(id = item.icon),
-                                                    contentDescription = item.label.toString()
+                                                Image(
+                                                    painter = painterResource(id = item.icon),
+                                                    contentDescription = null,
+                                                    modifier = Modifier
+                                                        .size(30.dp)
+                                                        .clip(CircleShape),
+                                                    contentScale = ContentScale.Crop
                                                 )
                                             },
                                             colors = NavigationBarItemDefaults.colors(
