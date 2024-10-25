@@ -15,6 +15,12 @@ import org.sopt.and.screen.MyScreen
 import org.sopt.and.screen.SignInScreen
 import org.sopt.and.screen.SignUpScreen
 
+object BottomNavRoutes {
+    const val Home = "Home"
+    const val Search = "Search"
+    const val My = "My"
+}
+
 object Routes {
     const val SignIn = "SignIn"
     const val SignUp = "SignUp"
@@ -32,6 +38,14 @@ fun NavGraph(
     coroutineScope: CoroutineScope
 ) {
     NavHost(navController = navController, startDestination = "SignIn") {
+        composable(route = BottomNavRoutes.Home) {
+            //MainHome()
+        }
+
+        composable(route = BottomNavRoutes.Search) {
+            //Search()
+        }
+
         composable(route = Routes.SignIn) {
             SignInScreen(
                 modifier = modifier,
