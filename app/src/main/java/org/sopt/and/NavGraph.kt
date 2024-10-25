@@ -1,22 +1,28 @@
 package org.sopt.and
 
-
+import android.annotation.SuppressLint
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
+import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.sopt.and.screen.My
 import org.sopt.and.screen.MyScreen
-import org.sopt.and.screen.SignIn
 import org.sopt.and.screen.SignInScreen
-import org.sopt.and.screen.SignUp
 import org.sopt.and.screen.SignUpScreen
 
+object Routes {
+    const val SignIn = "SignIn"
+    const val SignUp = "SignUp"
+    const val My = "My"
+    fun myRoute(isLoginSuccess: Boolean) = "$My/$isLoginSuccess"
+}
+
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun NavGraph(
     modifier: Modifier,
@@ -26,27 +32,45 @@ fun NavGraph(
     coroutineScope: CoroutineScope
 ) {
     NavHost(navController = navController, startDestination = "SignIn") {
-        composable<SignIn> {
+        composable(route = Routes.SignIn) {
             SignInScreen(
-                modifier,
-                userViewModel,
+                modifier = modifier,
+                userViewModel = userViewModel,
                 navigateToMy = { isLoginSuccess ->
-                    navController.navigate(My(isLoginSuccess))
+                    navController.navigate(Routes.myRoute(isLoginSuccess = isLoginSuccess))
+                },
+                navigateToSignUp = {
+                    navController.navigate(Routes.SignUp)
                 }
             )
         }
 
-        composable<SignUp> {
-            SignUpScreen() {}
+        composable(route = Routes.SignUp) {
+            SignUpScreen(
+                modifier = modifier,
+                onLoginButtonClicked = { email, password ->
+                    userViewModel.updateUserPreferences(email, password) //api 연결 전 임시로 userViewModel에 저장
+                    navController.popBackStack()
+                }
+            )
         }
 
-        composable<My> { backStackEntry ->
-            val item = backStackEntry.toRoute<My>()
-            if (item.isLoginSuccess == true) {
+        composable(route = Routes.My + "/{isLoginSuccess}",
+            arguments = listOf(
+                navArgument("isLoginSuccess") {
+                    type = NavType.BoolType
+                    defaultValue = false
+                }
+            )
+        ) { backStackEntry ->
+            val isLoginSuccess = backStackEntry.arguments?.getBoolean("isLoginSuccess") ?: false
+
+            if (isLoginSuccess) {
                 coroutineScope.launch {
                     snackbarHostState.showSnackbar("로그인에 성공했습니다.")
                 }
             }
+
             MyScreen(modifier, userViewModel)
         }
 

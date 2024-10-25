@@ -35,7 +35,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.serialization.Serializable
 import org.sopt.and.R
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.SNSLogin
@@ -44,9 +43,6 @@ import org.sopt.and.component.TextFieldNotificationMessage
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.pretendardFamily
-
-@Serializable
-data object SignUp
 
 @Composable
 fun SignUpScreen(

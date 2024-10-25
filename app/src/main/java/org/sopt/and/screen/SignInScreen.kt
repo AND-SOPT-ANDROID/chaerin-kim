@@ -1,16 +1,10 @@
 package org.sopt.and.screen
 
-import android.app.Activity
-import android.content.Intent
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,7 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,33 +33,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
 import org.sopt.and.R
-import org.sopt.and.SignUpActivity
 import org.sopt.and.UserPreferences
 import org.sopt.and.UserViewModel
 import org.sopt.and.component.GrayTextField
+import org.sopt.and.component.LoginHelpButton
 import org.sopt.and.component.SNSLogin
 import org.sopt.and.component.SNSNotificationMessage
 import org.sopt.and.ui.theme.BackgroundBlack
-import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
 import org.sopt.and.ui.theme.pretendardFamily
-
-@Serializable
-data object SignIn
 
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
     userViewModel: UserViewModel,
     navigateToMy: (isLoginSuccess: Boolean) -> Unit,
+    navigateToSignUp: () -> Unit,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
-    var signUpInfo by remember { mutableStateOf(UserPreferences("","")) }
     var passwordHidden by remember { mutableStateOf(true) }
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -125,9 +112,8 @@ fun SignInScreen(
             Button(
                 onClick = {
                     focusManager.clearFocus()
-                    if (email == signUpInfo.email && password == signUpInfo.password) {
+                    if (email == userViewModel.preferenceEmail.value && password == userViewModel.preferencePassword.value) {
                         userViewModel.updateUserPreferences(email, password)
-
                         navigateToMy(true)
                     } else {
                         coroutineScope.launch {
@@ -153,62 +139,14 @@ fun SignInScreen(
             }
             Spacer(modifier = Modifier.height(30.dp))
 
-            LoginHelpButton { userInfo ->
-                signUpInfo = userInfo
-            }
+            LoginHelpButton(
+                navigateToSignUp = { navigateToSignUp() }
+            )
             Spacer(modifier = Modifier.height(20.dp))
 
             SNSLogin(modifier, "로그인")
             SNSNotificationMessage(modifier)
 
-        }
-    }
-}
-
-@Composable
-fun LoginHelpButton(
-    setInfoFromSignUp: (UserPreferences) -> Unit
-) {
-    val helpLinks = listOf("아이디 찾기", "비밀번호 재설정", "회원가입")
-    val context = LocalContext.current
-    val resultLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val email = result.data?.getStringExtra("email")
-            val password = result.data?.getStringExtra("password")
-
-            if (email!= null && password!= null) {
-                val userInfo = UserPreferences(email, password)
-                setInfoFromSignUp(userInfo)
-            } else {
-                Log.d("chrin", "SignIn - LoginHelpButton: email $email, password $password")
-            }
-        }
-    }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 80.dp),
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-        helpLinks.forEach { link ->
-            Text(
-                text = link,
-                color = Gray40,
-                fontFamily = pretendardFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = 12.sp,
-                modifier = if (link == "회원가입") {
-                    Modifier.clickable(onClick = {
-                        val intent = Intent(context, SignUpActivity::class.java)
-                        resultLauncher.launch(intent)
-                    })
-                } else {
-                    Modifier
-                }
-            )
         }
     }
 }

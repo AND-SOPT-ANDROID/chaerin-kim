@@ -26,7 +26,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.serialization.Serializable
 import org.sopt.and.R
 import org.sopt.and.UserViewModel
 import org.sopt.and.component.ShowContentList
@@ -34,11 +33,6 @@ import org.sopt.and.component.PromotionalBanner
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
-
-@Serializable
-data class My(
-    val isLoginSuccess: Boolean?,
-)
 
 @Composable
 fun MyScreen(
