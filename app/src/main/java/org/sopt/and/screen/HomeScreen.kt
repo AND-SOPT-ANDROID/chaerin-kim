@@ -18,11 +18,6 @@ import org.sopt.and.data.HomeBannerItem
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    val banners = listOf(
-        HomeBannerItem(R.drawable.img_sample, "컨텐츠 제목1", "설명 1"),
-        HomeBannerItem(R.drawable.img_sample2, "컨텐츠 제목2", "설명 2"),
-        HomeBannerItem(R.drawable.img_sample3, "컨텐츠 제목3", "설명 3"),
-    )
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -32,7 +27,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(10.dp))
         HomeCategory()
         Spacer(modifier = Modifier.height(16.dp))
-        HomeBanner(banners)
+        HomeBanner()
         EditorRecommended()
     }
 

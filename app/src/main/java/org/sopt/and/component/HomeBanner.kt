@@ -32,15 +32,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
-import org.sopt.and.R
-import org.sopt.and.data.HomeBannerItem
+import org.sopt.and.data.HomeBannerViewModel
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 
 @Composable
-fun HomeBanner(banners: List<HomeBannerItem>) {
+fun HomeBanner() {
     var currentIndex by remember { mutableIntStateOf(0) }
+    val homeBannerViewModel: HomeBannerViewModel = viewModel()
+    val banners = homeBannerViewModel.items
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -136,10 +138,5 @@ fun BannerCount(
 @Preview
 @Composable
 private fun Preview2(modifier: Modifier = Modifier) {
-    val banners = listOf(
-        HomeBannerItem(R.drawable.img_sample2, "배너 1", "설명 1"),
-        HomeBannerItem(R.drawable.img_sample2, "배너 2", "설명 2"),
-        HomeBannerItem(R.drawable.img_sample3, "배너 3", "설명 3"),
-    )
-    HomeBanner(banners)
+    HomeBanner()
 }
