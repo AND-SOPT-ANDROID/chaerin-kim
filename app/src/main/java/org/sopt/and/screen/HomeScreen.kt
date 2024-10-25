@@ -10,9 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.and.R
+import org.sopt.and.component.EditorRecommended
 import org.sopt.and.component.HomeBanner
 import org.sopt.and.component.HomeCategory
 import org.sopt.and.component.HomeTopBar
+import org.sopt.and.data.ContentItem
 import org.sopt.and.data.HomeBannerItem
 import org.sopt.and.data.HomeCategoryItem
 
@@ -36,14 +38,14 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 10.dp)
+            .padding(horizontal = 14.dp)
     ) {
         HomeTopBar()
         Spacer(modifier = Modifier.height(10.dp))
         HomeCategory(categoryItem)
         Spacer(modifier = Modifier.height(16.dp))
         HomeBanner(banners)
-
+        EditorRecommended()
     }
 
 }
