@@ -1,4 +1,6 @@
-package org.sopt.and
+package org.sopt.and.navigation
+
+import org.sopt.and.R
 
 
 data class BottomNavigationItem(
