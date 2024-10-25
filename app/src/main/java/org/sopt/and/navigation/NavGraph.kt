@@ -40,6 +40,8 @@ fun NavGraph(
     snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope
 ) {
+    var hasShownSnackbar = false
+    
     NavHost(navController = navController, startDestination = "SignIn") {
         composable(route = BottomNavRoutes.Home) {
             HomeScreen(modifier = modifier)
@@ -81,12 +83,13 @@ fun NavGraph(
             )
         ) { backStackEntry ->
             val isLoginSuccess = backStackEntry.arguments?.getBoolean("isLoginSuccess") ?: false
-
-            if (isLoginSuccess) {
+            if (isLoginSuccess && !hasShownSnackbar) {
                 coroutineScope.launch {
                     snackbarHostState.showSnackbar("로그인에 성공했습니다.")
+                    hasShownSnackbar = true
                 }
             }
+
             MyScreen(modifier, userViewModel)
         }
 
