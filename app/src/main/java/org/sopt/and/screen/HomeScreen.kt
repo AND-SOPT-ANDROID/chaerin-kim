@@ -14,6 +14,7 @@ import org.sopt.and.component.EditorRecommended
 import org.sopt.and.component.HomeBanner
 import org.sopt.and.component.HomeCategory
 import org.sopt.and.component.HomeTopBar
+import org.sopt.and.component.TodayTop20
 import org.sopt.and.data.HomeBannerItem
 
 @Composable
@@ -29,6 +30,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
         HomeBanner()
         EditorRecommended()
+
+        TodayTop20()
     }
 
 }
