@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.sopt.and.screen.HomeScreen
 import org.sopt.and.screen.MyScreen
+import org.sopt.and.screen.SearchScreen
 import org.sopt.and.screen.SignInScreen
 import org.sopt.and.screen.SignUpScreen
 
@@ -44,7 +45,7 @@ fun NavGraph(
         }
 
         composable(route = BottomNavRoutes.Search) {
-            //Search()
+            SearchScreen(modifier = modifier)
         }
 
         composable(route = Routes.SignIn) {
@@ -85,7 +86,6 @@ fun NavGraph(
                     snackbarHostState.showSnackbar("로그인에 성공했습니다.")
                 }
             }
-
             MyScreen(modifier, userViewModel)
         }
 
