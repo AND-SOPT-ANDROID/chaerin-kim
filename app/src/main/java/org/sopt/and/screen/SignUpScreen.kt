@@ -138,9 +138,9 @@ fun SignUpScreen(
                 if (!emailError && !passwordError) {
                     onLoginButtonClicked(email, password)
                 } else if (emailError) {
-                    Toast.makeText(context, "이메일 ${R.string.type_error}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "이메일 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "비밀번호 ${R.string.type_error}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "비밀번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
