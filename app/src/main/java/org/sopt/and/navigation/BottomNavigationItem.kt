@@ -6,7 +6,7 @@ import org.sopt.and.R
 data class BottomNavigationItem(
     val label : Int = R.string.home,
     val icon : Int = R.drawable.ic_home,
-    val route : String = ""
+    val route : String = BottomNavRoutes.Home
 ) {
     fun bottomNavigationItems() : List<BottomNavigationItem> {
         return listOf(
