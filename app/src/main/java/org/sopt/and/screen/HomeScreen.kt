@@ -24,6 +24,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     val homeViewModel: HomeViewModel = viewModel()
     val categoryList = homeViewModel.categoryList
     val bannerList = homeViewModel.bannerList
+    val recommendList = homeViewModel.recommendList
 
     LazyColumn(
         modifier = modifier
@@ -46,7 +47,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         }
 
         item {
-            EditorRecommended()
+            EditorRecommended(recommendList)
             Spacer(modifier = Modifier.height(10.dp))
         }
 
