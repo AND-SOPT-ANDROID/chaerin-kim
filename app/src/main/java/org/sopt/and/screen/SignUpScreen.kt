@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.SNSLogin
-import org.sopt.and.component.SNSNotificationMessage
 import org.sopt.and.component.TextFieldNotificationMessage
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray60
