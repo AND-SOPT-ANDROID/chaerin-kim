@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,10 +24,11 @@ import org.sopt.and.data.HomeViewModel
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
     val homeViewModel: HomeViewModel = viewModel()
+    homeViewModel.setList()
     val categoryList = homeViewModel.categoryList
-    val bannerList = homeViewModel.bannerList
-    val recommendList = homeViewModel.recommendList
-    val top20List = homeViewModel.top20List
+    val bannerList by homeViewModel.bannerList.collectAsState()
+    val recommendList by homeViewModel.recommendList.collectAsState()
+    val top20List by homeViewModel.top20List.collectAsState()
 
     LazyColumn(
         modifier = modifier

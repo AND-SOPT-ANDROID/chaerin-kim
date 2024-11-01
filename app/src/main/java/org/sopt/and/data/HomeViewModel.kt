@@ -1,6 +1,10 @@
 package org.sopt.and.data
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import org.sopt.and.R
 
 class HomeViewModel : ViewModel() {
@@ -14,16 +18,19 @@ class HomeViewModel : ViewModel() {
         HomeCategoryItem("시사교양"),
         HomeCategoryItem("키즈"),
     )
-    private val _bannerList = mutableListOf<ContentItem>()
-    val bannerList: List<ContentItem> get() = _bannerList
-    private val _recommendList = mutableListOf<ContentItem>()
-    val recommendList: List<ContentItem> get() = _recommendList
-    private val _top20List = mutableListOf<ContentItem>()
-    val top20List: List<ContentItem> get() = _top20List
 
-    private fun getBannerList() {
-        _bannerList.addAll(
-            listOf(
+    private val _bannerList = MutableStateFlow<List<ContentItem>>(emptyList())
+    val bannerList: StateFlow<List<ContentItem>> get() = _bannerList
+
+    private val _recommendList = MutableStateFlow<List<ContentItem>>(emptyList())
+    val recommendList: StateFlow<List<ContentItem>> get() = _recommendList
+
+    private val _top20List = MutableStateFlow<List<ContentItem>>(emptyList())
+    val top20List: StateFlow<List<ContentItem>> get() = _top20List
+
+    fun setList() {
+        viewModelScope.launch {
+            _bannerList.value = listOf(
                 ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
                 ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
                 ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
@@ -31,12 +38,8 @@ class HomeViewModel : ViewModel() {
                 ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
                 ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
             )
-        )
-    }
 
-    private fun getRecommendList() {
-        _recommendList.addAll(
-            listOf(
+            _recommendList.value = listOf(
                 ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
                 ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
                 ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
@@ -44,12 +47,8 @@ class HomeViewModel : ViewModel() {
                 ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
                 ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
             )
-        )
-    }
 
-    private fun getTop20List() {
-        _top20List.addAll(
-            listOf(
+            _top20List.value = listOf(
                 ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
                 ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
                 ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
@@ -57,6 +56,6 @@ class HomeViewModel : ViewModel() {
                 ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
                 ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
             )
-        )
+        }
     }
 }
