@@ -25,6 +25,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     val categoryList = homeViewModel.categoryList
     val bannerList = homeViewModel.bannerList
     val recommendList = homeViewModel.recommendList
+    val top20List = homeViewModel.top20List
 
     LazyColumn(
         modifier = modifier
@@ -52,7 +53,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         }
 
         item {
-            TodayTop20()
+            TodayTop20(top20List)
             Spacer(modifier = Modifier.height(10.dp))
         }
     }

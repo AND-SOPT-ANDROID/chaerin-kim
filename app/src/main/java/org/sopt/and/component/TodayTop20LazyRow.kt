@@ -21,23 +21,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.data.ContentItem
-import org.sopt.and.data.ContentItemViewModel
 
 @Composable
-fun TodayTop20LazyRow() {
-    val contentItemViewModel: ContentItemViewModel = viewModel()
-    val items = contentItemViewModel.items
-
+fun TodayTop20LazyRow(top20List: List<ContentItem>) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(items) { item ->
-            val index = items.indexOf(item) + 1
+        items(top20List) { item ->
+            val index = top20List.indexOf(item) + 1
             TopImageCard(item, index)
         }
     }
