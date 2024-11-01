@@ -73,10 +73,10 @@ fun SNSLogin(
                 R.drawable.ic_alert_circle to "apple"
             )
             snsList.forEach { (iconResId, description) ->
-                Icon(
-                    painter = painterResource(id = iconResId),
+                CircleImage(
+                    image = iconResId,
                     contentDescription = description,
-                    modifier = Modifier.size(40.dp)
+                    size = 40
                 )
             }
         }

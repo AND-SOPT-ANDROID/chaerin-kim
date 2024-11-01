@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
+import org.sopt.and.component.CircleImage
 import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.ShowContentList
 import org.sopt.and.component.PromotionalBanner
@@ -62,14 +63,7 @@ fun MyScreen(
                     .padding(start = 16.dp, top = 20.dp, bottom = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(myViewModel.userProfileImg),
-                    contentDescription = "사용자이미지",
-                    modifier = Modifier
-                        .size(60.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
+                CircleImage(myViewModel.userProfileImg, "사용자 프로필 이미지", 60)
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "${email}님",
