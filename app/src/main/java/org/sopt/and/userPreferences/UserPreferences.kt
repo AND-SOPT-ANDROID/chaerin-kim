@@ -1,4 +1,4 @@
-package org.sopt.and
+package org.sopt.and.userPreferences
 
 data class UserPreferences(
     val email: String = "",

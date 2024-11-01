@@ -1,4 +1,4 @@
-package org.sopt.and
+package org.sopt.and.userPreferences
 
 import android.util.Log
 import androidx.datastore.core.DataStore

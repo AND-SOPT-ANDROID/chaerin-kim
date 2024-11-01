@@ -43,7 +43,7 @@ fun SNSLogin(
             )
 
             Text(
-                text = "${R.string.user_sns} $typeText",
+                text = "또는 다른 서비스 계정으로 $typeText",
                 color = Gray40,
                 fontFamily = pretendardFamily,
                 fontWeight = FontWeight.Normal,
