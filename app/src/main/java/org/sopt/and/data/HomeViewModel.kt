@@ -16,9 +16,24 @@ class HomeViewModel : ViewModel() {
     )
     private val _bannerList = mutableListOf<ContentItem>()
     val bannerList: List<ContentItem> get() = _bannerList
+    private val _recommendList = mutableListOf<ContentItem>()
+    val recommendList: List<ContentItem> get() = _recommendList
 
     private fun getBannerList() {
         _bannerList.addAll(
+            listOf(
+                ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
+                ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
+                ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
+                ContentItem("제목4", "내용4", 4, poster = R.drawable.img_sample),
+                ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
+                ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
+            )
+        )
+    }
+
+    private fun getRecommendList() {
+        _recommendList.addAll(
             listOf(
                 ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
                 ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
