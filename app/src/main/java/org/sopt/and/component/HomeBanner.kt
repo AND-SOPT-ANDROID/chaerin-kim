@@ -32,26 +32,23 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
-import org.sopt.and.data.HomeBannerViewModel
+import org.sopt.and.data.ContentItem
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 
 @Composable
-fun HomeBanner() {
+fun HomeBanner(bannerList: List<ContentItem>) {
     var currentIndex by remember { mutableIntStateOf(0) }
-    val homeBannerViewModel: HomeBannerViewModel = viewModel()
-    val banners = homeBannerViewModel.items
 
     LaunchedEffect(Unit) {
         while (true) {
             delay(3000)
-            currentIndex = (currentIndex + 1) % banners.size
+            currentIndex = (currentIndex + 1) % bannerList.size
         }
     }
 
-    val currentBanner = banners[currentIndex]
+    val currentBanner = bannerList[currentIndex]
 
     Box(
         modifier = Modifier
@@ -62,7 +59,7 @@ fun HomeBanner() {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(currentBanner.imageUrl),
+            painter = painterResource(currentBanner.poster),
             contentDescription = currentBanner.title,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -85,19 +82,19 @@ fun HomeBanner() {
                     .padding(14.dp)
             ) {
                 Text(
-                    text = currentBanner.title,
+                    text = currentBanner.title!!,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(14.dp))
                 Text(
-                    text = currentBanner.description,
+                    text = currentBanner.explain!!,
                     color = Color.White
                 )
                 Row {
                     Spacer(modifier = Modifier.weight(1f))
-                    BannerCount(currentIndex, banners.size)
+                    BannerCount(currentIndex, bannerList.size)
                 }
             }
         }
@@ -138,5 +135,5 @@ fun BannerCount(
 @Preview
 @Composable
 private fun Preview2(modifier: Modifier = Modifier) {
-    HomeBanner()
+    HomeBanner(bannerList)
 }
