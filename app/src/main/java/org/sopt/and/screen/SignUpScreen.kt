@@ -127,7 +127,6 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             SNSLogin(typeText = "가입")
-            SNSNotificationMessage()
         }
 
         Button(

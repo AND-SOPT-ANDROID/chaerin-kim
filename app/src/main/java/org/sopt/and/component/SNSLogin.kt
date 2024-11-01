@@ -81,6 +81,7 @@ fun SNSLogin(
             }
         }
 
+        SNSNotificationMessage(modifier)
 
     }
 }

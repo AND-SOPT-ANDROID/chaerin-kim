@@ -143,8 +143,6 @@ fun SignInScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             SNSLogin(modifier, "로그인")
-            SNSNotificationMessage(modifier)
-
         }
     }
 }
