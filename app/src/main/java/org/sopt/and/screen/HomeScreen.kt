@@ -1,8 +1,6 @@
 package org.sopt.and.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -12,17 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.sopt.and.R
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.component.EditorRecommended
 import org.sopt.and.component.HomeBanner
 import org.sopt.and.component.HomeCategory
 import org.sopt.and.component.HomeTopBar
 import org.sopt.and.component.TodayTop20
-import org.sopt.and.data.HomeBannerItem
+import org.sopt.and.data.HomeViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
+    val homeViewModel: HomeViewModel = viewModel()
+    val categoryList = homeViewModel.categoryList
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -34,7 +35,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         }
 
         stickyHeader {
-            HomeCategory()
+            HomeCategory(categoryList)
             Spacer(modifier = Modifier.height(14.dp))
         }
 
