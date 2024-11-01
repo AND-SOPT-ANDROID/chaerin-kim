@@ -85,14 +85,14 @@ fun HomeBanner(bannerList: List<ContentItem>) {
                     .padding(14.dp)
             ) {
                 Text(
-                    text = currentBanner.title!!,
+                    text = currentBanner.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.height(14.dp))
                 Text(
-                    text = currentBanner.explain!!,
+                    text = currentBanner.explain,
                     color = Color.White
                 )
                 Row {
