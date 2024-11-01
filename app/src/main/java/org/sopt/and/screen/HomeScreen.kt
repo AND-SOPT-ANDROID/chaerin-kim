@@ -23,6 +23,7 @@ import org.sopt.and.data.HomeViewModel
 fun HomeScreen(modifier: Modifier = Modifier) {
     val homeViewModel: HomeViewModel = viewModel()
     val categoryList = homeViewModel.categoryList
+    val bannerList = homeViewModel.bannerList
 
     LazyColumn(
         modifier = modifier
@@ -40,7 +41,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         }
 
         item {
-            HomeBanner()
+            HomeBanner(bannerList)
             Spacer(modifier = Modifier.height(10.dp))
         }
 
