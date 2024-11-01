@@ -32,8 +32,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import org.sopt.and.data.ContentItem
+import org.sopt.and.data.HomeViewModel
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 
@@ -134,6 +136,8 @@ fun BannerCount(
 
 @Preview
 @Composable
-private fun Preview2(modifier: Modifier = Modifier) {
+private fun PreviewHomeBanner(modifier: Modifier = Modifier) {
+    val homeViewModel: HomeViewModel = viewModel()
+    val bannerList = homeViewModel.bannerList
     HomeBanner(bannerList)
 }
