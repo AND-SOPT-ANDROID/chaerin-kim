@@ -1,5 +1,6 @@
 package org.sopt.and.screen.signIn
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -17,21 +18,22 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.launch
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
 import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.GrayTextField
@@ -49,12 +51,28 @@ fun SignInScreen(
     navigateToMy: (isLoginSuccess: Boolean) -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val userName by userViewModel.preferenceUserName.collectAsStateWithLifecycle()
+    val password by userViewModel.preferencePassword.collectAsStateWithLifecycle()
+    val isSignInSuccessful by userViewModel.isSignInSuccessful.collectAsStateWithLifecycle()
+    val errorMessage by userViewModel.errorMessage.collectAsStateWithLifecycle()
     var passwordHidden by remember { mutableStateOf(true) }
     val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+
+    LaunchedEffect(isSignInSuccessful) {
+        if (isSignInSuccessful) {
+            navigateToMy(isSignInSuccessful)
+            userViewModel.resetSignInState()
+        }
+    }
+
+    LaunchedEffect(errorMessage) {
+        if (errorMessage.isNotEmpty()) {
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            userViewModel.clearErrorMessage()
+        }
+    }
 
     Scaffold(
         snackbarHost = {
@@ -91,9 +109,9 @@ fun SignInScreen(
             Spacer(modifier = Modifier.height(80.dp))
 
             GrayTextField(
-                value = email,
-                placeholderText = "이메일 주소 또는 아이디",
-                onValueChange = { email = it }
+                value = userName,
+                placeholderText = "사용자 이름",
+                onValueChange = { userViewModel.updateUserName(it) }
             )
             Spacer(modifier = Modifier.height(6.dp))
             GrayTextField(
@@ -101,7 +119,7 @@ fun SignInScreen(
                 placeholderText = stringResource(R.string.password),
                 isPassword = true,
                 passwordHidden = passwordHidden,
-                onValueChange = { password = it },
+                onValueChange = { userViewModel.updatePassword(it) },
                 onPasswordToggle = { passwordHidden = !passwordHidden}
             )
             Spacer(modifier = Modifier.height(40.dp))
@@ -109,14 +127,7 @@ fun SignInScreen(
             Button(
                 onClick = {
                     focusManager.clearFocus()
-                    if (email == userViewModel.preferenceEmail.value && password == userViewModel.preferencePassword.value) {
-                        userViewModel.updateUserPreferences(email, password)
-                        navigateToMy(true)
-                    } else {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("이메일 또는 비밀번호가 올바르지 않습니다.")
-                        }
-                    }
+                    userViewModel.login(userName, password)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
