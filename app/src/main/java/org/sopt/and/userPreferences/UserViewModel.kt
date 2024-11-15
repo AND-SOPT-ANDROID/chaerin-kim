@@ -87,7 +87,6 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
             ) {
                 if (response.isSuccessful) {
                     _userState.value = response.body()
-//                    _token.value = response.body()?.result?.token.toString()
                     updateToken(response.body()?.result?.token.toString())
                     _isSignInSuccessful.value = true
                 } else {
