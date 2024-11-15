@@ -50,10 +50,14 @@ fun SignUpScreen(
 ) {
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var emailError by remember { mutableStateOf(false) }
+    var userNameError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
     var passwordHidden by remember { mutableStateOf(true) }
     val context = LocalContext.current
+
+    fun validateTextLength(inputText: String): Boolean {
+        return inputText.length in 1..7
+    }
 
     fun validateEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -117,7 +121,7 @@ fun SignUpScreen(
                 isPassword = true,
                 passwordHidden = passwordHidden,
                 onValueChange = { password = it },
-                onPasswordToggle = { passwordHidden = !passwordHidden}
+                onPasswordToggle = { passwordHidden = !passwordHidden }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
@@ -130,13 +134,13 @@ fun SignUpScreen(
 
         Button(
             onClick = {
-                emailError = !validateEmail(userName)
+                userNameError = !validateTextLength(userName)
                 passwordError = !validatePassword(password)
 
-                if (!emailError && !passwordError) {
+                if (!userNameError && !passwordError) {
                     onLoginButtonClicked(userName, password)
-                } else if (emailError) {
-                    Toast.makeText(context, "이메일 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
+                } else if (userNameError) {
+                    Toast.makeText(context, "이름은 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "비밀번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
                 }
