@@ -41,20 +41,6 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
     private var preferencesHobby = ""
     private var token = ""
 
-    init {
-        getUserPreferences()
-    }
-
-    private fun getUserPreferences() {
-        viewModelScope.launch {
-            datastoreRepository.userPreferencesFlow.collect { userPreferences ->
-                _preferenceUserName.value = userPreferences.userName
-                _preferencePassword.value = userPreferences.password
-                _preferenceHobby.value = userPreferences.hobby
-            }
-        }
-    }
-
     fun updateUserPreferences(userName: String, password: String, hobby: String) {
         viewModelScope.launch {
             datastoreRepository.updatePreference(DatastoreRepository.USER_NAME, userName)
@@ -80,12 +66,14 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
     fun updateHobby(newHobby: String) {
         viewModelScope.launch {
             datastoreRepository.updatePreference(DatastoreRepository.USER_HOBBY, newHobby)
+            _preferenceHobby.value = newHobby
         }
     }
 
     fun updateToken(newToken: String) {
         viewModelScope.launch {
             datastoreRepository.updatePreference(DatastoreRepository.USER_TOKEN, newToken)
+            _token.value = newToken
         }
     }
 
