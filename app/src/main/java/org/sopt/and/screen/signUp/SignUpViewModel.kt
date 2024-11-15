@@ -49,19 +49,26 @@ class SignUpViewModel : ViewModel() {
 
     private fun handleError(response: Response<ResponseSignUp>) {
         val errorBody = response.errorBody()?.string()
-        val errorMessage = if (errorBody != null) {
-            try {
-                val errorResponse = kotlinx.serialization.json.Json.decodeFromString<ResponseError>(errorBody)
-                when (errorResponse.code) {
-                    "00" -> "요청 본문이 유효하지 않습니다."
-                    "01" -> "username, password, hobby는 8자 이상이어야 합니다."
-                    else -> "서버 오류가 발생했습니다."
+        val errorMessage = when (response.code()) {
+            400 -> {
+                if (errorBody != null) {
+                    try {
+                        val errorResponse = kotlinx.serialization.json.Json.decodeFromString<ResponseError>(errorBody)
+                        when (errorResponse.code) {
+                            "00" -> "요청 본문이 유효하지 않습니다."
+                            "01" -> "각 입력값은 7자 이하이어야 합니다."
+                            else -> "잘못된 요청입니다."
+                        }
+                    } catch (e: Exception) {
+                        "잘못된 요청입니다."
+                    }
+                } else {
+                    "잘못된 요청입니다."
                 }
-            } catch (e: Exception) {
-                "응답 파싱 중 오류가 발생했습니다."
             }
-        } else {
-            "서버 오류가 발생했습니다. 상태 코드: ${response.code()}"
+            404 -> "유효하지 않은 경로로 요청하셨습니다."
+            409 -> "username이 이미 존재합니다."
+            else -> "서버 오류가 발생했습니다. 상태 코드: ${response.code()}"
         }
 
         _errorMessage.value = errorMessage
