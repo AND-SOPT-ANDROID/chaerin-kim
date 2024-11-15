@@ -38,10 +38,11 @@ fun MyScreen(
     modifier: Modifier = Modifier,
     userViewModel: UserViewModel
 ) {
-    val email by userViewModel.preferenceUserName.collectAsState()
+    val hobby by userViewModel.preferenceHobby.collectAsState()
     val myViewModel: MyViewModel = viewModel()
     val viewHistory = myViewModel.viewHistory
     val interestContent = myViewModel.interestContent
+    myViewModel.getMyHobby(userViewModel)
 
     Column(
         modifier = modifier
@@ -62,7 +63,7 @@ fun MyScreen(
                 CircleImage(Modifier.size(60.dp), myViewModel.userProfileImg, "사용자 프로필 이미지")
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "${email}님",
+                    text = hobby,
                     fontFamily = pretendardFamily,
                     fontWeight = FontWeight.Medium,
                     color = Color.White,
