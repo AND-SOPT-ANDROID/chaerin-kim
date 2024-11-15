@@ -1,4 +1,4 @@
-package org.sopt.and.screen
+package org.sopt.and.screen.signIn
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

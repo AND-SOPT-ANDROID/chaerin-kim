@@ -1,4 +1,4 @@
-package org.sopt.and.screen
+package org.sopt.and.screen.my
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,7 +29,6 @@ import org.sopt.and.component.CircleImage
 import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.ShowContentList
 import org.sopt.and.component.PromotionalBanner
-import org.sopt.and.data.MyViewModel
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily

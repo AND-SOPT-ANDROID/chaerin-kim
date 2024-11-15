@@ -1,7 +1,8 @@
-package org.sopt.and.data
+package org.sopt.and.screen.my
 
 import androidx.lifecycle.ViewModel
 import org.sopt.and.R
+import org.sopt.and.data.ContentItem
 
 class MyViewModel: ViewModel() {
     val userProfileImg: Int = R.drawable.img_sample

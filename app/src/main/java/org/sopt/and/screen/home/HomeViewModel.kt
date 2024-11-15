@@ -1,9 +1,11 @@
-package org.sopt.and.data
+package org.sopt.and.screen.home
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.sopt.and.R
+import org.sopt.and.data.ContentItem
+import org.sopt.and.data.HomeCategoryItem
 
 class HomeViewModel : ViewModel() {
     val categoryList: List<HomeCategoryItem> = listOf(
