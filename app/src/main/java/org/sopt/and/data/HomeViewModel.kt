@@ -1,10 +1,8 @@
 package org.sopt.and.data
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import org.sopt.and.R
 
 class HomeViewModel : ViewModel() {
