@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,29 +47,29 @@ import org.sopt.and.ui.theme.pretendardFamily
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onLoginButtonClicked: (userName: String, password: String, hobby: String) -> Unit
+    onLoginButtonClicked: () -> Unit
 ) {
+    val signUpViewModel = SignUpViewModel()
+    val isSignUpSuccessful by signUpViewModel.isSignUpSuccessful
+    val errorMessage by signUpViewModel.errorMessage
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var hobby by remember { mutableStateOf("") }
-    var userNameError by remember { mutableStateOf(false) }
-    var passwordError by remember { mutableStateOf(false) }
-    var hobbyError by remember { mutableStateOf(false) }
     var passwordHidden by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
-    fun validateTextLength(inputText: String): Boolean {
-        return inputText.length in 1..7
+    LaunchedEffect(isSignUpSuccessful) {
+        if (isSignUpSuccessful) {
+            onLoginButtonClicked()
+            signUpViewModel.resetSignUpState()
+        }
     }
 
-    fun validateEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    fun validatePassword(password: String): Boolean {
-        return password.length in 8..20 && password.any { it.isDigit() } &&
-                password.any { it.isUpperCase() } && password.any { it.isLowerCase() } &&
-                password.any { !it.isLetterOrDigit() }
+    LaunchedEffect(errorMessage) {
+        if (errorMessage.isNotEmpty()) {
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            signUpViewModel.clearErrorMessage()
+        }
     }
 
     Box {
@@ -147,19 +148,11 @@ fun SignUpScreen(
 
         Button(
             onClick = {
-                userNameError = !validateTextLength(userName)
-                passwordError = !validateTextLength(password)
-                hobbyError = !validateTextLength(hobby)
-
-                if (!userNameError && !passwordError && !hobbyError) {
-                    onLoginButtonClicked(userName, password, hobby)
-                } else if (userNameError) {
-                    Toast.makeText(context, "이름은 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
-                } else if (hobbyError){
-                    Toast.makeText(context, "취미는 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "비밀번호는 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
-                }
+                signUpViewModel.signUpUser(
+                    userName = userName,
+                    password = password,
+                    hobby = hobby
+                )
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -215,8 +208,6 @@ fun SignUpText() {
 private fun Preview(modifier: Modifier = Modifier) {
     SignUpScreen(
         modifier,
-    ) { email, password, hobby ->
-        val userEmail = email
-        val userPassword = password
-    }
+        onLoginButtonClicked = { }
+    )
 }

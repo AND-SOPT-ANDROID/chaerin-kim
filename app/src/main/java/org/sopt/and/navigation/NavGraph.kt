@@ -67,9 +67,7 @@ fun NavGraph(
         composable(route = Routes.SignUp) {
             SignUpScreen(
                 modifier = modifier,
-                onLoginButtonClicked = { email, password, hobby ->
-                    userViewModel.updateUserPreferences(email, password) //api 연결 전 임시로 userViewModel에 저장
-
+                onLoginButtonClicked = {
                     navController.popBackStack()
                 }
             )
