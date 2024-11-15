@@ -16,6 +16,7 @@ class DatastoreRepository(private val preferenceDataStore: DataStore<Preferences
         val USER_NAME = stringPreferencesKey("user_name")
         val USER_PASSWORD = stringPreferencesKey("user_password")
         val USER_HOBBY = stringPreferencesKey("user_hobby")
+        val USER_TOKEN = stringPreferencesKey("user_token")
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = preferenceDataStore.data
@@ -35,7 +36,8 @@ class DatastoreRepository(private val preferenceDataStore: DataStore<Preferences
         val userName = preferences[USER_NAME] ?: "홍길동"
         val password = preferences[USER_PASSWORD] ?: "password1!"
         val userHobby = preferences[USER_HOBBY] ?: "노래 듣기"
-        return UserPreferences(userName, password, userHobby)
+        val userToken = preferences[USER_TOKEN] ?: ""
+        return UserPreferences(userName, password, userHobby, userToken)
     }
 
     suspend fun updatePreference(key: Preferences.Key<String>, value: String) {
