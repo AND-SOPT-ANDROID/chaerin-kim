@@ -46,12 +46,14 @@ import org.sopt.and.ui.theme.pretendardFamily
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onLoginButtonClicked: (email: String, password: String) -> Unit
+    onLoginButtonClicked: (userName: String, password: String, hobby: String) -> Unit
 ) {
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var hobby by remember { mutableStateOf("") }
     var userNameError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
+    var hobbyError by remember { mutableStateOf(false) }
     var passwordHidden by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
@@ -116,6 +118,17 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             GrayTextField(
+                hobby,
+                stringResource(R.string.example_hobby_name),
+                onValueChange = { hobby = it }
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            TextFieldNotificationMessage(
+                stringResource(R.string.hobby_condition_info)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+
+            GrayTextField(
                 password,
                 "Wavve 비밀번호 설정",
                 isPassword = true,
@@ -136,11 +149,14 @@ fun SignUpScreen(
             onClick = {
                 userNameError = !validateTextLength(userName)
                 passwordError = !validateTextLength(password)
+                hobbyError = !validateTextLength(hobby)
 
-                if (!userNameError && !passwordError) {
-                    onLoginButtonClicked(userName, password)
+                if (!userNameError && !passwordError && !hobbyError) {
+                    onLoginButtonClicked(userName, password, hobby)
                 } else if (userNameError) {
                     Toast.makeText(context, "이름은 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                } else if (hobbyError){
+                    Toast.makeText(context, "취미는 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "비밀번호는 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -199,7 +215,7 @@ fun SignUpText() {
 private fun Preview(modifier: Modifier = Modifier) {
     SignUpScreen(
         modifier,
-    ) { email, password ->
+    ) { email, password, hobby ->
         val userEmail = email
         val userPassword = password
     }
