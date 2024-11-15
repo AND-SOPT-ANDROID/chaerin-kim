@@ -7,14 +7,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewModel() {
-    private val _preferenceEmail = MutableStateFlow("")
+    private val _preferenceUserName = MutableStateFlow("")
     private val _preferencePassword = MutableStateFlow("")
+    private val _preferenceHobby = MutableStateFlow("")
 
-    val preferenceEmail = _preferenceEmail.asStateFlow()
+    val preferenceUserName = _preferenceUserName.asStateFlow()
     val preferencePassword = _preferencePassword.asStateFlow()
+    val preferenceHobby = _preferenceHobby.asStateFlow()
 
-    private var preferencesEmail = ""
+    private var preferencesUserName = ""
     private var preferencesPassword = ""
+    private var preferencesHobby = ""
 
     init {
         getUserPreferences()
@@ -23,28 +26,36 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
     private fun getUserPreferences() {
         viewModelScope.launch {
             datastoreRepository.userPreferencesFlow.collect { userPreferences ->
-                _preferenceEmail.value = userPreferences.email
+                _preferenceUserName.value = userPreferences.userName
                 _preferencePassword.value = userPreferences.password
+                _preferenceHobby.value = userPreferences.hobby
             }
         }
     }
 
-    fun updateUserPreferences(email: String, password: String) {
+    fun updateUserPreferences(userName: String, password: String, hobby: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_EMAIL, email)
+            datastoreRepository.updatePreference(DatastoreRepository.USER_NAME, userName)
             datastoreRepository.updatePreference(DatastoreRepository.USER_PASSWORD, password)
+            datastoreRepository.updatePreference(DatastoreRepository.USER_HOBBY, hobby)
         }
     }
 
-    fun updateEmail(newEmail: String) {
+    fun updateUserName(newUserName: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_EMAIL, newEmail)
+            datastoreRepository.updatePreference(DatastoreRepository.USER_NAME, newUserName)
         }
     }
 
     fun updatePassword(newPassword: String) {
         viewModelScope.launch {
             datastoreRepository.updatePreference(DatastoreRepository.USER_PASSWORD, newPassword)
+        }
+    }
+
+    fun updateHobby(newHobby: String) {
+        viewModelScope.launch {
+            datastoreRepository.updatePreference(DatastoreRepository.USER_HOBBY, newHobby)
         }
     }
 }

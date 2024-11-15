@@ -38,7 +38,7 @@ fun MyScreen(
     modifier: Modifier = Modifier,
     userViewModel: UserViewModel
 ) {
-    val email by userViewModel.preferenceEmail.collectAsState()
+    val email by userViewModel.preferenceUserName.collectAsState()
     val myViewModel: MyViewModel = viewModel()
     val viewHistory = myViewModel.viewHistory
     val interestContent = myViewModel.interestContent
