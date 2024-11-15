@@ -11,12 +11,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CircleImage(image: Int, contentDescription: String, size: Int) {
+fun CircleImage(modifier: Modifier, image: Int, contentDescription: String) {
     Image(
         painter = painterResource(image),
         contentDescription = contentDescription,
-        modifier = Modifier
-            .size(size.dp)
+        modifier = modifier
             .clip(CircleShape),
         contentScale = ContentScale.Crop
     )

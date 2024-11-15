@@ -41,17 +41,17 @@ import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60
 
 @Composable
-fun HomeBanner(bannerList: List<ContentItem>) {
+fun HomeBanner(bannerData: List<ContentItem>) {
     var currentIndex by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {
         while (true) {
             delay(3000)
-            currentIndex = (currentIndex + 1) % bannerList.size
+            currentIndex = (currentIndex + 1) % bannerData.size
         }
     }
 
-    val currentBanner = bannerList[currentIndex]
+    val currentBanner = bannerData[currentIndex]
 
     Box(
         modifier = Modifier
@@ -97,7 +97,7 @@ fun HomeBanner(bannerList: List<ContentItem>) {
                 )
                 Row {
                     Spacer(modifier = Modifier.weight(1f))
-                    BannerCount(currentIndex, bannerList.size)
+                    BannerCount(currentIndex, bannerData.size)
                 }
             }
         }

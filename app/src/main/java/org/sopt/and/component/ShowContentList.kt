@@ -10,7 +10,7 @@ import org.sopt.and.data.ContentItem
 @Composable
 fun ShowContentList(
     title: String,
-    noContentMsg: String,
+    noContentMessage: String,
     contentList: List<ContentItem>
 ) {
     Column(
@@ -19,7 +19,7 @@ fun ShowContentList(
     ) {
         ContentListTitle(title = title, button = null) { }
         if (contentList.isEmpty()) {
-            NoContentList(noContentMsg)
+            NoContentList(noContentMessage)
         } else {
             ContentLazyRow(contentList)
         }

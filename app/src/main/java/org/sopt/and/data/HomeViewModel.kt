@@ -29,33 +29,31 @@ class HomeViewModel : ViewModel() {
     val top20List: StateFlow<List<ContentItem>> get() = _top20List
 
     fun setList() {
-        viewModelScope.launch {
-            _bannerList.value = listOf(
-                ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
-                ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
-                ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
-                ContentItem("제목4", "내용4", 4, poster = R.drawable.img_sample),
-                ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
-                ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
-            )
+        _bannerList.value = listOf(
+            ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
+            ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
+            ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
+            ContentItem("제목4", "내용4", 4, poster = R.drawable.img_sample),
+            ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
+            ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
+        )
 
-            _recommendList.value = listOf(
-                ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
-                ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
-                ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
-                ContentItem("제목4", "내용4", 4, poster = R.drawable.img_sample),
-                ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
-                ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
-            )
+        _recommendList.value = listOf(
+            ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
+            ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
+            ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
+            ContentItem("제목4", "내용4", 4, poster = R.drawable.img_sample),
+            ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
+            ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
+        )
 
-            _top20List.value = listOf(
-                ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
-                ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
-                ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
-                ContentItem("제목4", "내용4", 4, poster = R.drawable.img_sample),
-                ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
-                ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
-            )
-        }
+        _top20List.value = listOf(
+            ContentItem("제목1", "내용1", 1, poster = R.drawable.img_sample),
+            ContentItem("제목2", "내용2", 2, poster = R.drawable.img_sample2),
+            ContentItem("제목3", "내용3", 3, poster = R.drawable.img_sample3),
+            ContentItem("제목4", "내용4", 4, poster = R.drawable.img_sample),
+            ContentItem("제목5", "내용5", 5, poster = R.drawable.img_sample2),
+            ContentItem("제목6", "내용6", 6, poster = R.drawable.img_sample3),
+        )
     }
 }
