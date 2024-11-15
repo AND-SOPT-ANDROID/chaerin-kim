@@ -135,14 +135,14 @@ fun SignUpScreen(
         Button(
             onClick = {
                 userNameError = !validateTextLength(userName)
-                passwordError = !validatePassword(password)
+                passwordError = !validateTextLength(password)
 
                 if (!userNameError && !passwordError) {
                     onLoginButtonClicked(userName, password)
                 } else if (userNameError) {
                     Toast.makeText(context, "이름은 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "비밀번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "비밀번호는 최대 7글자로 설정할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
