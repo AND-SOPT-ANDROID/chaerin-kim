@@ -9,19 +9,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import org.sopt.and.data.CategoryViewModel
+import org.sopt.and.data.HomeCategoryItem
 import org.sopt.and.ui.theme.pretendardFamily
 
 @Composable
-fun HomeCategory() {
-    val categoryViewModel: CategoryViewModel = viewModel()
-    val items = categoryViewModel.items
-
+fun HomeCategory(categoryList: List<HomeCategoryItem>) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(items) { item ->
+        items(categoryList) { item ->
             Text (
                 text = item.title,
                 color = Color.Gray,

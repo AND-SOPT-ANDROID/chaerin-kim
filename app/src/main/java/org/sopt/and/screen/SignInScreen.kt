@@ -37,7 +37,6 @@ import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.LoginHelpButton
 import org.sopt.and.component.SNSLogin
-import org.sopt.and.component.SNSNotificationMessage
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray60
 import org.sopt.and.ui.theme.MainBlue
@@ -143,8 +142,6 @@ fun SignInScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             SNSLogin(modifier, "로그인")
-            SNSNotificationMessage(modifier)
-
         }
     }
 }

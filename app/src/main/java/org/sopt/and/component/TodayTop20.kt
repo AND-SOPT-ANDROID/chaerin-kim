@@ -6,9 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.sopt.and.data.ContentItem
 
 @Composable
-fun TodayTop20() {
+fun TodayTop20(top20List: List<ContentItem>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -18,6 +19,6 @@ fun TodayTop20() {
             title = "오늘의 TOP 20",
             button = null
         ) { }
-        TodayTop20LazyRow()
+        TodayTop20LazyRow(top20List)
     }
 }

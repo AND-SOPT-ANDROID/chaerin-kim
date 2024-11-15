@@ -3,13 +3,18 @@ package org.sopt.and.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
+import org.sopt.and.data.ContentItem
+import org.sopt.and.data.HomeViewModel
 
 @Composable
-fun EditorRecommended() {
+fun EditorRecommended(recommendList: List<ContentItem>) {
     Column(
         modifier = Modifier.padding(top = 14.dp)
     ) {
@@ -17,12 +22,14 @@ fun EditorRecommended() {
             title = "믿고 보는 웨이브 에디터 추천작",
             button = R.drawable.ic_chevron_right
         ) { }
-        ContentLazyRow()
+        ContentLazyRow(recommendList)
     }
 }
 
 @Preview
 @Composable
 private fun PreviewEditor(modifier: Modifier = Modifier) {
-    EditorRecommended()
+    val homeViewModel: HomeViewModel = viewModel()
+    val recommendList by homeViewModel.recommendList.collectAsState()
+    EditorRecommended(recommendList)
 }

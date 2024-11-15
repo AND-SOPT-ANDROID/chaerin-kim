@@ -12,24 +12,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
+import org.sopt.and.component.CircleImage
 import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.ShowContentList
 import org.sopt.and.component.PromotionalBanner
+import org.sopt.and.data.MyViewModel
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
@@ -40,6 +40,9 @@ fun MyScreen(
     userViewModel: UserViewModel
 ) {
     val email by userViewModel.preferenceEmail.collectAsState()
+    val myViewModel: MyViewModel = viewModel()
+    val viewHistory = myViewModel.viewHistory
+    val interestContent = myViewModel.interestContent
 
     Column(
         modifier = modifier
@@ -57,14 +60,7 @@ fun MyScreen(
                     .padding(start = 16.dp, top = 20.dp, bottom = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(R.drawable.img_sample),
-                    contentDescription = "사용자이미지",
-                    modifier = Modifier
-                        .size(60.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
+                CircleImage(Modifier.size(60.dp), myViewModel.userProfileImg, "사용자 프로필 이미지")
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "${email}님",
@@ -94,8 +90,8 @@ fun MyScreen(
         Spacer(modifier = Modifier.height(2.dp))
         PromotionalBanner(message = "현재 보유하신 이용권이 없습니다.")
 
-        ShowContentList("전체 시청내역", "시청내역이 없어요.")
-        ShowContentList("관심 프로그램", "관심 프로그램이 없어요.")
+        ShowContentList("전체 시청내역", "시청내역이 없어요.", viewHistory)
+        ShowContentList("관심 프로그램", "관심 프로그램이 없어요.", interestContent)
 
     }
 }

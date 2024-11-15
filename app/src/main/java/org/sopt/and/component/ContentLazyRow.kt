@@ -17,22 +17,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.data.ContentItem
-import org.sopt.and.data.ContentItemViewModel
 
 @Composable
-fun ContentLazyRow() {
-    val contentItemViewModel: ContentItemViewModel = viewModel()
-    val items = contentItemViewModel.items
-
+fun ContentLazyRow(contentList: List<ContentItem>) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(items) { item ->
+        items(contentList) { item ->
             ContentImageCard(item)
         }
     }
