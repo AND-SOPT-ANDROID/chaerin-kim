@@ -48,7 +48,7 @@ fun SignUpScreen(
     modifier: Modifier = Modifier,
     onLoginButtonClicked: (email: String, password: String) -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
+    var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
@@ -101,13 +101,13 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             GrayTextField(
-                email,
-                stringResource(R.string.example_email),
-                onValueChange = { email = it }
+                userName,
+                stringResource(R.string.example_user_name),
+                onValueChange = { userName = it }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
-                stringResource(R.string.email_condition_info)
+                stringResource(R.string.user_name_condition_info)
             )
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -130,11 +130,11 @@ fun SignUpScreen(
 
         Button(
             onClick = {
-                emailError = !validateEmail(email)
+                emailError = !validateEmail(userName)
                 passwordError = !validatePassword(password)
 
                 if (!emailError && !passwordError) {
-                    onLoginButtonClicked(email, password)
+                    onLoginButtonClicked(userName, password)
                 } else if (emailError) {
                     Toast.makeText(context, "이메일 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
                 } else {
