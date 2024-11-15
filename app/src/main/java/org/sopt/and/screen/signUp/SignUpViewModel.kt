@@ -3,6 +3,8 @@ package org.sopt.and.screen.signUp
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.sopt.and.api.dto.request.RequestSignUp
 import org.sopt.and.api.dto.response.ResponseError
 import org.sopt.and.api.dto.response.ResponseSignUp
@@ -14,11 +16,12 @@ import retrofit2.Response
 class SignUpViewModel : ViewModel() {
     private val userService by lazy { ServicePool.userService }
     private val _userState = mutableStateOf<ResponseSignUp?>(null)
+    private val _isSignUpSuccessful =  MutableStateFlow(false)
+    private val _errorMessage = MutableStateFlow("")
+
     val userState: State<ResponseSignUp?> get() = _userState
-    private val _errorMessage = mutableStateOf("")
-    val errorMessage: State<String> = _errorMessage
-    private val _isSignUpSuccessful = mutableStateOf(false)
-    val isSignUpSuccessful: State<Boolean> = _isSignUpSuccessful
+    val isSignUpSuccessful = _isSignUpSuccessful.asStateFlow()
+    val errorMessage = _errorMessage.asStateFlow()
 
     fun signUpUser(userName: String, password: String, hobby: String) {
         val request = RequestSignUp(userName, password, hobby)
