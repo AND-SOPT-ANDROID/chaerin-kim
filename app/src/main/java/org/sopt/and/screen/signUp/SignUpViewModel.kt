@@ -15,12 +15,12 @@ import retrofit2.Response
 
 class SignUpViewModel : ViewModel() {
     private val userService by lazy { ServicePool.userService }
-    private val _userState = mutableStateOf<ResponseSignUp?>(null)
-    private val _isSignUpSuccessful =  MutableStateFlow(false)
-    private val _errorMessage = MutableStateFlow("")
 
+    private val _userState = mutableStateOf<ResponseSignUp?>(null)
     val userState: State<ResponseSignUp?> get() = _userState
+    private val _isSignUpSuccessful =  MutableStateFlow(false)
     val isSignUpSuccessful = _isSignUpSuccessful.asStateFlow()
+    private val _errorMessage = MutableStateFlow("")
     val errorMessage = _errorMessage.asStateFlow()
 
     fun signUpUser(userName: String, password: String, hobby: String) {

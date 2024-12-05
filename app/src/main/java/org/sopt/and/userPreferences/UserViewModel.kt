@@ -22,24 +22,18 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
     val userState: State<ResponseSignIn?> get() = _userState
 
     private val _preferenceUserName = MutableStateFlow("")
+    val preferenceUserName = _preferenceUserName.asStateFlow()
     private val _preferencePassword = MutableStateFlow("")
+    val preferencePassword = _preferencePassword.asStateFlow()
     private val _preferenceHobby = MutableStateFlow("")
+    val preferenceHobby = _preferenceHobby.asStateFlow()
     private val _token = MutableStateFlow("")
+    val preferenceToken = _token.asStateFlow()
 
     private val _isSignInSuccessful =  MutableStateFlow(false)
-    private val _errorMessage = MutableStateFlow("")
-
-    val preferenceUserName = _preferenceUserName.asStateFlow()
-    val preferencePassword = _preferencePassword.asStateFlow()
-    val preferenceHobby = _preferenceHobby.asStateFlow()
-    val preferenceToken = _token.asStateFlow()
     val isSignInSuccessful = _isSignInSuccessful.asStateFlow()
+    private val _errorMessage = MutableStateFlow("")
     val errorMessage = _errorMessage.asStateFlow()
-
-    private var preferencesUserName = ""
-    private var preferencesPassword = ""
-    private var preferencesHobby = ""
-    private var token = ""
 
     fun updateUserPreferences(userName: String, password: String, hobby: String) {
         viewModelScope.launch {
