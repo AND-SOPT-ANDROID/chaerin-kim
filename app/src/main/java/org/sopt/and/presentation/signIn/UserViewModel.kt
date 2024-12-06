@@ -1,15 +1,17 @@
-package org.sopt.and.userPreferences
+package org.sopt.and.presentation.signIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.RequestSignIn
 import org.sopt.and.data.dto.response.ResponseError
 import org.sopt.and.data.dto.response.ResponseSignIn
 import org.sopt.and.domain.repository.RepositoryPool
+import org.sopt.and.domain.repository.DatastoreRepository
 import retrofit2.Response
 
 class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewModel() {
@@ -31,36 +33,36 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
 
     fun updateUserPreferences(userName: String, password: String, hobby: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_NAME, userName)
-            datastoreRepository.updatePreference(DatastoreRepository.USER_PASSWORD, password)
-            datastoreRepository.updatePreference(DatastoreRepository.USER_HOBBY, hobby)
+            datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_NAME, userName)
+            datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_PASSWORD, password)
+            datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_HOBBY, hobby)
         }
     }
 
     fun updateUserName(newUserName: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_NAME, newUserName)
+            datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_NAME, newUserName)
             _preferenceUserName.value = newUserName
         }
     }
 
     fun updatePassword(newPassword: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_PASSWORD, newPassword)
+            datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_PASSWORD, newPassword)
             _preferencePassword.value = newPassword
         }
     }
 
     fun updateHobby(newHobby: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_HOBBY, newHobby)
+            datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_HOBBY, newHobby)
             _preferenceHobby.value = newHobby
         }
     }
 
     fun updateToken(newToken: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_TOKEN, newToken)
+            datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_TOKEN, newToken)
             _token.value = newToken
         }
     }
@@ -85,7 +87,7 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
             400 -> {
                 if (errorBody != null) {
                     try {
-                        val errorResponse = kotlinx.serialization.json.Json.decodeFromString<ResponseError>(errorBody)
+                        val errorResponse = Json.decodeFromString<ResponseError>(errorBody)
                         when (errorResponse.code) {
                             "01" -> "요청 본문이 유효하지 않습니다."
                             "02" -> "비밀번호는 7자 이하이어야 합니다."

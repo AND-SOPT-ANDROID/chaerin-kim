@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.core.design_system.component.CircleImage
-import org.sopt.and.userPreferences.UserViewModel
+import org.sopt.and.presentation.signIn.UserViewModel
 import org.sopt.and.core.design_system.component.ShowContentList
 import org.sopt.and.core.design_system.component.PromotionalBanner
 import org.sopt.and.core.design_system.theme.BackgroundBlack

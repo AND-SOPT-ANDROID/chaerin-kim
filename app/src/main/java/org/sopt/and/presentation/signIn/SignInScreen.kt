@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
-import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.core.design_system.component.GrayTextField
 import org.sopt.and.core.design_system.component.LoginHelpButton
 import org.sopt.and.core.design_system.component.SNSLogin

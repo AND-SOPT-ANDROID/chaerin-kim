@@ -1,4 +1,4 @@
-package org.sopt.and.userPreferences
+package org.sopt.and.domain.repository
 
 import android.util.Log
 import androidx.datastore.core.DataStore
@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import org.sopt.and.domain.entity.UserPreferences
 import java.io.IOException
 
 class DatastoreRepository(private val preferenceDataStore: DataStore<Preferences>) {

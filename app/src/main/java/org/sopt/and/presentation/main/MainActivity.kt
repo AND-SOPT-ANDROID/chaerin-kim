@@ -39,9 +39,9 @@ import org.sopt.and.presentation.main.navigation.Routes
 import org.sopt.and.core.design_system.theme.ANDANDROIDTheme
 import org.sopt.and.core.design_system.theme.BackgroundBlack
 import org.sopt.and.core.design_system.theme.pretendardFamily
-import org.sopt.and.userPreferences.DatastoreRepository
-import org.sopt.and.userPreferences.UserViewModel
-import org.sopt.and.userPreferences.UserViewModelFactory
+import org.sopt.and.domain.repository.DatastoreRepository
+import org.sopt.and.presentation.signIn.UserViewModel
+import org.sopt.and.presentation.signIn.UserViewModelFactory
 
 class MainActivity : ComponentActivity() {
     val Context.dataStore by preferencesDataStore(name = "user_preferences")

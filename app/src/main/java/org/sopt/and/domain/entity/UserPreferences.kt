@@ -1,4 +1,4 @@
-package org.sopt.and.userPreferences
+package org.sopt.and.domain.entity
 
 data class UserPreferences(
     val userName: String = "",

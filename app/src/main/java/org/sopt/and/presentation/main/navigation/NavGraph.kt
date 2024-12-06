@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.sopt.and.userPreferences.UserViewModel
+import org.sopt.and.presentation.signIn.UserViewModel
 import org.sopt.and.presentation.home.HomeScreen
 import org.sopt.and.presentation.my.MyScreen
 import org.sopt.and.presentation.search.SearchScreen

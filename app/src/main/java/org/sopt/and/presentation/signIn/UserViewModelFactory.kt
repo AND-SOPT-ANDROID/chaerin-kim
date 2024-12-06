@@ -1,7 +1,8 @@
-package org.sopt.and.userPreferences
+package org.sopt.and.presentation.signIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import org.sopt.and.domain.repository.DatastoreRepository
 
 class UserViewModelFactory(
     private val repository: DatastoreRepository

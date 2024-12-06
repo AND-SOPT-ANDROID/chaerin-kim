@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import org.sopt.and.R
 import org.sopt.and.domain.entity.ContentItem
 import org.sopt.and.domain.repository.RepositoryPool
-import org.sopt.and.userPreferences.UserViewModel
+import org.sopt.and.presentation.signIn.UserViewModel
 
 class MyViewModel : ViewModel() {
     private val repository = RepositoryPool.userRepository
