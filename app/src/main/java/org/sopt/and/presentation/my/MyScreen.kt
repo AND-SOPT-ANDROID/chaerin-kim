@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import org.sopt.and.R
 import org.sopt.and.core.design_system.component.CircleImage
 import org.sopt.and.presentation.signIn.UserViewModel
@@ -39,7 +39,7 @@ fun MyScreen(
     userViewModel: UserViewModel
 ) {
     val hobby by userViewModel.preferenceHobby.collectAsState()
-    val myViewModel: MyViewModel = viewModel()
+    val myViewModel: MyViewModel = hiltViewModel()
     val viewHistory = myViewModel.viewHistory
     val interestContent = myViewModel.interestContent
     myViewModel.getMyHobby(userViewModel)
