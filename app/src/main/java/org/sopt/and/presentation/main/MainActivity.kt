@@ -33,6 +33,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.and.presentation.main.navigation.BottomNavigationItem
 import org.sopt.and.presentation.main.navigation.NavGraph
 import org.sopt.and.presentation.main.navigation.Routes
@@ -43,6 +44,7 @@ import org.sopt.and.domain.repository.DatastoreRepository
 import org.sopt.and.presentation.signIn.UserViewModel
 import org.sopt.and.presentation.signIn.UserViewModelFactory
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     val Context.dataStore by preferencesDataStore(name = "user_preferences")
     override fun onCreate(savedInstanceState: Bundle?) {
