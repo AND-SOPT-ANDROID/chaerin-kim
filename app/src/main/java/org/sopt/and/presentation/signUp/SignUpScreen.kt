@@ -150,7 +150,7 @@ fun SignUpScreen(
         Button(
             onClick = {
                 signUpViewModel.signUpUser(
-                    userName = userName,
+                    username = userName,
                     password = password,
                     hobby = hobby
                 )
