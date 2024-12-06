@@ -37,7 +37,7 @@ class SignUpViewModel : ViewModel() {
                     _isSignUpSuccessful.value = true
                 } else {
                     _isSignUpSuccessful.value = false
-//                    handleError(response)
+                    handleError(response)
                 }
             }
 
@@ -48,7 +48,7 @@ class SignUpViewModel : ViewModel() {
         })
     }
 
-    private fun handleError(response: Response<ResponseSignUp>) {
+    private fun handleError(response: Response<BaseResponse<ResponseSignUp>>) {
         val errorBody = response.errorBody()?.string()
         val errorMessage = when (response.code()) {
             400 -> {
@@ -69,7 +69,7 @@ class SignUpViewModel : ViewModel() {
             }
             404 -> "유효하지 않은 경로로 요청하셨습니다."
             409 -> "username이 이미 존재합니다."
-            else -> "서버 오류가 발생했습니다. 상태 코드: ${response.code()}"
+            else -> "오류가 발생했습니다. 상태 코드: ${response.code()}"
         }
 
         _errorMessage.value = errorMessage
