@@ -1,4 +1,4 @@
-package org.sopt.and.screen.signIn
+package org.sopt.and.presentation.signIn
 
 import android.widget.Toast
 import androidx.compose.foundation.Image

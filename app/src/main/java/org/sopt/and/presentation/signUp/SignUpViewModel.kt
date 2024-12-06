@@ -1,4 +1,4 @@
-package org.sopt.and.screen.signUp
+package org.sopt.and.presentation.signUp
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

@@ -1,4 +1,4 @@
-package org.sopt.and.screen.signUp
+package org.sopt.and.presentation.signUp
 
 import android.widget.Toast
 import androidx.compose.foundation.Image

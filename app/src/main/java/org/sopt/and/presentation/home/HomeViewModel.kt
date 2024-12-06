@@ -1,4 +1,4 @@
-package org.sopt.and.screen.home
+package org.sopt.and.presentation.home
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

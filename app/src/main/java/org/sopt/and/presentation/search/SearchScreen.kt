@@ -1,4 +1,4 @@
-package org.sopt.and.screen.search
+package org.sopt.and.presentation.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text

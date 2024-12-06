@@ -1,4 +1,4 @@
-package org.sopt.and.screen.my
+package org.sopt.and.presentation.my
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

@@ -12,11 +12,11 @@ import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.sopt.and.userPreferences.UserViewModel
-import org.sopt.and.screen.home.HomeScreen
-import org.sopt.and.screen.my.MyScreen
-import org.sopt.and.screen.search.SearchScreen
-import org.sopt.and.screen.signIn.SignInScreen
-import org.sopt.and.screen.signUp.SignUpScreen
+import org.sopt.and.presentation.home.HomeScreen
+import org.sopt.and.presentation.my.MyScreen
+import org.sopt.and.presentation.search.SearchScreen
+import org.sopt.and.presentation.signIn.SignInScreen
+import org.sopt.and.presentation.signUp.SignUpScreen
 
 object BottomNavRoutes {
     const val Home = "Home"
