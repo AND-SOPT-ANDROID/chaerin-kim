@@ -5,10 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.sopt.and.api.dto.BaseResponse
-import org.sopt.and.api.dto.request.RequestSignUp
-import org.sopt.and.api.dto.response.ResponseError
-import org.sopt.and.api.dto.response.ResponseSignUp
+import org.sopt.and.data.dto.BaseResponse
+import org.sopt.and.data.dto.request.RequestSignUp
+import org.sopt.and.data.dto.response.ResponseError
+import org.sopt.and.data.dto.response.ResponseSignUp
 import org.sopt.and.api.factory.ServicePool
 import retrofit2.Call
 import retrofit2.Callback

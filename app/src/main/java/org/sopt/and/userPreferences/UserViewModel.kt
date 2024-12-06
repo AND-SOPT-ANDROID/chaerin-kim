@@ -7,10 +7,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.and.api.dto.BaseResponse
-import org.sopt.and.api.dto.request.RequestSignIn
-import org.sopt.and.api.dto.response.ResponseError
-import org.sopt.and.api.dto.response.ResponseSignIn
+import org.sopt.and.data.dto.BaseResponse
+import org.sopt.and.data.dto.request.RequestSignIn
+import org.sopt.and.data.dto.response.ResponseError
+import org.sopt.and.data.dto.response.ResponseSignIn
 import org.sopt.and.api.factory.ServicePool
 import retrofit2.Call
 import retrofit2.Callback

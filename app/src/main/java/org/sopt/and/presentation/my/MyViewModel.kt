@@ -3,8 +3,8 @@ package org.sopt.and.presentation.my
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import org.sopt.and.R
-import org.sopt.and.api.dto.BaseResponse
-import org.sopt.and.api.dto.response.ResponseMyHobby
+import org.sopt.and.data.dto.BaseResponse
+import org.sopt.and.data.dto.response.ResponseMyHobby
 import org.sopt.and.api.factory.ServicePool
 import org.sopt.and.domain.entity.ContentItem
 import org.sopt.and.userPreferences.UserViewModel

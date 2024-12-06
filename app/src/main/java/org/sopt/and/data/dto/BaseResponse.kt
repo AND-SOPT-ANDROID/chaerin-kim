@@ -1,4 +1,4 @@
-package org.sopt.and.api.dto
+package org.sopt.and.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

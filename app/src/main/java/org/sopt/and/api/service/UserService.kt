@@ -1,11 +1,11 @@
 package org.sopt.and.api.service
 
-import org.sopt.and.api.dto.BaseResponse
-import org.sopt.and.api.dto.request.RequestSignIn
-import org.sopt.and.api.dto.request.RequestSignUp
-import org.sopt.and.api.dto.response.ResponseMyHobby
-import org.sopt.and.api.dto.response.ResponseSignIn
-import org.sopt.and.api.dto.response.ResponseSignUp
+import org.sopt.and.data.dto.BaseResponse
+import org.sopt.and.data.dto.request.RequestSignIn
+import org.sopt.and.data.dto.request.RequestSignUp
+import org.sopt.and.data.dto.response.ResponseMyHobby
+import org.sopt.and.data.dto.response.ResponseSignIn
+import org.sopt.and.data.dto.response.ResponseSignUp
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
