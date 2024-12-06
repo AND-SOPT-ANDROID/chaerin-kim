@@ -1,4 +1,4 @@
-package org.sopt.and.api.service
+package org.sopt.and.data.service
 
 import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.RequestSignIn
