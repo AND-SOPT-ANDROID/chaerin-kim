@@ -2,18 +2,15 @@ package org.sopt.and.presentation.my
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.sopt.and.R
-import org.sopt.and.data.dto.BaseResponse
-import org.sopt.and.data.dto.response.ResponseMyHobby
-import org.sopt.and.data.remote.ServicePool
 import org.sopt.and.domain.entity.ContentItem
+import org.sopt.and.domain.repository.RepositoryPool
 import org.sopt.and.userPreferences.UserViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class MyViewModel: ViewModel() {
-    private val userService by lazy { ServicePool.userService }
+class MyViewModel : ViewModel() {
+    private val repository = RepositoryPool.userRepository
 
     val userProfileImg: Int = R.drawable.img_sample
     private val _viewHistory = mutableListOf<ContentItem>()
@@ -22,25 +19,17 @@ class MyViewModel: ViewModel() {
     val interestContent: List<ContentItem> get() = _interestContent
 
     fun getMyHobby(userViewModel: UserViewModel) {
-        val token = userViewModel.preferenceToken.value
-
-        userService.getMyHobby(token).enqueue(object : Callback<BaseResponse<ResponseMyHobby>> {
-            override fun onResponse(
-                call: Call<BaseResponse<ResponseMyHobby>>,
-                response: Response<BaseResponse<ResponseMyHobby>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.result?.let { userViewModel.updateHobby(it.hobby) }
-                } else {
-                    val error = response.message()
+        viewModelScope.launch {
+            val token = userViewModel.preferenceToken.value
+            repository.getMyHobby(token)
+                .onSuccess {
+                    userViewModel.updateHobby(it.hobby)
+                }
+                .onFailure {
+                    val error = it.message
                     Log.e("error", error.toString())
                 }
-            }
 
-            override fun onFailure(call: Call<BaseResponse<ResponseMyHobby>>, t: Throwable) {
-                Log.e("failure", t.message.toString())
-            }
-
-        })
+        }
     }
 }

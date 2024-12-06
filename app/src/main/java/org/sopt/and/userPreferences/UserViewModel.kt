@@ -1,7 +1,5 @@
 package org.sopt.and.userPreferences
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,16 +9,11 @@ import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.RequestSignIn
 import org.sopt.and.data.dto.response.ResponseError
 import org.sopt.and.data.dto.response.ResponseSignIn
-import org.sopt.and.data.remote.ServicePool
-import retrofit2.Call
-import retrofit2.Callback
+import org.sopt.and.domain.repository.RepositoryPool
 import retrofit2.Response
 
 class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewModel() {
-    private val userService by lazy { ServicePool.userService }
-
-    private val _userState = mutableStateOf<ResponseSignIn?>(null)
-    val userState: State<ResponseSignIn?> get() = _userState
+    private val repository = RepositoryPool.userRepository
 
     private val _preferenceUserName = MutableStateFlow("")
     val preferenceUserName = _preferenceUserName.asStateFlow()
@@ -73,29 +66,17 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
     }
 
     fun login(username: String, password: String) {
-        val request = RequestSignIn(username = username, password = password)
-
-        userService.userLogin(request).enqueue(object : Callback<BaseResponse<ResponseSignIn>> {
-            override fun onResponse(
-                call: Call<BaseResponse<ResponseSignIn>>,
-                response: Response<BaseResponse<ResponseSignIn>>
-            ) {
-                if (response.isSuccessful) {
-                    _userState.value = response.body()?.result
-                    updateToken(response.body()?.result?.token.toString())
+        viewModelScope.launch {
+            val request = RequestSignIn(username = username, password = password)
+            repository.signInUser(request)
+                .onSuccess {
+                    updateToken(it.token)
                     _isSignInSuccessful.value = true
-                } else {
-                    _isSignInSuccessful.value = false
-                    handleError(response)
                 }
-            }
-
-            override fun onFailure(call: Call<BaseResponse<ResponseSignIn>>, t: Throwable) {
-                _isSignInSuccessful.value = false
-                _errorMessage.value = "네트워크 오류가 발생했습니다."
-            }
-
-        })
+                .onFailure {
+                    _isSignInSuccessful.value = false
+                }
+        }
     }
 
     private fun handleError(response: Response<BaseResponse<ResponseSignIn>>) {

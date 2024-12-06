@@ -1,51 +1,34 @@
 package org.sopt.and.presentation.signUp
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.RequestSignUp
 import org.sopt.and.data.dto.response.ResponseError
 import org.sopt.and.data.dto.response.ResponseSignUp
-import org.sopt.and.data.remote.ServicePool
-import retrofit2.Call
-import retrofit2.Callback
+import org.sopt.and.domain.repository.RepositoryPool
 import retrofit2.Response
 
 class SignUpViewModel : ViewModel() {
-    private val userService by lazy { ServicePool.userService }
+    private val repository = RepositoryPool.userRepository
 
-    private val _userState = mutableStateOf<ResponseSignUp?>(null)
-    val userState: State<ResponseSignUp?> get() = _userState
-    private val _isSignUpSuccessful =  MutableStateFlow(false)
+    private val _isSignUpSuccessful = MutableStateFlow(false)
     val isSignUpSuccessful = _isSignUpSuccessful.asStateFlow()
     private val _errorMessage = MutableStateFlow("")
     val errorMessage = _errorMessage.asStateFlow()
 
-    fun signUpUser(userName: String, password: String, hobby: String) {
-        val request = RequestSignUp(userName, password, hobby)
-
-        userService.signUpUser(request).enqueue(object : Callback<BaseResponse<ResponseSignUp>> {
-            override fun onResponse(
-                call: Call<BaseResponse<ResponseSignUp>>,
-                response: Response<BaseResponse<ResponseSignUp>>
-            ) {
-                if (response.isSuccessful) {
-                    _userState.value = response.body()?.result
-                    _isSignUpSuccessful.value = true
-                } else {
-                    _isSignUpSuccessful.value = false
-                    handleError(response)
-                }
+    fun signUpUser(username: String, password: String, hobby: String) = viewModelScope.launch {
+        val request = RequestSignUp(username, password, hobby)
+        repository.signUpUser(request)
+            .onSuccess {
+                _isSignUpSuccessful.value = true
             }
-
-            override fun onFailure(call: Call<BaseResponse<ResponseSignUp>>, t: Throwable) {
+            .onFailure {
                 _isSignUpSuccessful.value = false
-                _errorMessage.value = "네트워크 오류가 발생했습니다."
             }
-        })
     }
 
     private fun handleError(response: Response<BaseResponse<ResponseSignUp>>) {
