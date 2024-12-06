@@ -111,7 +111,7 @@ fun SignInScreen(
             GrayTextField(
                 value = userName,
                 placeholderText = "사용자 이름",
-                onValueChange = { userViewModel::updateUserName }
+                onValueChange = userViewModel::updateUserName
             )
             Spacer(modifier = Modifier.height(6.dp))
             GrayTextField(
@@ -119,7 +119,7 @@ fun SignInScreen(
                 placeholderText = stringResource(R.string.password),
                 isPassword = true,
                 passwordHidden = passwordHidden,
-                onValueChange = { userViewModel::updatePassword },
+                onValueChange = userViewModel::updatePassword,
                 onPasswordToggle = { passwordHidden = !passwordHidden}
             )
             Spacer(modifier = Modifier.height(40.dp))
