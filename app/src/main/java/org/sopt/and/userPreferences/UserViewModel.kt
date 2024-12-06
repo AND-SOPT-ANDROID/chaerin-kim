@@ -86,7 +86,7 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
                     _isSignInSuccessful.value = true
                 } else {
                     _isSignInSuccessful.value = false
-//                    handleError(response)
+                    handleError(response)
                 }
             }
 
@@ -98,7 +98,7 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
         })
     }
 
-    private fun handleError(response: Response<ResponseSignIn>) {
+    private fun handleError(response: Response<BaseResponse<ResponseSignIn>>) {
         val errorBody = response.errorBody()?.string()
         val errorMessage = when (response.code()) {
             400 -> {
@@ -119,7 +119,7 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
             }
             403 -> "비밀번호가 일치하지 않습니다."
             404 -> "유효하지 않은 경로로 요청하셨습니다."
-            else -> "서버 오류가 발생했습니다. 상태 코드: ${response.code()}"
+            else -> "오류가 발생했습니다. 상태 코드: ${response.code()}"
         }
 
         _errorMessage.value = errorMessage
