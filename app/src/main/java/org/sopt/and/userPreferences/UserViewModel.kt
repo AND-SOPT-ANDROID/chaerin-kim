@@ -1,50 +1,135 @@
 package org.sopt.and.userPreferences
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.sopt.and.api.dto.BaseResponse
+import org.sopt.and.api.dto.request.RequestSignIn
+import org.sopt.and.api.dto.response.ResponseError
+import org.sopt.and.api.dto.response.ResponseSignIn
+import org.sopt.and.api.factory.ServicePool
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewModel() {
-    private val _preferenceEmail = MutableStateFlow("")
+    private val userService by lazy { ServicePool.userService }
+
+    private val _userState = mutableStateOf<ResponseSignIn?>(null)
+    val userState: State<ResponseSignIn?> get() = _userState
+
+    private val _preferenceUserName = MutableStateFlow("")
+    val preferenceUserName = _preferenceUserName.asStateFlow()
     private val _preferencePassword = MutableStateFlow("")
-
-    val preferenceEmail = _preferenceEmail.asStateFlow()
     val preferencePassword = _preferencePassword.asStateFlow()
+    private val _preferenceHobby = MutableStateFlow("")
+    val preferenceHobby = _preferenceHobby.asStateFlow()
+    private val _token = MutableStateFlow("")
+    val preferenceToken = _token.asStateFlow()
 
-    private var preferencesEmail = ""
-    private var preferencesPassword = ""
+    private val _isSignInSuccessful =  MutableStateFlow(false)
+    val isSignInSuccessful = _isSignInSuccessful.asStateFlow()
+    private val _errorMessage = MutableStateFlow("")
+    val errorMessage = _errorMessage.asStateFlow()
 
-    init {
-        getUserPreferences()
-    }
-
-    private fun getUserPreferences() {
+    fun updateUserPreferences(userName: String, password: String, hobby: String) {
         viewModelScope.launch {
-            datastoreRepository.userPreferencesFlow.collect { userPreferences ->
-                _preferenceEmail.value = userPreferences.email
-                _preferencePassword.value = userPreferences.password
-            }
-        }
-    }
-
-    fun updateUserPreferences(email: String, password: String) {
-        viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_EMAIL, email)
+            datastoreRepository.updatePreference(DatastoreRepository.USER_NAME, userName)
             datastoreRepository.updatePreference(DatastoreRepository.USER_PASSWORD, password)
+            datastoreRepository.updatePreference(DatastoreRepository.USER_HOBBY, hobby)
         }
     }
 
-    fun updateEmail(newEmail: String) {
+    fun updateUserName(newUserName: String) {
         viewModelScope.launch {
-            datastoreRepository.updatePreference(DatastoreRepository.USER_EMAIL, newEmail)
+            datastoreRepository.updatePreference(DatastoreRepository.USER_NAME, newUserName)
+            _preferenceUserName.value = newUserName
         }
     }
 
     fun updatePassword(newPassword: String) {
         viewModelScope.launch {
             datastoreRepository.updatePreference(DatastoreRepository.USER_PASSWORD, newPassword)
+            _preferencePassword.value = newPassword
         }
+    }
+
+    fun updateHobby(newHobby: String) {
+        viewModelScope.launch {
+            datastoreRepository.updatePreference(DatastoreRepository.USER_HOBBY, newHobby)
+            _preferenceHobby.value = newHobby
+        }
+    }
+
+    fun updateToken(newToken: String) {
+        viewModelScope.launch {
+            datastoreRepository.updatePreference(DatastoreRepository.USER_TOKEN, newToken)
+            _token.value = newToken
+        }
+    }
+
+    fun login(username: String, password: String) {
+        val request = RequestSignIn(username = username, password = password)
+
+        userService.userLogin(request).enqueue(object : Callback<BaseResponse<ResponseSignIn>> {
+            override fun onResponse(
+                call: Call<BaseResponse<ResponseSignIn>>,
+                response: Response<BaseResponse<ResponseSignIn>>
+            ) {
+                if (response.isSuccessful) {
+                    _userState.value = response.body()?.result
+                    updateToken(response.body()?.result?.token.toString())
+                    _isSignInSuccessful.value = true
+                } else {
+                    _isSignInSuccessful.value = false
+                    handleError(response)
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<ResponseSignIn>>, t: Throwable) {
+                _isSignInSuccessful.value = false
+                _errorMessage.value = "네트워크 오류가 발생했습니다."
+            }
+
+        })
+    }
+
+    private fun handleError(response: Response<BaseResponse<ResponseSignIn>>) {
+        val errorBody = response.errorBody()?.string()
+        val errorMessage = when (response.code()) {
+            400 -> {
+                if (errorBody != null) {
+                    try {
+                        val errorResponse = kotlinx.serialization.json.Json.decodeFromString<ResponseError>(errorBody)
+                        when (errorResponse.code) {
+                            "01" -> "요청 본문이 유효하지 않습니다."
+                            "02" -> "비밀번호는 7자 이하이어야 합니다."
+                            else -> "잘못된 요청입니다."
+                        }
+                    } catch (e: Exception) {
+                        "잘못된 요청입니다."
+                    }
+                } else {
+                    "잘못된 요청입니다."
+                }
+            }
+            403 -> "비밀번호가 일치하지 않습니다."
+            404 -> "유효하지 않은 경로로 요청하셨습니다."
+            else -> "오류가 발생했습니다. 상태 코드: ${response.code()}"
+        }
+
+        _errorMessage.value = errorMessage
+    }
+
+    fun resetSignInState() {
+        _isSignInSuccessful.value = false
+    }
+
+    fun clearErrorMessage() {
+        _errorMessage.value = ""
     }
 }

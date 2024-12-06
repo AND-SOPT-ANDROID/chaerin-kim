@@ -1,4 +1,4 @@
-package org.sopt.and.screen
+package org.sopt.and.screen.signUp
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.SNSLogin
@@ -46,23 +48,29 @@ import org.sopt.and.ui.theme.pretendardFamily
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onLoginButtonClicked: (email: String, password: String) -> Unit
+    onLoginButtonClicked: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
+    val signUpViewModel = SignUpViewModel()
+    val isSignUpSuccessful by signUpViewModel.isSignUpSuccessful.collectAsStateWithLifecycle()
+    val errorMessage by signUpViewModel.errorMessage.collectAsStateWithLifecycle()
+    var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var emailError by remember { mutableStateOf(false) }
-    var passwordError by remember { mutableStateOf(false) }
+    var hobby by remember { mutableStateOf("") }
     var passwordHidden by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
-    fun validateEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    LaunchedEffect(isSignUpSuccessful) {
+        if (isSignUpSuccessful) {
+            onLoginButtonClicked()
+            signUpViewModel.resetSignUpState()
+        }
     }
 
-    fun validatePassword(password: String): Boolean {
-        return password.length in 8..20 && password.any { it.isDigit() } &&
-                password.any { it.isUpperCase() } && password.any { it.isLowerCase() } &&
-                password.any { !it.isLetterOrDigit() }
+    LaunchedEffect(errorMessage) {
+        if (errorMessage.isNotEmpty()) {
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            signUpViewModel.clearErrorMessage()
+        }
     }
 
     Box {
@@ -101,13 +109,24 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             GrayTextField(
-                email,
-                stringResource(R.string.example_email),
-                onValueChange = { email = it }
+                userName,
+                stringResource(R.string.example_user_name),
+                onValueChange = { userName = it }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
-                stringResource(R.string.email_condition_info)
+                stringResource(R.string.user_name_condition_info)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+
+            GrayTextField(
+                hobby,
+                stringResource(R.string.example_hobby_name),
+                onValueChange = { hobby = it }
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            TextFieldNotificationMessage(
+                stringResource(R.string.hobby_condition_info)
             )
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -117,7 +136,7 @@ fun SignUpScreen(
                 isPassword = true,
                 passwordHidden = passwordHidden,
                 onValueChange = { password = it },
-                onPasswordToggle = { passwordHidden = !passwordHidden}
+                onPasswordToggle = { passwordHidden = !passwordHidden }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
@@ -130,16 +149,11 @@ fun SignUpScreen(
 
         Button(
             onClick = {
-                emailError = !validateEmail(email)
-                passwordError = !validatePassword(password)
-
-                if (!emailError && !passwordError) {
-                    onLoginButtonClicked(email, password)
-                } else if (emailError) {
-                    Toast.makeText(context, "이메일 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "비밀번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show()
-                }
+                signUpViewModel.signUpUser(
+                    userName = userName,
+                    password = password,
+                    hobby = hobby
+                )
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -195,8 +209,6 @@ fun SignUpText() {
 private fun Preview(modifier: Modifier = Modifier) {
     SignUpScreen(
         modifier,
-    ) { email, password ->
-        val userEmail = email
-        val userPassword = password
-    }
+        onLoginButtonClicked = { }
+    )
 }

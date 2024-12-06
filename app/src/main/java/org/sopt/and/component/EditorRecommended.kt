@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
 import org.sopt.and.data.ContentItem
-import org.sopt.and.data.HomeViewModel
+import org.sopt.and.screen.home.HomeViewModel
 
 @Composable
 fun EditorRecommended(recommendList: List<ContentItem>) {

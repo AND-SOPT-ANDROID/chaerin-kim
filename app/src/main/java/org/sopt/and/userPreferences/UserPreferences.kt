@@ -1,6 +1,8 @@
 package org.sopt.and.userPreferences
 
 data class UserPreferences(
-    val email: String = "",
+    val userName: String = "",
     val password: String = "",
+    val hobby: String = "",
+    val token: String = "",
 )

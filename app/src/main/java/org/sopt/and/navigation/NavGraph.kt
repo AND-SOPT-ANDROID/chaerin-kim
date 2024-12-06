@@ -12,11 +12,11 @@ import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.sopt.and.userPreferences.UserViewModel
-import org.sopt.and.screen.HomeScreen
-import org.sopt.and.screen.MyScreen
-import org.sopt.and.screen.SearchScreen
-import org.sopt.and.screen.SignInScreen
-import org.sopt.and.screen.SignUpScreen
+import org.sopt.and.screen.home.HomeScreen
+import org.sopt.and.screen.my.MyScreen
+import org.sopt.and.screen.search.SearchScreen
+import org.sopt.and.screen.signIn.SignInScreen
+import org.sopt.and.screen.signUp.SignUpScreen
 
 object BottomNavRoutes {
     const val Home = "Home"
@@ -67,8 +67,7 @@ fun NavGraph(
         composable(route = Routes.SignUp) {
             SignUpScreen(
                 modifier = modifier,
-                onLoginButtonClicked = { email, password ->
-                    userViewModel.updateUserPreferences(email, password) //api 연결 전 임시로 userViewModel에 저장
+                onLoginButtonClicked = {
                     navController.popBackStack()
                 }
             )

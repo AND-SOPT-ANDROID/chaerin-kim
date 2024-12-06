@@ -1,4 +1,4 @@
-package org.sopt.and.screen
+package org.sopt.and.screen.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +18,6 @@ import org.sopt.and.component.HomeBanner
 import org.sopt.and.component.HomeCategory
 import org.sopt.and.component.HomeTopBar
 import org.sopt.and.component.TodayTop20
-import org.sopt.and.data.HomeViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

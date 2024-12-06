@@ -1,4 +1,4 @@
-package org.sopt.and.screen
+package org.sopt.and.screen.my
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,7 +29,6 @@ import org.sopt.and.component.CircleImage
 import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.ShowContentList
 import org.sopt.and.component.PromotionalBanner
-import org.sopt.and.data.MyViewModel
 import org.sopt.and.ui.theme.BackgroundBlack
 import org.sopt.and.ui.theme.Gray80
 import org.sopt.and.ui.theme.pretendardFamily
@@ -39,10 +38,11 @@ fun MyScreen(
     modifier: Modifier = Modifier,
     userViewModel: UserViewModel
 ) {
-    val email by userViewModel.preferenceEmail.collectAsState()
+    val hobby by userViewModel.preferenceHobby.collectAsState()
     val myViewModel: MyViewModel = viewModel()
     val viewHistory = myViewModel.viewHistory
     val interestContent = myViewModel.interestContent
+    myViewModel.getMyHobby(userViewModel)
 
     Column(
         modifier = modifier
@@ -63,7 +63,7 @@ fun MyScreen(
                 CircleImage(Modifier.size(60.dp), myViewModel.userProfileImg, "사용자 프로필 이미지")
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "${email}님",
+                    text = hobby,
                     fontFamily = pretendardFamily,
                     fontWeight = FontWeight.Medium,
                     color = Color.White,
