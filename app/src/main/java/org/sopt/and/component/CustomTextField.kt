@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,9 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import org.sopt.and.ui.theme.Gray40
-import org.sopt.and.ui.theme.Gray80
-import org.sopt.and.ui.theme.pretendardFamily
+import org.sopt.and.core.design_system.theme.Gray40
+import org.sopt.and.core.design_system.theme.Gray80
+import org.sopt.and.core.design_system.theme.pretendardFamily
 
 @Composable
 fun GrayTextField(

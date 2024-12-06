@@ -36,9 +36,9 @@ import androidx.navigation.compose.rememberNavController
 import org.sopt.and.navigation.BottomNavigationItem
 import org.sopt.and.navigation.NavGraph
 import org.sopt.and.navigation.Routes
-import org.sopt.and.ui.theme.ANDANDROIDTheme
-import org.sopt.and.ui.theme.BackgroundBlack
-import org.sopt.and.ui.theme.pretendardFamily
+import org.sopt.and.core.design_system.theme.ANDANDROIDTheme
+import org.sopt.and.core.design_system.theme.BackgroundBlack
+import org.sopt.and.core.design_system.theme.pretendardFamily
 import org.sopt.and.userPreferences.DatastoreRepository
 import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.userPreferences.UserViewModelFactory

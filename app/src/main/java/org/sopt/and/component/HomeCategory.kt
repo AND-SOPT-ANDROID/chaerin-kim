@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.domain.entity.HomeCategoryItem
-import org.sopt.and.ui.theme.pretendardFamily
+import org.sopt.and.core.design_system.theme.pretendardFamily
 
 @Composable
 fun HomeCategory(categoryList: List<HomeCategoryItem>) {

@@ -20,9 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.ui.theme.Gray40
-import org.sopt.and.ui.theme.Gray80
-import org.sopt.and.ui.theme.pretendardFamily
+import org.sopt.and.core.design_system.theme.Gray40
+import org.sopt.and.core.design_system.theme.Gray80
+import org.sopt.and.core.design_system.theme.pretendardFamily
 
 @Composable
 fun PromotionalBanner(

@@ -39,10 +39,10 @@ import org.sopt.and.userPreferences.UserViewModel
 import org.sopt.and.component.GrayTextField
 import org.sopt.and.component.LoginHelpButton
 import org.sopt.and.component.SNSLogin
-import org.sopt.and.ui.theme.BackgroundBlack
-import org.sopt.and.ui.theme.Gray60
-import org.sopt.and.ui.theme.MainBlue
-import org.sopt.and.ui.theme.pretendardFamily
+import org.sopt.and.core.design_system.theme.BackgroundBlack
+import org.sopt.and.core.design_system.theme.Gray60
+import org.sopt.and.core.design_system.theme.MainBlue
+import org.sopt.and.core.design_system.theme.pretendardFamily
 
 @Composable
 fun SignInScreen(
