@@ -6,7 +6,6 @@ import org.sopt.and.data.dto.request.RequestSignUp
 import org.sopt.and.data.dto.response.ResponseMyHobby
 import org.sopt.and.data.dto.response.ResponseSignIn
 import org.sopt.and.data.dto.response.ResponseSignUp
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
