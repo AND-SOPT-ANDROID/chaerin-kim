@@ -3,9 +3,9 @@ package org.sopt.and.data.service
 import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.RequestSignIn
 import org.sopt.and.data.dto.request.RequestSignUp
-import org.sopt.and.data.dto.response.ResponseMyHobby
-import org.sopt.and.data.dto.response.ResponseSignIn
-import org.sopt.and.data.dto.response.ResponseSignUp
+import org.sopt.and.data.dto.response.ResponseMyHobbyDto
+import org.sopt.and.data.dto.response.ResponseSignInDto
+import org.sopt.and.data.dto.response.ResponseSignUpDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -16,17 +16,17 @@ interface UserService {
     suspend fun signUpUser(
         @Body
         requestSignUp: RequestSignUp
-    ): BaseResponse<ResponseSignUp>
+    ): BaseResponse<ResponseSignUpDto>
 
     @POST("/login")
     suspend fun userLogin(
         @Body
         requestSignIn: RequestSignIn
-    ): BaseResponse<ResponseSignIn>
+    ): BaseResponse<ResponseSignInDto>
 
     @GET("/user/my-hobby")
     suspend fun getMyHobby(
         @Header("token")
         token: String
-    ): BaseResponse<ResponseMyHobby>
+    ): BaseResponse<ResponseMyHobbyDto>
 }

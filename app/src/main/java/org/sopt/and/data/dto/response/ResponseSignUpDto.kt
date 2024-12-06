@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseMyHobby(
-    @SerialName("hobby")
-    val hobby: String,
+data class ResponseSignUpDto(
+    @SerialName("no")
+    val no: Int,
 )
