@@ -2,36 +2,40 @@ package org.sopt.and.presentation.signUp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.and.data.dto.BaseResponse
-import org.sopt.and.data.dto.request.RequestSignUp
 import org.sopt.and.data.dto.response.ResponseError
-import org.sopt.and.data.dto.response.ResponseSignUp
-import org.sopt.and.domain.repository.RepositoryPool
+import org.sopt.and.data.dto.response.ResponseSignUpDto
+import org.sopt.and.domain.entity.UserInfo
+import org.sopt.and.domain.repository.UserRepository
 import retrofit2.Response
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
-    private val repository = RepositoryPool.userRepository
-
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+) : ViewModel() {
     private val _isSignUpSuccessful = MutableStateFlow(false)
     val isSignUpSuccessful = _isSignUpSuccessful.asStateFlow()
     private val _errorMessage = MutableStateFlow("")
     val errorMessage = _errorMessage.asStateFlow()
 
-    fun signUpUser(username: String, password: String, hobby: String) = viewModelScope.launch {
-        val request = RequestSignUp(username, password, hobby)
-        repository.signUpUser(request)
-            .onSuccess {
-                _isSignUpSuccessful.value = true
-            }
-            .onFailure {
-                _isSignUpSuccessful.value = false
-            }
-    }
+    fun signUpUser(username: String, password: String, hobby: String) =
+        viewModelScope.launch {
+            val request = UserInfo(username, password, hobby)
+            userRepository.signUpUser(request)
+                .onSuccess {
+                    _isSignUpSuccessful.value = true
+                }
+                .onFailure {
+                    _isSignUpSuccessful.value = false
+                }
+        }
 
-    private fun handleError(response: Response<BaseResponse<ResponseSignUp>>) {
+    private fun handleError(response: Response<BaseResponse<ResponseSignUpDto>>) {
         val errorBody = response.errorBody()?.string()
         val errorMessage = when (response.code()) {
             400 -> {

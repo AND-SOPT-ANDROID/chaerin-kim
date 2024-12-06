@@ -36,6 +36,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
 import org.sopt.and.core.design_system.component.GrayTextField
@@ -50,7 +51,7 @@ fun SignUpScreen(
     modifier: Modifier = Modifier,
     onLoginButtonClicked: () -> Unit
 ) {
-    val signUpViewModel = SignUpViewModel()
+    val signUpViewModel: SignUpViewModel = hiltViewModel()
     val isSignUpSuccessful by signUpViewModel.isSignUpSuccessful.collectAsStateWithLifecycle()
     val errorMessage by signUpViewModel.errorMessage.collectAsStateWithLifecycle()
     var userName by remember { mutableStateOf("") }
