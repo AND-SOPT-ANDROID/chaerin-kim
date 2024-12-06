@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import org.sopt.and.R
 import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.response.ResponseMyHobby
-import org.sopt.and.api.factory.ServicePool
+import org.sopt.and.data.remote.ServicePool
 import org.sopt.and.domain.entity.ContentItem
 import org.sopt.and.userPreferences.UserViewModel
 import retrofit2.Call

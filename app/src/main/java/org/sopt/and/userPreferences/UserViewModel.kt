@@ -11,7 +11,7 @@ import org.sopt.and.data.dto.BaseResponse
 import org.sopt.and.data.dto.request.RequestSignIn
 import org.sopt.and.data.dto.response.ResponseError
 import org.sopt.and.data.dto.response.ResponseSignIn
-import org.sopt.and.api.factory.ServicePool
+import org.sopt.and.data.remote.ServicePool
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
