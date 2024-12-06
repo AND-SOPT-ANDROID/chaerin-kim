@@ -1,4 +1,4 @@
-package org.sopt.and.navigation
+package org.sopt.and.presentation.main.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.SnackbarHostState

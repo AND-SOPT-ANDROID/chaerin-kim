@@ -1,4 +1,4 @@
-package org.sopt.and
+package org.sopt.and.presentation.main
 
 import android.content.Context
 import android.os.Bundle
@@ -33,9 +33,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import org.sopt.and.navigation.BottomNavigationItem
-import org.sopt.and.navigation.NavGraph
-import org.sopt.and.navigation.Routes
+import org.sopt.and.presentation.main.navigation.BottomNavigationItem
+import org.sopt.and.presentation.main.navigation.NavGraph
+import org.sopt.and.presentation.main.navigation.Routes
 import org.sopt.and.core.design_system.theme.ANDANDROIDTheme
 import org.sopt.and.core.design_system.theme.BackgroundBlack
 import org.sopt.and.core.design_system.theme.pretendardFamily

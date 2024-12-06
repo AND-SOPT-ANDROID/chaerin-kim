@@ -1,4 +1,4 @@
-package org.sopt.and.navigation
+package org.sopt.and.presentation.main.navigation
 
 import org.sopt.and.R
 
