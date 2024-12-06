@@ -5,17 +5,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-import org.sopt.and.data.dto.BaseResponse
-import org.sopt.and.data.dto.request.RequestSignIn
-import org.sopt.and.data.dto.response.ResponseError
-import org.sopt.and.data.dto.response.ResponseSignIn
-import org.sopt.and.domain.repository.RepositoryPool
 import org.sopt.and.domain.repository.DatastoreRepository
-import retrofit2.Response
 
-class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewModel() {
-    private val repository = RepositoryPool.userRepository
+class UserViewModel(
+    private val datastoreRepository: DatastoreRepository
+): ViewModel() {
 
     private val _preferenceUserName = MutableStateFlow("")
     val preferenceUserName = _preferenceUserName.asStateFlow()
@@ -26,8 +20,6 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
     private val _token = MutableStateFlow("")
     val preferenceToken = _token.asStateFlow()
 
-    private val _isSignInSuccessful =  MutableStateFlow(false)
-    val isSignInSuccessful = _isSignInSuccessful.asStateFlow()
     private val _errorMessage = MutableStateFlow("")
     val errorMessage = _errorMessage.asStateFlow()
 
@@ -65,51 +57,6 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
             datastoreRepository.updatePreference(DatastoreRepository.Companion.USER_TOKEN, newToken)
             _token.value = newToken
         }
-    }
-
-    fun login(username: String, password: String) {
-        viewModelScope.launch {
-            val request = RequestSignIn(username = username, password = password)
-            repository.signInUser(request)
-                .onSuccess {
-                    updateToken(it.token)
-                    _isSignInSuccessful.value = true
-                }
-                .onFailure {
-                    _isSignInSuccessful.value = false
-                }
-        }
-    }
-
-    private fun handleError(response: Response<BaseResponse<ResponseSignIn>>) {
-        val errorBody = response.errorBody()?.string()
-        val errorMessage = when (response.code()) {
-            400 -> {
-                if (errorBody != null) {
-                    try {
-                        val errorResponse = Json.decodeFromString<ResponseError>(errorBody)
-                        when (errorResponse.code) {
-                            "01" -> "요청 본문이 유효하지 않습니다."
-                            "02" -> "비밀번호는 7자 이하이어야 합니다."
-                            else -> "잘못된 요청입니다."
-                        }
-                    } catch (e: Exception) {
-                        "잘못된 요청입니다."
-                    }
-                } else {
-                    "잘못된 요청입니다."
-                }
-            }
-            403 -> "비밀번호가 일치하지 않습니다."
-            404 -> "유효하지 않은 경로로 요청하셨습니다."
-            else -> "오류가 발생했습니다. 상태 코드: ${response.code()}"
-        }
-
-        _errorMessage.value = errorMessage
-    }
-
-    fun resetSignInState() {
-        _isSignInSuccessful.value = false
     }
 
     fun clearErrorMessage() {

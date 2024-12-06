@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
 import org.sopt.and.core.design_system.component.GrayTextField
@@ -50,9 +51,10 @@ fun SignInScreen(
     navigateToMy: (isLoginSuccess: Boolean) -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
+    val signInViewModel : SignInViewModel = hiltViewModel()
+    val isSignInSuccessful by signInViewModel.isSignInSuccessful.collectAsStateWithLifecycle()
     val userName by userViewModel.preferenceUserName.collectAsStateWithLifecycle()
     val password by userViewModel.preferencePassword.collectAsStateWithLifecycle()
-    val isSignInSuccessful by userViewModel.isSignInSuccessful.collectAsStateWithLifecycle()
     val errorMessage by userViewModel.errorMessage.collectAsStateWithLifecycle()
     var passwordHidden by remember { mutableStateOf(true) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -62,7 +64,7 @@ fun SignInScreen(
     LaunchedEffect(isSignInSuccessful) {
         if (isSignInSuccessful) {
             navigateToMy(isSignInSuccessful)
-            userViewModel.resetSignInState()
+            signInViewModel.resetSignInState()
         }
     }
 
@@ -126,7 +128,7 @@ fun SignInScreen(
             Button(
                 onClick = {
                     focusManager.clearFocus()
-                    userViewModel.login(userName, password)
+                    signInViewModel.login(userName, password, userViewModel)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
