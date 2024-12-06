@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
-import org.sopt.and.data.ContentItem
+import org.sopt.and.domain.entity.ContentItem
 import org.sopt.and.presentation.home.HomeViewModel
 import org.sopt.and.ui.theme.Gray40
 import org.sopt.and.ui.theme.Gray60

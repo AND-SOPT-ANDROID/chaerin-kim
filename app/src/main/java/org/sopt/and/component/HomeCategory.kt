@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.data.HomeCategoryItem
+import org.sopt.and.domain.entity.HomeCategoryItem
 import org.sopt.and.ui.theme.pretendardFamily
 
 @Composable

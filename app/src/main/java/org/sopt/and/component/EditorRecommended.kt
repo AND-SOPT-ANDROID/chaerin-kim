@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
-import org.sopt.and.data.ContentItem
+import org.sopt.and.domain.entity.ContentItem
 import org.sopt.and.presentation.home.HomeViewModel
 
 @Composable

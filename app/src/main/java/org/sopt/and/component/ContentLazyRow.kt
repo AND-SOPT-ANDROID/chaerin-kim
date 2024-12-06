@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import org.sopt.and.data.ContentItem
+import org.sopt.and.domain.entity.ContentItem
 
 @Composable
 fun ContentLazyRow(contentList: List<ContentItem>) {

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.sopt.and.R
-import org.sopt.and.data.ContentItem
-import org.sopt.and.data.HomeCategoryItem
+import org.sopt.and.domain.entity.ContentItem
+import org.sopt.and.domain.entity.HomeCategoryItem
 
 class HomeViewModel : ViewModel() {
     val categoryList: List<HomeCategoryItem> = listOf(

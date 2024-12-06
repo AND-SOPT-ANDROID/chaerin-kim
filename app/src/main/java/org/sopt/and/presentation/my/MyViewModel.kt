@@ -6,7 +6,7 @@ import org.sopt.and.R
 import org.sopt.and.api.dto.BaseResponse
 import org.sopt.and.api.dto.response.ResponseMyHobby
 import org.sopt.and.api.factory.ServicePool
-import org.sopt.and.data.ContentItem
+import org.sopt.and.domain.entity.ContentItem
 import org.sopt.and.userPreferences.UserViewModel
 import retrofit2.Call
 import retrofit2.Callback

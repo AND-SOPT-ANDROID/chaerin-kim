@@ -1,4 +1,4 @@
-package org.sopt.and.data
+package org.sopt.and.domain.entity
 
 data class ContentItem(
     val title: String,

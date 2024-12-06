@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.sopt.and.data.ContentItem
+import org.sopt.and.domain.entity.ContentItem
 
 @Composable
 fun ShowContentList(
