@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.sopt.and.api.dto.BaseResponse
 import org.sopt.and.api.dto.request.RequestSignIn
 import org.sopt.and.api.dto.response.ResponseError
 import org.sopt.and.api.dto.response.ResponseSignIn
@@ -74,22 +75,22 @@ class UserViewModel(private val datastoreRepository: DatastoreRepository): ViewM
     fun login(username: String, password: String) {
         val request = RequestSignIn(username = username, password = password)
 
-        userService.userLogin(request).enqueue(object : Callback<ResponseSignIn> {
+        userService.userLogin(request).enqueue(object : Callback<BaseResponse<ResponseSignIn>> {
             override fun onResponse(
-                call: Call<ResponseSignIn>,
-                response: Response<ResponseSignIn>
+                call: Call<BaseResponse<ResponseSignIn>>,
+                response: Response<BaseResponse<ResponseSignIn>>
             ) {
                 if (response.isSuccessful) {
-                    _userState.value = response.body()
+                    _userState.value = response.body()?.result
                     updateToken(response.body()?.result?.token.toString())
                     _isSignInSuccessful.value = true
                 } else {
                     _isSignInSuccessful.value = false
-                    handleError(response)
+//                    handleError(response)
                 }
             }
 
-            override fun onFailure(call: Call<ResponseSignIn>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse<ResponseSignIn>>, t: Throwable) {
                 _isSignInSuccessful.value = false
                 _errorMessage.value = "네트워크 오류가 발생했습니다."
             }

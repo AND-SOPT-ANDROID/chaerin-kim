@@ -1,5 +1,6 @@
 package org.sopt.and.api.service
 
+import org.sopt.and.api.dto.BaseResponse
 import org.sopt.and.api.dto.request.RequestSignIn
 import org.sopt.and.api.dto.request.RequestSignUp
 import org.sopt.and.api.dto.response.ResponseMyHobby
@@ -16,17 +17,17 @@ interface UserService {
     fun signUpUser(
         @Body
         requestSignUp: RequestSignUp
-    ): Call<ResponseSignUp>
+    ): Call<BaseResponse<ResponseSignUp>>
 
     @POST("/login")
     fun userLogin(
         @Body
         requestSignIn: RequestSignIn
-    ): Call<ResponseSignIn>
+    ): Call<BaseResponse<ResponseSignIn>>
 
     @GET("/user/my-hobby")
     fun getMyHobby(
         @Header("token")
         token: String
-    ): Call<ResponseMyHobby>
+    ): Call<BaseResponse<ResponseMyHobby>>
 }

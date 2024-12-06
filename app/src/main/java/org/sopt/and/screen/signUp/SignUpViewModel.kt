@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.sopt.and.api.dto.BaseResponse
 import org.sopt.and.api.dto.request.RequestSignUp
 import org.sopt.and.api.dto.response.ResponseError
 import org.sopt.and.api.dto.response.ResponseSignUp
@@ -26,21 +27,21 @@ class SignUpViewModel : ViewModel() {
     fun signUpUser(userName: String, password: String, hobby: String) {
         val request = RequestSignUp(userName, password, hobby)
 
-        userService.signUpUser(request).enqueue(object : Callback<ResponseSignUp> {
+        userService.signUpUser(request).enqueue(object : Callback<BaseResponse<ResponseSignUp>> {
             override fun onResponse(
-                call: Call<ResponseSignUp>,
-                response: Response<ResponseSignUp>
+                call: Call<BaseResponse<ResponseSignUp>>,
+                response: Response<BaseResponse<ResponseSignUp>>
             ) {
                 if (response.isSuccessful) {
-                    _userState.value = response.body()
+                    _userState.value = response.body()?.result
                     _isSignUpSuccessful.value = true
                 } else {
                     _isSignUpSuccessful.value = false
-                    handleError(response)
+//                    handleError(response)
                 }
             }
 
-            override fun onFailure(call: Call<ResponseSignUp>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse<ResponseSignUp>>, t: Throwable) {
                 _isSignUpSuccessful.value = false
                 _errorMessage.value = "네트워크 오류가 발생했습니다."
             }

@@ -3,6 +3,7 @@ package org.sopt.and.screen.my
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import org.sopt.and.R
+import org.sopt.and.api.dto.BaseResponse
 import org.sopt.and.api.dto.response.ResponseMyHobby
 import org.sopt.and.api.factory.ServicePool
 import org.sopt.and.data.ContentItem
@@ -23,10 +24,10 @@ class MyViewModel: ViewModel() {
     fun getMyHobby(userViewModel: UserViewModel) {
         val token = userViewModel.preferenceToken.value
 
-        userService.getMyHobby(token).enqueue(object : Callback<ResponseMyHobby> {
+        userService.getMyHobby(token).enqueue(object : Callback<BaseResponse<ResponseMyHobby>> {
             override fun onResponse(
-                call: Call<ResponseMyHobby>,
-                response: Response<ResponseMyHobby>
+                call: Call<BaseResponse<ResponseMyHobby>>,
+                response: Response<BaseResponse<ResponseMyHobby>>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.result?.let { userViewModel.updateHobby(it.hobby) }
@@ -36,7 +37,7 @@ class MyViewModel: ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseMyHobby>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse<ResponseMyHobby>>, t: Throwable) {
                 Log.e("failure", t.message.toString())
             }
 
