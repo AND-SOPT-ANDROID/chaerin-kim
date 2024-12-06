@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.sopt.and.R
-import org.sopt.and.component.CircleImage
+import org.sopt.and.core.design_system.component.CircleImage
 import org.sopt.and.userPreferences.UserViewModel
-import org.sopt.and.component.ShowContentList
-import org.sopt.and.component.PromotionalBanner
+import org.sopt.and.core.design_system.component.ShowContentList
+import org.sopt.and.core.design_system.component.PromotionalBanner
 import org.sopt.and.core.design_system.theme.BackgroundBlack
 import org.sopt.and.core.design_system.theme.Gray80
 import org.sopt.and.core.design_system.theme.pretendardFamily

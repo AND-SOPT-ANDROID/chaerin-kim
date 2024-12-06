@@ -13,11 +13,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.sopt.and.component.EditorRecommended
-import org.sopt.and.component.HomeBanner
-import org.sopt.and.component.HomeCategory
-import org.sopt.and.component.HomeTopBar
-import org.sopt.and.component.TodayTop20
+import org.sopt.and.core.design_system.component.EditorRecommended
+import org.sopt.and.core.design_system.component.HomeBanner
+import org.sopt.and.core.design_system.component.HomeCategory
+import org.sopt.and.core.design_system.component.HomeTopBar
+import org.sopt.and.core.design_system.component.TodayTop20
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

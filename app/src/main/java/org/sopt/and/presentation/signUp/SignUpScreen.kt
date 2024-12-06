@@ -38,9 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.R
-import org.sopt.and.component.GrayTextField
-import org.sopt.and.component.SNSLogin
-import org.sopt.and.component.TextFieldNotificationMessage
+import org.sopt.and.core.design_system.component.GrayTextField
+import org.sopt.and.core.design_system.component.SNSLogin
+import org.sopt.and.core.design_system.component.TextFieldNotificationMessage
 import org.sopt.and.core.design_system.theme.BackgroundBlack
 import org.sopt.and.core.design_system.theme.Gray60
 import org.sopt.and.core.design_system.theme.pretendardFamily

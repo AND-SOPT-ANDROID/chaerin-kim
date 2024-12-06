@@ -1,4 +1,4 @@
-package org.sopt.and.component
+package org.sopt.and.core.design_system.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

@@ -1,4 +1,4 @@
-package org.sopt.and.component
+package org.sopt.and.core.design_system.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
