@@ -90,6 +90,8 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
     //hilt
+    implementation(libs.androidx.hilt)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 }
