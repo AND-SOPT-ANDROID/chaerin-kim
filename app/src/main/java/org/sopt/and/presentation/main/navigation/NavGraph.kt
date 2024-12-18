@@ -54,7 +54,7 @@ fun NavGraph(
         composable(route = Routes.SignIn) {
             SignInRoute(
                 modifier = modifier,
-//                userViewModel = userViewModel,
+                userViewModel = userViewModel,
                 navigateToMy = { isLoginSuccess ->
                     navController.navigate(Routes.myRoute(isLoginSuccess = isLoginSuccess))
                 },

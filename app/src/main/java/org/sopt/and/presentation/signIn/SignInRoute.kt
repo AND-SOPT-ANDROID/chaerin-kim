@@ -53,7 +53,7 @@ fun SignInRoute(
     modifier: Modifier = Modifier,
     navigateToMy: (isLoginSuccess: Boolean) -> Unit,
     navigateToSignUp: () -> Unit,
-    userViewModel: UserViewModel = hiltViewModel(),
+    userViewModel: UserViewModel,
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -157,7 +157,6 @@ fun SignInScreen(
             placeholderText = "사용자 이름",
             onValueChange = { userName ->
                 onUserNameChanged(userName)
-//                userViewModel::updateUserName
             }
         )
         Spacer(modifier = Modifier.height(6.dp))
@@ -168,7 +167,6 @@ fun SignInScreen(
             passwordHidden = uiState.passwordHidden,
             onValueChange = { password ->
                 onPasswordChanged(password)
-//                userViewModel::updatePassword
             },
             onPasswordToggle = onShowButtonClicked
         )
@@ -178,7 +176,6 @@ fun SignInScreen(
             onClick = {
                 focusManager.clearFocus()
                 onSignInButtonClicked()
-//                signInViewModel.login(userName, password, userViewModel)
             },
             modifier = Modifier.fillMaxWidth(),
             colors = if (uiState.isSignInButtonActivated) ButtonDefaults.buttonColors(
