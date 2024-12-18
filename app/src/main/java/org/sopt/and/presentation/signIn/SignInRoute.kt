@@ -1,6 +1,5 @@
 package org.sopt.and.presentation.signIn
 
-import android.R.id.message
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -54,7 +53,7 @@ fun SignInRoute(
     modifier: Modifier = Modifier,
     navigateToMy: (isLoginSuccess: Boolean) -> Unit,
     navigateToSignUp: () -> Unit,
-//    userViewModel: UserViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -71,6 +70,9 @@ fun SignInRoute(
                     is SignInEffect.NavigateToMy -> navigateToMy(uiState.isSignInSuccessful)
                     is SignInEffect.ShowToastMessage -> {
                         Toast.makeText(context, signInSideEffect.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is SignInEffect.StoreToken -> {
+                        userViewModel.updateToken(signInSideEffect.token)
                     }
                 }
             }

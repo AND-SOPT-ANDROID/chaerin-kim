@@ -18,6 +18,7 @@ class SignInContract {
     sealed class SignInEffect : UiSideEffect {
         data object NavigateToMy : SignInEffect()
         data class ShowToastMessage(val message: String) : SignInEffect()
+        data class StoreToken(val token: String) : SignInEffect()
     }
 
     sealed class SignInEvent : UiEvent {
