@@ -16,7 +16,7 @@ import org.sopt.and.presentation.home.HomeScreen
 import org.sopt.and.presentation.my.MyScreen
 import org.sopt.and.presentation.search.SearchScreen
 import org.sopt.and.presentation.signIn.SignInScreen
-import org.sopt.and.presentation.signUp.SignUpScreen
+import org.sopt.and.presentation.signUp.SignUpRoute
 
 object BottomNavRoutes {
     const val Home = "Home"
@@ -65,9 +65,9 @@ fun NavGraph(
         }
 
         composable(route = Routes.SignUp) {
-            SignUpScreen(
+            SignUpRoute(
                 modifier = modifier,
-                onLoginButtonClicked = {
+                navigateToSignIn = {
                     navController.popBackStack()
                 }
             )

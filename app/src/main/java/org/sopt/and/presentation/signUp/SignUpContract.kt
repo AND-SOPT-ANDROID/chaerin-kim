@@ -8,15 +8,17 @@ class SignUpContract {
     data class SignUpUiState(
         val userName: String = "",
         val password: String = "",
-        val passwordHidden: Boolean = false,
+        val passwordHidden: Boolean = true,
         val hobby: String = "",
-        val isSignUpButtonActivated: Boolean = false,
         val isSignUpSuccessful: Boolean = false,
-    ) : UiState
+    ) : UiState {
+        val isSignUpButtonActivated: Boolean
+            get() = userName.isNotEmpty() && password.isNotEmpty() && hobby.isNotEmpty()
+    }
 
-    sealed interface SignUpEffect : UiSideEffect {
-        data object NavigateToLogin : SignUpEffect
-        data class ShowToastMessage(val message: String) : SignUpEffect
+    sealed class SignUpEffect : UiSideEffect {
+        data object NavigateToSignIn : SignUpEffect()
+        data class ShowToastMessage(val message: String) : SignUpEffect()
     }
 
     sealed class SignUpEvent : UiEvent {
