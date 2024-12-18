@@ -57,17 +57,11 @@ fun SignInRoute(
 //    userViewModel: UserViewModel = hiltViewModel(),
     viewModel: SignInViewModel = hiltViewModel(),
 ) {
-//    val signInViewModel : SignInViewModel = hiltViewModel()
-//    val isSignInSuccessful by signInViewModel.isSignInSuccessful.collectAsStateWithLifecycle()
-//    val userName by userViewModel.preferenceUserName.collectAsStateWithLifecycle()
-//    val password by userViewModel.preferencePassword.collectAsStateWithLifecycle()
-//    val errorMessage by userViewModel.errorMessage.collectAsStateWithLifecycle()
-//    var passwordHidden by remember { mutableStateOf(true) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -81,20 +75,6 @@ fun SignInRoute(
                 }
             }
     }
-
-//    LaunchedEffect(isSignInSuccessful) {
-//        if (isSignInSuccessful) {
-//            navigateToMy(isSignInSuccessful)
-//            signInViewModel.resetSignInState()
-//        }
-//    }
-//
-//    LaunchedEffect(errorMessage) {
-//        if (errorMessage.isNotEmpty()) {
-//            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-//            userViewModel.clearErrorMessage()
-//        }
-//    }
 
     Scaffold(
         snackbarHost = {
