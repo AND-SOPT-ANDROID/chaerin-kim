@@ -1,4 +1,4 @@
-package org.sopt.and.data.mapper.toData
+package org.sopt.and.data.mapper
 
 import org.sopt.and.data.dto.request.RequestSignIn
 import org.sopt.and.domain.entity.UserInfo

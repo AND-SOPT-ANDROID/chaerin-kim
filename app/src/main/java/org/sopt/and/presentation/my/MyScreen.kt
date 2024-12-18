@@ -25,13 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.sopt.and.R
-import org.sopt.and.core.design_system.component.CircleImage
+import org.sopt.and.core.designsystem.component.CircleImage
 import org.sopt.and.presentation.signIn.UserViewModel
-import org.sopt.and.core.design_system.component.ShowContentList
-import org.sopt.and.core.design_system.component.PromotionalBanner
-import org.sopt.and.core.design_system.theme.BackgroundBlack
-import org.sopt.and.core.design_system.theme.Gray80
-import org.sopt.and.core.design_system.theme.pretendardFamily
+import org.sopt.and.core.designsystem.component.ShowContentList
+import org.sopt.and.core.designsystem.component.PromotionalBanner
+import org.sopt.and.core.designsystem.theme.BackgroundBlack
+import org.sopt.and.core.designsystem.theme.Gray80
+import org.sopt.and.core.designsystem.theme.pretendardFamily
 
 @Composable
 fun MyScreen(

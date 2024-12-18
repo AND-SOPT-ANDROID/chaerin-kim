@@ -1,8 +1,8 @@
 package org.sopt.and.data.repositoryimpl
 
 import org.sopt.and.data.datasource.UserDataSource
-import org.sopt.and.data.mapper.toData.toRequestSignUp
-import org.sopt.and.data.mapper.toData.toRequestSingIn
+import org.sopt.and.data.mapper.toRequestSignUp
+import org.sopt.and.data.mapper.toRequestSingIn
 import org.sopt.and.domain.entity.ResponseMyHobby
 import org.sopt.and.domain.entity.ResponseSignIn
 import org.sopt.and.domain.entity.ResponseSignUp
