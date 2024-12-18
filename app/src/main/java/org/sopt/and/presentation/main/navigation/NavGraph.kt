@@ -15,7 +15,7 @@ import org.sopt.and.presentation.signIn.UserViewModel
 import org.sopt.and.presentation.home.HomeScreen
 import org.sopt.and.presentation.my.MyScreen
 import org.sopt.and.presentation.search.SearchScreen
-import org.sopt.and.presentation.signIn.SignInScreen
+import org.sopt.and.presentation.signIn.SignInRoute
 import org.sopt.and.presentation.signUp.SignUpRoute
 
 object BottomNavRoutes {
@@ -52,9 +52,9 @@ fun NavGraph(
         }
 
         composable(route = Routes.SignIn) {
-            SignInScreen(
+            SignInRoute(
                 modifier = modifier,
-                userViewModel = userViewModel,
+//                userViewModel = userViewModel,
                 navigateToMy = { isLoginSuccess ->
                     navController.navigate(Routes.myRoute(isLoginSuccess = isLoginSuccess))
                 },

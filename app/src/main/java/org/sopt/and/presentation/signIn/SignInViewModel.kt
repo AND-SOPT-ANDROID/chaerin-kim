@@ -1,36 +1,55 @@
 package org.sopt.and.presentation.signIn
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.sopt.and.core.viewmodel.BaseViewModel
 import org.sopt.and.domain.entity.UserInfo
 import org.sopt.and.domain.repository.UserRepository
+import org.sopt.and.presentation.signIn.SignInContract.SignInEffect
+import org.sopt.and.presentation.signIn.SignInContract.SignInEvent
+import org.sopt.and.presentation.signIn.SignInContract.SignInUiState
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val userRepository: UserRepository,
-) : ViewModel() {
-    private val _isSignInSuccessful = MutableStateFlow(false)
-    val isSignInSuccessful = _isSignInSuccessful.asStateFlow()
+) : BaseViewModel<SignInUiState, SignInEffect, SignInEvent>() {
 
-    fun login(username: String, password: String, userViewModel: UserViewModel) =
+    override fun createInitialState(): SignInUiState = SignInUiState()
+
+    override suspend fun handleEvent(event: SignInEvent) {
+        when (event) {
+            is SignInEvent.OnUserNameChanged -> {
+                setState { copy(userName = event.userName) }
+            }
+
+            is SignInEvent.OnPasswordChanged -> {
+                setState { copy(password = event.password) }
+            }
+
+            is SignInEvent.OnShowButtonClicked -> {
+                setState { copy(passwordHidden = !passwordHidden) }
+            }
+
+            is SignInEvent.OnSignInButtonClicked -> {
+                login(uiState.value.userName, uiState.value.password)
+            }
+        }
+    }
+
+    fun login(username: String, password: String) =
         viewModelScope.launch {
             val request = UserInfo(username = username, password = password, hobby = "")
             userRepository.signInUser(request)
                 .onSuccess {
-                    userViewModel.updateToken(it.token)
-                    _isSignInSuccessful.value = true
+//                    userViewModel.updateToken(it.token)
+                    setState { copy(isSignInSuccessful = true) }
+                    setSideEffect(SignInEffect.NavigateToMy)
                 }
-                .onFailure {
-                    _isSignInSuccessful.value = false
+                .onFailure { response->
+                    setState { copy(isSignInSuccessful = false) }
+                    setSideEffect(SignInEffect.ShowToastMessage(response.message.toString()))
                 }
         }
-
-    fun resetSignInState() {
-        _isSignInSuccessful.value = false
-    }
 }
