@@ -45,6 +45,7 @@ import org.sopt.and.core.designsystem.theme.MainBlue
 import org.sopt.and.core.designsystem.theme.pretendardFamily
 import org.sopt.and.presentation.signUp.SignUpContract.SignUpEffect
 import org.sopt.and.presentation.signUp.SignUpContract.SignUpEvent
+import org.sopt.and.presentation.signUp.SignUpContract.SignUpUiState
 
 @Composable
 fun SignUpRoute(
@@ -104,7 +105,7 @@ fun SignUpRoute(
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    uiState: SignUpContract.SignUpUiState,
+    uiState: SignUpUiState,
     onUserNameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onHobbyChanged: (String) -> Unit,
