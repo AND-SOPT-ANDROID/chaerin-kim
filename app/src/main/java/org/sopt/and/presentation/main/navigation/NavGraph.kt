@@ -15,8 +15,8 @@ import org.sopt.and.presentation.signIn.UserViewModel
 import org.sopt.and.presentation.home.HomeScreen
 import org.sopt.and.presentation.my.MyScreen
 import org.sopt.and.presentation.search.SearchScreen
-import org.sopt.and.presentation.signIn.SignInScreen
-import org.sopt.and.presentation.signUp.SignUpScreen
+import org.sopt.and.presentation.signIn.SignInRoute
+import org.sopt.and.presentation.signUp.SignUpRoute
 
 object BottomNavRoutes {
     const val Home = "Home"
@@ -52,7 +52,7 @@ fun NavGraph(
         }
 
         composable(route = Routes.SignIn) {
-            SignInScreen(
+            SignInRoute(
                 modifier = modifier,
                 userViewModel = userViewModel,
                 navigateToMy = { isLoginSuccess ->
@@ -65,9 +65,9 @@ fun NavGraph(
         }
 
         composable(route = Routes.SignUp) {
-            SignUpScreen(
+            SignUpRoute(
                 modifier = modifier,
-                onLoginButtonClicked = {
+                navigateToSignIn = {
                     navController.popBackStack()
                 }
             )

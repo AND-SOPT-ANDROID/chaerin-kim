@@ -37,9 +37,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.and.presentation.main.navigation.BottomNavigationItem
 import org.sopt.and.presentation.main.navigation.NavGraph
 import org.sopt.and.presentation.main.navigation.Routes
-import org.sopt.and.core.design_system.theme.ANDANDROIDTheme
-import org.sopt.and.core.design_system.theme.BackgroundBlack
-import org.sopt.and.core.design_system.theme.pretendardFamily
+import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
+import org.sopt.and.core.designsystem.theme.BackgroundBlack
+import org.sopt.and.core.designsystem.theme.pretendardFamily
 import org.sopt.and.domain.repository.DatastoreRepository
 import org.sopt.and.presentation.signIn.UserViewModel
 import org.sopt.and.presentation.signIn.UserViewModelFactory

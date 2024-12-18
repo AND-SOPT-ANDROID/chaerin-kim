@@ -1,72 +1,61 @@
 package org.sopt.and.presentation.signUp
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.and.data.dto.BaseResponse
-import org.sopt.and.data.dto.response.ResponseError
-import org.sopt.and.data.dto.response.ResponseSignUpDto
+import org.sopt.and.core.viewmodel.BaseViewModel
 import org.sopt.and.domain.entity.UserInfo
 import org.sopt.and.domain.repository.UserRepository
-import retrofit2.Response
+import org.sopt.and.presentation.signUp.SignUpContract.SignUpEffect
+import org.sopt.and.presentation.signUp.SignUpContract.SignUpEvent
+import org.sopt.and.presentation.signUp.SignUpContract.SignUpUiState
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val userRepository: UserRepository,
-) : ViewModel() {
-    private val _isSignUpSuccessful = MutableStateFlow(false)
-    val isSignUpSuccessful = _isSignUpSuccessful.asStateFlow()
-    private val _errorMessage = MutableStateFlow("")
-    val errorMessage = _errorMessage.asStateFlow()
+) : BaseViewModel<SignUpUiState, SignUpEffect, SignUpEvent>() {
+
+    override fun createInitialState(): SignUpUiState = SignUpUiState()
+
+    override suspend fun handleEvent(event: SignUpEvent) {
+        when (event) {
+            is SignUpEvent.OnUserNameChanged -> {
+                setState { copy(userName = event.userName) }
+            }
+
+            is SignUpEvent.OnPasswordChanged -> {
+                setState { copy(password = event.password) }
+            }
+
+            is SignUpEvent.OnHobbyChanged -> {
+                setState { copy(hobby = event.hobby) }
+            }
+
+            is SignUpEvent.OnShowButtonClicked -> {
+                setState { copy(passwordHidden = !passwordHidden) }
+            }
+
+            is SignUpEvent.OnCloseButtonClicked -> {
+                setSideEffect(sideEffect = SignUpEffect.NavigateToSignIn)
+            }
+
+            is SignUpEvent.OnSignUpButtonClicked -> {
+                signUpUser(uiState.value.userName, uiState.value.password, uiState.value.hobby)
+            }
+        }
+    }
 
     fun signUpUser(username: String, password: String, hobby: String) =
         viewModelScope.launch {
             val request = UserInfo(username, password, hobby)
             userRepository.signUpUser(request)
                 .onSuccess {
-                    _isSignUpSuccessful.value = true
+                    setState { copy(isSignUpSuccessful = true) }
+                    setSideEffect(SignUpEffect.NavigateToSignIn)
                 }
                 .onFailure {
-                    _isSignUpSuccessful.value = false
+                    setState { copy(isSignUpSuccessful = false) }
                 }
         }
-
-    private fun handleError(response: Response<BaseResponse<ResponseSignUpDto>>) {
-        val errorBody = response.errorBody()?.string()
-        val errorMessage = when (response.code()) {
-            400 -> {
-                if (errorBody != null) {
-                    try {
-                        val errorResponse = kotlinx.serialization.json.Json.decodeFromString<ResponseError>(errorBody)
-                        when (errorResponse.code) {
-                            "00" -> "요청 본문이 유효하지 않습니다."
-                            "01" -> "각 입력값은 7자 이하이어야 합니다."
-                            else -> "잘못된 요청입니다."
-                        }
-                    } catch (e: Exception) {
-                        "잘못된 요청입니다."
-                    }
-                } else {
-                    "잘못된 요청입니다."
-                }
-            }
-            404 -> "유효하지 않은 경로로 요청하셨습니다."
-            409 -> "username이 이미 존재합니다."
-            else -> "오류가 발생했습니다. 상태 코드: ${response.code()}"
-        }
-
-        _errorMessage.value = errorMessage
-    }
-
-    fun resetSignUpState() {
-        _isSignUpSuccessful.value = false
-    }
-
-    fun clearErrorMessage() {
-        _errorMessage.value = ""
-    }
 }

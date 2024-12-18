@@ -1,32 +1,32 @@
 package org.sopt.and.presentation.my
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.and.R
-import org.sopt.and.domain.entity.ContentItem
+import org.sopt.and.core.viewmodel.BaseViewModel
 import org.sopt.and.domain.repository.UserRepository
-import org.sopt.and.presentation.signIn.UserViewModel
+import org.sopt.and.presentation.my.MyContract.MyEffect
+import org.sopt.and.presentation.my.MyContract.MyUiState
+import org.sopt.and.presentation.my.MyContract.MyEvent
 import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
     private val userRepository: UserRepository,
-) : ViewModel() {
-    val userProfileImg: Int = R.drawable.img_sample
-    private val _viewHistory = mutableListOf<ContentItem>()
-    val viewHistory: List<ContentItem> get() = _viewHistory
-    private val _interestContent = mutableListOf<ContentItem>()
-    val interestContent: List<ContentItem> get() = _interestContent
+) : BaseViewModel<MyUiState, MyEffect, MyEvent>() {
 
-    fun getMyHobby(userViewModel: UserViewModel) =
+    override fun createInitialState(): MyUiState = MyUiState()
+
+    override suspend fun handleEvent(event: MyEvent) {
+
+    }
+
+    fun getMyHobby(token: String) =
         viewModelScope.launch {
-            val token = userViewModel.preferenceToken.value
             userRepository.getMyHobby(token)
-                .onSuccess {
-                    userViewModel.updateHobby(it.hobby)
+                .onSuccess { response ->
+                    setSideEffect(MyEffect.StoreHobby(response.hobby))
                 }
                 .onFailure {
                     val error = it.message

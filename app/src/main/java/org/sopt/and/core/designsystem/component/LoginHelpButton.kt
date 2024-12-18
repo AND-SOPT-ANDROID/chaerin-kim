@@ -1,4 +1,4 @@
-package org.sopt.and.core.design_system.component
+package org.sopt.and.core.designsystem.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.sopt.and.core.design_system.theme.Gray40
-import org.sopt.and.core.design_system.theme.pretendardFamily
+import org.sopt.and.core.designsystem.theme.Gray40
+import org.sopt.and.core.designsystem.theme.pretendardFamily
 
 @Composable
 fun LoginHelpButton(

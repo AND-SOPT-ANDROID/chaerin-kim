@@ -1,6 +1,5 @@
 package org.sopt.and.presentation.signUp
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,13 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -37,43 +32,87 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import org.sopt.and.R
-import org.sopt.and.core.design_system.component.GrayTextField
-import org.sopt.and.core.design_system.component.SNSLogin
-import org.sopt.and.core.design_system.component.TextFieldNotificationMessage
-import org.sopt.and.core.design_system.theme.BackgroundBlack
-import org.sopt.and.core.design_system.theme.Gray60
-import org.sopt.and.core.design_system.theme.pretendardFamily
+import org.sopt.and.core.designsystem.component.GrayTextField
+import org.sopt.and.core.designsystem.component.SNSLogin
+import org.sopt.and.core.designsystem.component.TextFieldNotificationMessage
+import org.sopt.and.core.designsystem.theme.BackgroundBlack
+import org.sopt.and.core.designsystem.theme.Gray60
+import org.sopt.and.core.designsystem.theme.MainBlue
+import org.sopt.and.core.designsystem.theme.pretendardFamily
+import org.sopt.and.presentation.signUp.SignUpContract.SignUpEffect
+import org.sopt.and.presentation.signUp.SignUpContract.SignUpEvent
+import org.sopt.and.presentation.signUp.SignUpContract.SignUpUiState
+
+@Composable
+fun SignUpRoute(
+    modifier: Modifier = Modifier,
+    navigateToSignIn: () -> Unit,
+    viewModel: SignUpViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
+        viewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
+            .collect { signUpSideEffect ->
+                when (signUpSideEffect) {
+                    is SignUpEffect.NavigateToSignIn -> navigateToSignIn()
+                    is SignUpEffect.ShowToastMessage -> {}
+                }
+            }
+    }
+
+    SignUpScreen(
+        modifier = modifier,
+        uiState = uiState,
+        onUserNameChanged = { userName ->
+            viewModel.setEvent(
+                SignUpEvent.OnUserNameChanged(userName = userName)
+            )
+        },
+        onPasswordChanged = { password ->
+            viewModel.setEvent(
+                SignUpEvent.OnPasswordChanged(password = password)
+            )
+        },
+        onHobbyChanged = { hobby ->
+            viewModel.setEvent(
+                SignUpEvent.OnHobbyChanged(hobby = hobby)
+            )
+        },
+        onShowButtonClicked = {
+            viewModel.setEvent(
+                SignUpEvent.OnShowButtonClicked
+            )
+        },
+        onSignUpButtonClicked = {
+            viewModel.setEvent(
+                SignUpEvent.OnSignUpButtonClicked
+            )
+        },
+        onCloseButtonClicked = {
+            viewModel.setEvent(
+                SignUpEvent.OnCloseButtonClicked
+            )
+        }
+    )
+}
 
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
-    onLoginButtonClicked: () -> Unit
+    uiState: SignUpUiState,
+    onUserNameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onHobbyChanged: (String) -> Unit,
+    onShowButtonClicked: () -> Unit,
+    onSignUpButtonClicked: () -> Unit,
+    onCloseButtonClicked: () -> Unit,
 ) {
-    val signUpViewModel: SignUpViewModel = hiltViewModel()
-    val isSignUpSuccessful by signUpViewModel.isSignUpSuccessful.collectAsStateWithLifecycle()
-    val errorMessage by signUpViewModel.errorMessage.collectAsStateWithLifecycle()
-    var userName by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var hobby by remember { mutableStateOf("") }
-    var passwordHidden by remember { mutableStateOf(true) }
-    val context = LocalContext.current
-
-    LaunchedEffect(isSignUpSuccessful) {
-        if (isSignUpSuccessful) {
-            onLoginButtonClicked()
-            signUpViewModel.resetSignUpState()
-        }
-    }
-
-    LaunchedEffect(errorMessage) {
-        if (errorMessage.isNotEmpty()) {
-            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-            signUpViewModel.clearErrorMessage()
-        }
-    }
-
     Box {
         Column(
             modifier = modifier
@@ -101,7 +140,7 @@ fun SignUpScreen(
                     contentDescription = "btn_close",
                     modifier = Modifier
                         .size(30.dp)
-                        .clickable { }
+                        .clickable { onCloseButtonClicked() }
                 )
             }
             Spacer(modifier = Modifier.height(50.dp))
@@ -110,9 +149,11 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             GrayTextField(
-                userName,
+                uiState.userName,
                 stringResource(R.string.example_user_name),
-                onValueChange = { userName = it }
+                onValueChange = { userName ->
+                    onUserNameChanged(userName)
+                }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
@@ -121,9 +162,11 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             GrayTextField(
-                hobby,
+                uiState.hobby,
                 stringResource(R.string.example_hobby_name),
-                onValueChange = { hobby = it }
+                onValueChange = { hobby ->
+                    onHobbyChanged(hobby)
+                }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
@@ -132,12 +175,14 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             GrayTextField(
-                password,
+                uiState.password,
                 "Wavve 비밀번호 설정",
                 isPassword = true,
-                passwordHidden = passwordHidden,
-                onValueChange = { password = it },
-                onPasswordToggle = { passwordHidden = !passwordHidden }
+                passwordHidden = uiState.passwordHidden,
+                onValueChange = { password->
+                    onPasswordChanged(password)
+                },
+                onPasswordToggle = onShowButtonClicked
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextFieldNotificationMessage(
@@ -149,18 +194,12 @@ fun SignUpScreen(
         }
 
         Button(
-            onClick = {
-                signUpViewModel.signUpUser(
-                    username = userName,
-                    password = password,
-                    hobby = hobby
-                )
-            },
+            onClick = onSignUpButtonClicked,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
                 .align(Alignment.BottomCenter),
-            colors = ButtonDefaults.buttonColors(containerColor = Gray60),
+            colors = if (uiState.isSignUpButtonActivated) ButtonDefaults.buttonColors(contentColor = MainBlue) else ButtonDefaults.buttonColors(containerColor = Gray60),
             shape = RoundedCornerShape(0.dp)
         ) {
             Text(
@@ -208,8 +247,8 @@ fun SignUpText() {
 @Preview
 @Composable
 private fun Preview(modifier: Modifier = Modifier) {
-    SignUpScreen(
+    SignUpRoute(
         modifier,
-        onLoginButtonClicked = { }
+        navigateToSignIn = { },
     )
 }
