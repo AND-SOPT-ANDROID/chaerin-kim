@@ -1,34 +1,30 @@
 package org.sopt.and.presentation.signUp
 
-class SignUpContract {
-//    data class SignUpUiState(
-//        val name: S
-//    )
-//
-//    data class LookUiState(
-//        val loadState: LoadState = LoadState.Idle,
-//        val isRegionBottomSheetOpen: Boolean = false,
-//        val region: RegionType? = null,
-//        val area: Any? = null,
-//        val money: MoneyTagType? = null,
-//        val regionBottomSheetSelectedRegion: RegionType? = RegionType.SEOUL,
-//        val regionBottomSheetSelectedArea: Any? = null,
-//        val courses: List<Course> = listOf()
-//    ) : UiState
-//
-//    sealed interface LookSideEffect : UiSideEffect {
-//        data class NavigateToCourseDetail(val courseId: Int) : LookSideEffect
-//        data object NavigateToEnroll : LookSideEffect
-//    }
-//
-//    sealed class LookEvent : UiEvent {
-//        data object OnAreaButtonClicked : LookEvent()
-//        data object OnResetButtonClicked : LookEvent()
-//        data object OnRegionBottomSheetDismissRequest : LookEvent()
-//        data class FetchCourses(val loadState: LoadState, val courses: List<Course>) : LookEvent()
-//        data class OnMoneyChipClicked(val money: MoneyTagType?) : LookEvent()
-//        data class OnRegionBottomSheetButtonClicked(val region: RegionType?, val area: Any?) : LookEvent()
-//        data class OnRegionBottomSheetRegionClicked(val region: RegionType?) : LookEvent()
-//        data class OnRegionBottomSheetAreaClicked(val area: Any?) : LookEvent()
+import org.sopt.and.core.viewmodel.UiEvent
+import org.sopt.and.core.viewmodel.UiSideEffect
+import org.sopt.and.core.viewmodel.UiState
 
+class SignUpContract {
+    data class SignUpUiState(
+        val userName: String = "",
+        val password: String = "",
+        val passwordHidden: Boolean = false,
+        val hobby: String = "",
+        val isSignUpButtonActivated: Boolean = false,
+        val isSignUpSuccessful: Boolean = false,
+    ) : UiState
+
+    sealed interface SignUpEffect : UiSideEffect {
+        data object NavigateToLogin : SignUpEffect
+        data class ShowToastMessage(val message: String) : SignUpEffect
+    }
+
+    sealed class SignUpEvent : UiEvent {
+        data class OnUserNameChanged(val userName: String) : SignUpEvent()
+        data class OnPasswordChanged(val password: String) : SignUpEvent()
+        data class OnHobbyChanged(val hobby: String) : SignUpEvent()
+        data object OnShowButtonClicked : SignUpEvent()
+        data object OnSignUpButtonClicked : SignUpEvent()
+        data object OnCloseButtonClicked : SignUpEvent()
+    }
 }
