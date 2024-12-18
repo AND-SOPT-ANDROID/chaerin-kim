@@ -1,4 +1,4 @@
-package org.sopt.and.core.design_system.component
+package org.sopt.and.core.designsystem.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -16,8 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.sopt.and.R
-import org.sopt.and.core.design_system.theme.Gray40
-import org.sopt.and.core.design_system.theme.pretendardFamily
+import org.sopt.and.core.designsystem.theme.Gray40
+import org.sopt.and.core.designsystem.theme.pretendardFamily
 
 @Composable
 fun NoContentList(noContentMsg: String) {

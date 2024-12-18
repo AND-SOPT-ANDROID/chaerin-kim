@@ -1,4 +1,4 @@
-package org.sopt.and.core.design_system.component
+package org.sopt.and.core.designsystem.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,8 +37,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import org.sopt.and.domain.entity.ContentItem
 import org.sopt.and.presentation.home.HomeViewModel
-import org.sopt.and.core.design_system.theme.Gray40
-import org.sopt.and.core.design_system.theme.Gray60
+import org.sopt.and.core.designsystem.theme.Gray40
+import org.sopt.and.core.designsystem.theme.Gray60
 
 @Composable
 fun HomeBanner(bannerData: List<ContentItem>) {

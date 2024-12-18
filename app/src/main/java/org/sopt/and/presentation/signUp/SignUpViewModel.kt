@@ -3,7 +3,11 @@ package org.sopt.and.presentation.signUp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.and.data.dto.BaseResponse
@@ -18,6 +22,21 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
+
+    private val _uiState = MutableStateFlow<State>(initialState)
+    val uiState: StateFlow<State>
+        get() = _uiState.asStateFlow()
+    val currentState: State
+        get() = uiState.value
+
+    private val _event: MutableSharedFlow<Event> = MutableSharedFlow()
+    val event: SharedFlow<Event>
+        get() = _event.asSharedFlow()
+
+    private val _sideEffect: MutableSharedFlow<SideEffect> = MutableSharedFlow()
+    val sideEffect: Flow<SideEffect>
+        get() = _sideEffect.asSharedFlow()
+
     private val _isSignUpSuccessful = MutableStateFlow(false)
     val isSignUpSuccessful = _isSignUpSuccessful.asStateFlow()
     private val _errorMessage = MutableStateFlow("")

@@ -1,4 +1,4 @@
-package org.sopt.and.core.design_system.component
+package org.sopt.and.core.designsystem.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.core.design_system.theme.Gray40
-import org.sopt.and.core.design_system.theme.Gray80
-import org.sopt.and.core.design_system.theme.pretendardFamily
+import org.sopt.and.core.designsystem.theme.Gray40
+import org.sopt.and.core.designsystem.theme.Gray80
+import org.sopt.and.core.designsystem.theme.pretendardFamily
 
 @Composable
 fun SNSLogin(
