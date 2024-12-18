@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hilt)
+    kotlin("kapt")
 }
 
 val properties = Properties().apply {
@@ -87,4 +89,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlin.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
+    //hilt
+    implementation(libs.androidx.hilt)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt)
+    kapt(libs.androidx.hilt.compiler)
 }
